@@ -28,11 +28,15 @@ const entry =
 const slug = entry ? viewSlug(entry.id) : '';
 const views = entry
   ? [
-      { label: 'HTML', href: Astro.url.pathname, current: true },
-      { label: 'JSON', href: `${base}/${slug}.json` },
-      { label: 'YAML', href: `${base}/${slug}.yaml` },
-      { label: 'Markdown', href: `${base}/${slug}.md` },
-      { label: 'Source', href: `${repo}/blob/main/${entry.filePath}` },
+      { label: 'HTML', name: 'This page as HTML', href: Astro.url.pathname, current: true },
+      { label: 'JSON', name: 'This page as JSON', href: `${base}/${slug}.json` },
+      { label: 'YAML', name: 'This page as YAML', href: `${base}/${slug}.yaml` },
+      { label: 'Markdown', name: 'This page as Markdown', href: `${base}/${slug}.md` },
+      {
+        label: 'Source on GitHub',
+        name: "This page's source on GitHub",
+        href: `${repo}/blob/main/${entry.filePath}`,
+      },
     ]
   : [];
 
@@ -74,13 +78,23 @@ const columns = [
 <footer class="sb-footer">
   {
     views.length > 0 && (
-      <nav class="sb-footer__views" aria-label="This page in other formats">
-        <span class="sb-footer__views-label">This page as</span>
-        {views.map((view) => (
-          <a href={view.href} aria-current={view.current ? 'page' : undefined}>
-            {view.label}
-          </a>
-        ))}
+      <nav class="sb-footer__views" aria-labelledby="sb-footer-views-label">
+        <span class="sb-footer__views-label" id="sb-footer-views-label">
+          This page as
+        </span>
+        <ul>
+          {views.map((view) => (
+            <li>
+              <a
+                href={view.href}
+                aria-label={view.name}
+                aria-current={view.current ? 'page' : undefined}
+              >
+                {view.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </nav>
     )
   }
