@@ -16,6 +16,7 @@ import { getCollection } from 'astro:content';
 import { pageSourceId, slugFromEntryId } from '@spec-kitty/doc-toolkit';
 import { agentPageRoute } from '@spec-kitty/doc-toolkit/routes';
 import { stringify } from 'yaml';
+import { YAML_OPTIONS } from './yaml-view-options.mjs';
 
 const pageRoute = agentPageRoute();
 
@@ -58,14 +59,6 @@ const TYPES = {
   yaml: 'application/yaml',
   markdown: 'text/markdown',
 } as const;
-
-/**
- * YAML for the `.yaml` view and the `.md` frontmatter. `compat` quotes any
- * string a YAML 1.1 reader (PyYAML, gray-matter, js-yaml) would take for
- * another type, such as `2026-10-23T00:00:00Z`, `yes` or `on`, so the record
- * reads back as the `.json` view does. Other strings stay plain.
- */
-const YAML_OPTIONS = { lineWidth: 0, compat: 'yaml-1.1' } as const;
 
 /** The site root as an absolute URL without a trailing slash, base included. */
 function siteRoot(ctx: APIContext): string {
