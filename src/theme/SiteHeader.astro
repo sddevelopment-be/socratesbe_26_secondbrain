@@ -1,0 +1,56 @@
+---
+/*
+ * SoCraTes BE site header (dk:site-header slot). Rendered inside Starlight's
+ * own <header class="header">, so it emits no <header> and does not size or
+ * position the bar — chrome.css paints the bar itself.
+ *
+ * Layout echoes socratesbe.org: a dark bar, the ensō mark and SOCRATES BE
+ * wordmark on the left, inline section links, then search / socials / theme.
+ */
+import Search from '@astrojs/starlight/components/Search.astro';
+import SocialIcons from '@astrojs/starlight/components/SocialIcons.astro';
+import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const here = Astro.url.pathname;
+
+const nav = [
+  { label: 'Unconference', href: `${base}/context/` },
+  { label: 'Sessions', href: `${base}/sessions/` },
+  { label: 'Ideas', href: `${base}/ideas/` },
+  { label: 'Contribute', href: `${base}/guides/` },
+];
+---
+
+<div class="sb-header">
+  <a class="sb-brand" href={`${base}/`} aria-label="SoCraTes BE 2026 second brain — home">
+    <svg class="sb-brand__mark" viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M26.31 53.25A22 22 0 0 1 30.08 10.08" fill="none" stroke="#2d8cff" stroke-width="8" stroke-linecap="round" />
+      <path d="M33.92 10.08A22 22 0 0 1 37.69 53.25" fill="none" stroke="#e5391b" stroke-width="8" stroke-linecap="round" />
+    </svg>
+    <span class="sb-brand__text">
+      <span class="sb-brand__word">SoCraTes <strong>BE</strong></span>
+      <span class="sb-brand__sub">2026 · second brain</span>
+    </span>
+  </a>
+
+  <nav class="sb-nav" aria-label="Sections">
+    {
+      nav.map((item) => (
+        <a href={item.href} aria-current={here.startsWith(item.href) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))
+    }
+    <a class="sb-nav__agents" href={`${base}/llms.txt`} title="The machine-readable entry point for LLM agents">
+      llms.txt
+    </a>
+  </nav>
+
+  <div class="sb-search"><Search /></div>
+
+  <div class="sb-tools">
+    <SocialIcons />
+    <ThemeSelect />
+  </div>
+</div>

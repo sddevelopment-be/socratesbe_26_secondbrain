@@ -1,0 +1,110 @@
+/*
+ * SoCraTes BE palette as DocKitty tokens. Both blocks are required: the
+ * toolkit re-declares every mode-varying key under :root[data-theme='dark'],
+ * so the dark block must match that selector to win.
+ *
+ * Brand anchors: primary #007bff (hover #0056b3), text #333 / headings #222,
+ * light surface #f8f9fa, bars #262627 / #1f2125, ensō blue #0077ff and
+ * red #b32004, the legacy orange #fe4918 and the hero violet #9001a5.
+ * Link and fill blues are nudged darker in light mode to hold WCAG AA.
+ */
+:root {
+  --dk-color-bg: #ffffff;
+  --dk-color-bg-nav: #f8f9fa;
+  --dk-color-bg-sidebar: #f8f9fa;
+  --dk-color-surface-1: #ffffff;
+  --dk-color-surface-2: #f3f5f6;
+  --dk-color-surface-inset: #eff1f5;
+  --dk-color-border: #e9e9e9;
+  --dk-color-border-strong: #c9ced6;
+  --dk-color-text: #333333;
+  --dk-color-text-strong: #222222;
+  --dk-color-text-muted: #5c6066;
+  --dk-color-text-accent: #0062cc;
+  --dk-color-text-invert: #ffffff;
+
+  --dk-color-accent-low: #e6f1ff;
+  --dk-color-accent: #0069d9;
+  --dk-color-accent-high: #0056b3;
+  --dk-color-accent-text: #ffffff;
+
+  --dk-color-info: #0056b3;
+  --dk-color-info-bg: #e6f1ff;
+  --dk-color-success: #1e7e34;
+  --dk-color-success-bg: #e7f4ea;
+  --dk-color-warning: #a93a10;
+  --dk-color-warning-bg: #fff0ea;
+  --dk-color-danger: #b32004;
+  --dk-color-danger-bg: #fdecea;
+  --dk-color-neutral: #5c6066;
+  --dk-color-neutral-bg: #f1f3f5;
+  --dk-color-tint-lilac: #f6e9f9;
+  --dk-color-tint-lilac-text: #7a1590;
+
+  --dk-diagram-node-fill: #ffffff;
+  --dk-diagram-node-border: #0069d9;
+  --dk-diagram-node-text: #222222;
+  --dk-diagram-edge: #b32004;
+  --dk-diagram-subgraph-title: #0056b3;
+  --dk-diagram-cluster-fill: #f8f9fa;
+
+  --dk-shadow-focus: 0 0 0 3px #0056b3;
+
+  /* Site-local chrome tokens (not part of the DocKitty catalog). */
+  --sb-bar: #262627;
+  --sb-bar-deep: #1f2125;
+  --sb-bar-text: #e9e9e9;
+  --sb-bar-muted: #a9adb4;
+  --sb-enso-blue: #0077ff;
+  --sb-enso-red: #b32004;
+  --sb-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --sb-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme='dark'] {
+  --dk-color-bg: #1f2125;
+  --dk-color-bg-nav: #262627;
+  --dk-color-bg-sidebar: #232427;
+  --dk-color-surface-1: #2a2b2e;
+  --dk-color-surface-2: #303236;
+  --dk-color-surface-inset: #18191c;
+  --dk-color-border: #3a3c41;
+  --dk-color-border-strong: #4a4d53;
+  --dk-color-text: #d9dadc;
+  --dk-color-text-strong: #ffffff;
+  --dk-color-text-muted: #a7abb2;
+  --dk-color-text-accent: #6cb2ff;
+  --dk-color-text-invert: #0b1320;
+
+  --dk-color-accent-low: #10233d;
+  --dk-color-accent: #3d95ff;
+  --dk-color-accent-high: #7ab6ff;
+  --dk-color-accent-text: #0b1320;
+
+  --dk-color-info: #8ec2ff;
+  --dk-color-info-bg: #112338;
+  --dk-color-success: #7fd18f;
+  --dk-color-success-bg: #14281a;
+  --dk-color-warning: #ff9a73;
+  --dk-color-warning-bg: #331a10;
+  --dk-color-danger: #ff7a66;
+  --dk-color-danger-bg: #3a1512;
+  --dk-color-neutral: #a7abb2;
+  --dk-color-neutral-bg: #2c2e33;
+  --dk-color-tint-lilac: #2d1734;
+  --dk-color-tint-lilac-text: #e0a8ec;
+
+  --dk-diagram-node-fill: #2a2b2e;
+  --dk-diagram-node-border: #3d95ff;
+  --dk-diagram-node-text: #d9dadc;
+  --dk-diagram-edge: #ff7a66;
+  --dk-diagram-subgraph-title: #6cb2ff;
+  --dk-diagram-cluster-fill: #262627;
+
+  --dk-shadow-focus: 0 0 0 3px rgba(61, 149, 255, 0.6);
+
+  --sb-bar: #161719;
+  --sb-bar-deep: #111214;
+  --sb-shadow: 0 4px 6px rgba(0, 0, 0, 0.35);
+  --sb-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.4);
+}

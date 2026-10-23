@@ -1,0 +1,26 @@
+# Citation catalog (CSL-JSON-lite). Cite an entry from a page with
+#   external_references: [{ type: biblio, id: <id> }]
+- id: owen-2008
+  type: book
+  title: "Open Space Technology: A User's Guide"
+  authors: [Harrison Owen]
+  container: Berrett-Koehler
+  url: https://openspaceworld.org
+  issued: "2008"
+  note: the format behind the daily marketplace
+- id: craftsmanship-manifesto
+  type: webpage
+  title: Manifesto for Software Craftsmanship
+  url: https://manifesto.softwarecraftsmanship.org
+  issued: "2009"
+- id: common-docs
+  type: webpage
+  title: Common Docs
+  url: https://github.com/velvet-tiger/common-docs
+  note: the documentation convention this tree follows
+- id: llms-txt-2024
+  type: webpage
+  title: The /llms.txt file
+  url: https://llmstxt.org
+  issued: "2024"
+  note: the agent-facing discovery index this site emits

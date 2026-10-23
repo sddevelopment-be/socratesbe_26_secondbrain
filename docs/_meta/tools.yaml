@@ -1,0 +1,13 @@
+# Tools catalog. Cite from a page with external_references: [{ type: tool, id: <id> }]
+- id: dockitty
+  name: DocKitty
+  url: https://github.com/spec-kitty/doc-kitty
+  note: the Astro + Starlight toolkit that renders this tree
+- id: spec-kitty
+  name: Spec Kitty
+  url: https://github.com/spec-kitty/spec-kitty
+  note: spec-driven workflow and governance for humans and agents
+- id: astro
+  name: Astro
+  url: https://astro.build
+  note: the static-site framework underneath

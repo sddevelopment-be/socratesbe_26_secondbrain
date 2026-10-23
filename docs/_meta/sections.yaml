@@ -1,0 +1,35 @@
+# Section registry: label, order and document type per top-level folder.
+# Editing this file relabels or reorders a nav group without moving content.
+version: 1
+sections:
+  - id: context
+    label: The Unconference
+    order: 10
+    type: Context
+    purpose: What SoCraTes BE 2026 is, where and when it happens, and how it works.
+
+  - id: sessions
+    label: Sessions
+    order: 20
+    type: Context
+    feeds: [rss]
+    purpose: Notes from marketplace sessions, written by the people who were there.
+
+  - id: ideas
+    label: Ideas
+    order: 30
+    type: Plan
+    feeds: [rss]
+    purpose: Session proposals, open questions and follow-ups that are not sessions yet.
+
+  - id: guides
+    label: Contribute
+    order: 40
+    type: Guide
+    purpose: How humans and agents add to this second brain.
+
+  - id: adr
+    label: Decisions
+    order: 50
+    type: ADR
+    purpose: Why this site is built the way it is.

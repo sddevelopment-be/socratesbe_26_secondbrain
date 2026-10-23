@@ -1,0 +1,264 @@
+/*
+ * SoCraTes BE chrome: the header and footer bars and a little page furniture.
+ * Element styling only — palette values come from socrates.css tokens.
+ */
+
+/* ── Header bar ───────────────────────────────────────────────────────────── */
+
+header.header {
+  background: var(--sb-bar);
+  color: var(--sb-bar-text);
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(90deg, var(--sb-enso-blue) 0 50%, var(--sb-enso-red) 50% 100%) 1;
+}
+
+.sb-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+.sb-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #ffffff;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.sb-brand__mark {
+  width: 2.1rem;
+  height: 2.1rem;
+}
+
+.sb-brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.sb-brand__word {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sb-brand__word strong {
+  color: #ff7200;
+  font-weight: 800;
+}
+
+.sb-brand__sub {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--sb-bar-muted);
+  letter-spacing: 0.04em;
+}
+
+.sb-nav {
+  display: none;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.sb-nav a {
+  color: var(--sb-bar-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--dk-radius-pill);
+  transition: all 0.3s ease;
+}
+
+.sb-nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.sb-nav a[aria-current='page'] {
+  background: #007bff;
+  color: #ffffff;
+}
+
+.sb-nav a.sb-nav__agents {
+  font-family: var(--dk-font-mono);
+  font-size: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.sb-search {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sb-tools {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+  color: var(--sb-bar-text);
+}
+
+/* Starlight's controls inherit gray tokens meant for the page; on the dark
+   bar they need light ink. */
+.sb-tools a,
+.sb-tools starlight-theme-select,
+.sb-tools select {
+  color: var(--sb-bar-text);
+}
+
+.sb-tools a:hover {
+  color: #ffffff;
+}
+
+.sb-tools select option {
+  color: initial;
+}
+
+@media (min-width: 50rem) {
+  .sb-search {
+    flex: 0 1 18rem;
+    justify-content: flex-start;
+    margin-inline-start: auto;
+  }
+
+  .sb-tools {
+    display: flex;
+  }
+}
+
+@media (min-width: 72rem) {
+  .sb-nav {
+    display: flex;
+  }
+}
+
+/* ── Footer band ──────────────────────────────────────────────────────────── */
+
+.sb-footer {
+  margin-top: 3rem;
+  border-radius: var(--dk-radius-md);
+  overflow: hidden;
+  background: var(--sb-bar);
+  color: var(--sb-bar-muted);
+  font-size: 0.9rem;
+}
+
+.sb-footer__cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 2rem 1.5rem;
+}
+
+.sb-footer__title {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.sb-footer__title span {
+  color: #4da3ff;
+}
+
+.sb-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sb-footer li {
+  margin: 0.3rem 0;
+}
+
+.sb-footer a {
+  color: var(--sb-bar-text);
+  text-decoration: none;
+}
+
+.sb-footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.sb-footer__base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.9rem 2rem;
+  background: var(--sb-bar-deep);
+  font-size: 0.8rem;
+}
+
+/* ── Page furniture ───────────────────────────────────────────────────────── */
+
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Cards and figures echo the site's soft 8px card with a lift on hover. */
+.sl-markdown-content img {
+  border-radius: var(--dk-radius-md);
+}
+
+.sb-hero {
+  position: relative;
+  margin-block: 0 2rem;
+  padding: 2.5rem 2rem;
+  border-radius: var(--dk-radius-lg);
+  color: #ffffff;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+    linear-gradient(135deg, #9001a5 0%, #10171a 100%);
+  box-shadow: var(--sb-shadow);
+}
+
+.sl-markdown-content .sb-hero :is(h2, p, strong) {
+  color: #ffffff;
+}
+
+.sl-markdown-content .sb-hero h2 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.sl-markdown-content .sb-hero p {
+  margin: 0.75rem 0 0;
+  font-size: 1.15rem;
+  font-weight: 300;
+}
+
+.sl-markdown-content .sb-hero a.sb-cta {
+  display: inline-block;
+  margin-top: 1.25rem;
+  margin-inline-end: 0.5rem;
+  padding: 0.6rem 1.6rem;
+  border-radius: var(--dk-radius-pill);
+  background: #007bff;
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.sl-markdown-content .sb-hero a.sb-cta:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
+}
+
+.sl-markdown-content .sb-hero a.sb-cta--ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
