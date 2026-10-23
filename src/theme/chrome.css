@@ -71,7 +71,10 @@ header.header {
   font-weight: 500;
   padding: 0.35rem 0.8rem;
   border-radius: var(--dk-radius-pill);
-  transition: all 0.3s ease;
+  /* Only what :hover changes; `all` would also fade the focus ring in. */
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .sb-nav a:hover {
@@ -308,7 +311,12 @@ header.header {
   color: var(--sb-cta-text);
   font-weight: 600;
   text-decoration: none;
-  transition: all 0.3s ease;
+  /* Only what :hover changes; `all` would also fade the focus ring in. */
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .sl-markdown-content .sb-hero a.sb-cta:hover {
