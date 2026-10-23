@@ -30,10 +30,13 @@ Belgium 2026 unconference for humans and agents. Read
 - Sections (registered in `docs/_meta/sections.yaml`): `context/` (the
   unconference), `sessions/` (one page per session), `ideas/`, `guides/`
   (contributing), `adr/` (decisions).
-- The theme is in `src/theme/`. Set `--dk-*` tokens only, never `--sl-*`.
+- The theme is in `src/theme/`. Refine `--dk-*` tokens, never `--sl-*`.
 - Chrome the toolkit has no token for (bars, hero, call-to-action buttons)
-  uses theme-private `--sb-*` tokens declared in `src/theme/socrates.css`,
-  never colour literals in `chrome.css`; `pnpm check` enforces this.
+  uses theme-private `--sb-*` tokens declared in `src/theme/socrates.css`.
+  Declare a token once in `:root` when it is the same in both schemes,
+  otherwise in both blocks; never alias `--dk-color-accent*`. `chrome.css`
+  holds no colour literals unless the line carries a
+  `/* literal: <reason> */` comment; `pnpm check` enforces this.
 
 ### Every page needs frontmatter
 
