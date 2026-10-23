@@ -35,7 +35,7 @@ The [code of conduct](https://confcodeofconduct.com/) applies here too.
 
 ## Run it locally
 
-Requires Node ≥ 22.22 and pnpm (`corepack enable`). No registry token is
+Requires Node ≥ 22.23.4 (Node 24 recommended) and pnpm (`corepack enable`). No registry token is
 needed: the toolkit installs from its public GitHub repository.
 
 ```sh

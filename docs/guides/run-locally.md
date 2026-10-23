@@ -13,7 +13,7 @@ authors:
 
 # Run the site locally
 
-You need Node 22.22 or later and pnpm (`corepack enable` installs it).
+You need Node 22.23.4 or later (Node 24 recommended) and pnpm (`corepack enable` installs it).
 
 ```sh
 pnpm install
