@@ -8,7 +8,8 @@
  * - a colour function: rgb(), rgba(), hsl(), hsla(), hwb(), lab(), lch(),
  *   oklab(), oklch(), color() or color-mix(), in any case;
  * - a URL-encoded hex colour (`%23ff0000`) or a hex colour inside a url(),
- *   as in an inline SVG data URI;
+ *   as in an inline SVG data URI, which is also decoded and checked for colour
+ *   functions and named colours in colour attributes (`fill=%22red%22`);
  * - a named colour (`white`, `Black`, `rebeccapurple`) in the value of a
  *   colour-bearing property. `transparent`, `currentColor`, `inherit`,
  *   `initial`, `unset` and `none` are not colours and pass.
@@ -59,6 +60,9 @@ const NAMED = new Set(
 const COLOUR_PROPERTY =
   /^(?:color|background(?:-(?:color|image))?|border(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?(?:-color)?|border-image(?:-source)?|mask(?:-image)?|filter|outline(?:-color)?|text-decoration(?:-color)?|text-emphasis(?:-color)?|column-rule(?:-color)?|box-shadow|text-shadow|caret-color|accent-color|fill|stroke|stop-color|flood-color|lighting-color|scrollbar-color|-webkit-text-fill-color|-webkit-text-stroke(?:-color)?|-webkit-tap-highlight-color|--[\w-]+)$/i;
 
+// A colour attribute or style declaration in SVG markup: `fill="red"`, `stop-color:red`.
+const SVG_COLOUR_ATTRIBUTE = /(?<![\w-])(?:fill|stroke|stop-color|flood-color|lighting-color|color)\s*[=:]\s*["']?\s*([a-z]+)(?![\w-])/gi;
+
 /** Every match of a global regex in text, as offsets. */
 const offsets = (regex, text) => [...text.matchAll(regex)].map((m) => m.index);
 
@@ -85,6 +89,14 @@ function literalOffsets(css) {
     value = value.replace(/url\(\s*(['"]?)([\s\S]*?)\1\s*\)/gi, (whole, _quote, target, at) => {
       if (/^data:/i.test(target)) {
         for (const regex of [HEX, ENCODED_HEX]) for (const i of offsets(regex, whole)) found.push(valueAt + at + i);
+        // The decoded SVG: colour functions, and named colours in colour attributes or styles.
+        let svg = target;
+        try {
+          svg = decodeURIComponent(target);
+        } catch {} // malformed escapes: scan it as written
+        if (offsets(COLOUR_FUNCTION, svg).length > 0) found.push(valueAt + at);
+        for (const m of svg.matchAll(SVG_COLOUR_ATTRIBUTE))
+          if (NAMED.has(m[1].toLowerCase())) found.push(valueAt + at);
       }
       return whole.replace(/[^\n]/g, ' ');
     });
@@ -132,6 +144,7 @@ const fixtures = {
     'a {\n  background-image:\n    linear-gradient(red, blue);\n}',
     `a { background: url("data:image/svg+xml,%3Csvg fill='%23ff0000'/%3E"); }`,
     `a { background: url("data:image/svg+xml,<svg fill='#f00'/>"); }`,
+    'a { background: url("data:image/svg+xml,%3Csvg fill=%22red%22/%3E"); }',
     '/* white on #007bff */',
     'a { color: #fff; } /* literal: */',
   ],
