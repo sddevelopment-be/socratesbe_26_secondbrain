@@ -65,7 +65,7 @@
      them is declared once here. Never alias --dk-color-accent*: it lightens
      in dark mode, where white on it would fail. Site-local tokens that vary
      by scheme are redeclared in the dark block; the rest are declared once. */
-  --sb-bar-strong: #ffffff;
+  --sb-bar-text-strong: #ffffff;
   --sb-wordmark: #ff7200;
   --sb-bar-highlight: #4da3ff;
   /* Focus ring on the dark surfaces (bars, hero). Not --dk-color-focus-ring:
