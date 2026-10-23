@@ -63,8 +63,9 @@
 
   /* The bars and the hero are dark in both schemes, so everything drawn on
      them is declared once here. Never alias --dk-color-accent*: it lightens
-     in dark mode, where white on it would fail. Only --sb-bar and
-     --sb-bar-deep change with the scheme. */
+     in dark mode, where white on it would fail. Of the site-local tokens,
+     only --sb-bar, --sb-bar-deep, --sb-shadow and --sb-shadow-hover are
+     redeclared for the dark scheme. */
   --sb-bar-strong: #ffffff;
   --sb-bar-accent: #ff7200;
   --sb-bar-highlight: #4da3ff;
