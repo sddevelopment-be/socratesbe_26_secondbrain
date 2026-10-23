@@ -1,0 +1,49 @@
+schema_version: 1.0.0
+mission: documentation
+profile: minimal
+answers:
+  project_intent: >-
+    An open, community-owned second brain for the SoCraTes Belgium 2026
+    unconference (22-25 October 2026, La Roche-en-Ardenne). It collects session
+    notes, ideas, links and learnings from attendees, and publishes them as a
+    docsite that works equally well for humans (readable, navigable, on-brand)
+    and for automatons/agents (llms.txt, JSON agent-API, RSS, structured
+    frontmatter). It doubles as a live demonstration of docs-as-code for both
+    audiences.
+  languages_frameworks: >-
+    Markdown content in a repo-root docs/ tree following the DocKitty (Common
+    Docs) convention: README.md is the section index and carries frontmatter.
+    The site is Astro + Starlight via @spec-kitty/doc-toolkit, built with pnpm
+    on Node >= 22.22. Custom chrome lives in src/theme/ and only refines --dk-*
+    tokens, never --sl-*.
+  testing_requirements: >-
+    Every change must pass `pnpm validate` (frontmatter against the
+    convention), `pnpm links` (strict internal link check) and `pnpm build`.
+    No other test suite is required.
+  quality_gates: >-
+    Frontmatter validation, strict link check and a clean build before merge.
+    Pages that are not ready stay `doc_status: draft`. No personal data about
+    attendees without their consent; attribute contributions only as people
+    choose to be named.
+  review_policy: >-
+    Low ceremony, unconference style: anyone may propose content via pull
+    request; one other participant (human or agent-assisted human) reviews.
+    Content is kept in the spirit of the SoCraTes code of conduct.
+  performance_targets: >-
+    The static site builds in under a minute and every page is usable without
+    JavaScript; agent surfaces (llms.txt, api/index.json) stay small and
+    crawlable.
+  deployment_constraints: >-
+    Static output (dist/) deployable to GitHub Pages or any static host; must
+    build on macOS, Linux and Windows developer machines with no private
+    registry credentials.
+selected_paradigms: []
+selected_directives: []
+selected_tactics: []
+available_tools:
+- git
+- spec-kitty
+- pnpm
+- node
+agent_profile:
+agent_role:

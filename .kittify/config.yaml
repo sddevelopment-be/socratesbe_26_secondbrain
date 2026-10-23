@@ -1,0 +1,19 @@
+project:
+  uuid: 2bdb2a3f-5e2b-4610-9b30-1cb4a69a946b
+  slug: socratesbe-26-secondbrain
+  node_id: 26ae9a8b6053
+  build_id: 9c254feb-3f1a-5581-9994-99dac8737f4a
+mission_type_activations:
+- software-dev
+- documentation
+- research
+- plan
+vcs:
+  type: git
+agents:
+  available:
+  - claude
+  - codex
+  auto_commit: true
+  lint_on_edit: false
+charter: .kittify/charter/charter.yaml
