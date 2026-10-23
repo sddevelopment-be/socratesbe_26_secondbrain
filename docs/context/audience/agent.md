@@ -17,7 +17,7 @@ goals:
 responsibilities:
   - Starts from llms.txt or api/index.json and cites page URLs.
   - Follows the conventions in AGENTS.md and the project charter when writing.
-  - Never invents attendees, quotes or session content.
+  - Never invents attendees, quotes or session content, and never adds participant names.
 ---
 
 # The agent

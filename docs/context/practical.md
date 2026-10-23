@@ -35,5 +35,5 @@ sidebar:
 ## Code of conduct
 
 SoCraTes BE follows the [conference code of conduct](https://confcodeofconduct.com/).
-It applies to this site as well. Write about ideas, not about people, and only
-name participants who agreed to be named.
+It applies to this site as well. Write about ideas, not about people, and do
+not add participant names; only your own handle in a page's `authors` list.

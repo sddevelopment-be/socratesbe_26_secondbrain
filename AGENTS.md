@@ -62,8 +62,12 @@ authors:
   build rewrites them, and they still work on GitHub.
 - A published page must not link to a draft. Publish the target or keep both
   as drafts.
-- Never invent attendees, quotes or session content. Only name people who
-  appear by name in the notes you were given.
+- Never invent attendees, quotes or session content.
+- Never add participant names, even when they appear in the notes, photos or
+  schedule you were given: not as conveners, speakers, attendees or the
+  source of a quote. Write "the convener" or "a participant" instead. The only
+  name on a page is a contributor's own handle in `authors`, added by them.
+  Reviewers proofread for names; there is no automated check.
 - Keep new pages `doc_status: draft` unless the human asks otherwise.
 - Write in UK English (colour, behaviour, organise).
 - Before you finish, run `pnpm validate && pnpm lint:md && pnpm links && pnpm build`,
