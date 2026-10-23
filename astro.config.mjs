@@ -12,6 +12,11 @@ const BASE = `/${REPO}`;
 export default defineConfig({
   site: SITE,
   base: BASE,
+  // Pre-bundle Mermaid for the dev server: its CommonJS dependency (dayjs) is
+  // otherwise served raw and the client-side diagram render fails in `astro dev`.
+  vite: {
+    optimizeDeps: { include: ['@spec-kitty/doc-toolkit > mermaid'] },
+  },
   integrations: defineDocKittyIntegrations({
     title: 'SoCraTes BE 2026 — Second Brain',
     description:

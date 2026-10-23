@@ -1,0 +1,139 @@
+/*
+ * SoCraTes BE look for reveal.js decks. Layered after the toolkit's neutral
+ * --dk → --r map. Decks get none of the theme's object tokens or font links,
+ * so the type and radii from src/theme/index.ts are restated here.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --dk-font-sans: "Inter", "Roboto", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --dk-font-display: "Inter", "Roboto", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --dk-font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --dk-radius-md: 0.5rem;
+  --dk-radius-pill: 50px;
+  --r-heading-font-weight: 700;
+  --r-main-font-size: 1.85rem;
+}
+
+/* The ensō stripe across the top of every slide. Drawn as an overlay so it
+   takes no space from reveal's own slide scaling. */
+.reveal-viewport::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  height: 6px;
+  background: linear-gradient(90deg, #0077ff 0 50%, #b32004 50% 100%);
+  pointer-events: none;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+.reveal .slides section {
+  text-align: left;
+}
+
+.reveal strong {
+  color: var(--dk-color-text-strong);
+}
+
+/* Quotes and evidence: a blockquote whose last line is emphasised shows that
+   line as a small source credit. */
+.reveal blockquote {
+  width: auto;
+  margin: 0.5em 0;
+  padding: 0.4em 1em;
+  border-left: 6px solid var(--dk-color-accent);
+  background: var(--dk-color-surface-2);
+  border-radius: var(--dk-radius-md);
+  box-shadow: none;
+  font-style: normal;
+}
+
+.reveal blockquote p:last-child em {
+  display: block;
+  margin-top: 0.4em;
+  font-size: 0.6em;
+  color: var(--dk-color-text-muted);
+}
+
+.reveal code {
+  font-size: 0.85em;
+}
+
+/* Code blocks only: Mermaid measures labels inside its own pre.mermaid, so
+   shrinking that element would clip every node label. */
+.reveal pre:not(.mermaid) {
+  width: 100%;
+  border-radius: var(--dk-radius-md);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 0.5em;
+}
+
+/* The toolkit's deck sheet does not style tables. */
+.reveal table {
+  margin: 0.5em 0;
+  border-collapse: collapse;
+  font-size: 0.7em;
+}
+
+.reveal table th,
+.reveal table td {
+  padding: 0.35em 0.8em;
+  border-bottom: 1px solid var(--dk-color-border);
+  text-align: left;
+}
+
+.reveal table th {
+  color: var(--dk-color-text-strong);
+  border-bottom: 2px solid var(--dk-color-accent);
+}
+
+/* Big numbers on evidence slides: mark the paragraph with
+   <!-- .element: class="sb-stat" --> under it. */
+.reveal p.sb-stat,
+.reveal p.sb-stat strong {
+  font-size: 1.6em;
+  line-height: 1.1;
+  color: var(--dk-color-text-accent);
+}
+
+.reveal p.sb-stat strong {
+  font-size: inherit;
+}
+
+/* Section dividers carry class="sb-section" and the hero gradient. */
+.reveal .slides section.sb-section,
+.reveal .slides section.sb-section :is(h1, h2, h3, p, strong, li) {
+  color: #ffffff;
+}
+
+.reveal .slides section.sb-section h2 {
+  font-size: 2.6em;
+  line-height: 1.05;
+}
+
+.reveal .slides section.sb-section p {
+  font-weight: 300;
+}
+
+.reveal .slides section.sb-section code {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.reveal figure.dk-diagram {
+  margin: 0.4em 0;
+}
+
+/* Mermaid sizes label boxes from a font measurement that can come out a few
+   pixels short where Trebuchet MS is missing (most Linux machines). Let the
+   label overflow its box rather than clip. */
+figure.dk-diagram svg foreignObject {
+  overflow: visible;
+}
