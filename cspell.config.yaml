@@ -1,12 +1,39 @@
 # Spellcheck in UK English. Advisory in CI: findings are reported as
-# warnings and never block a merge. Add project vocabulary to words below
-# (or to a page's frontmatter-free text with a `cspell:ignore` comment).
+# warnings and never block a merge. Add project vocabulary to
+# .cspell/project-words.txt, or use a `<!-- cspell:ignore word -->` comment
+# in a page.
 version: "0.2"
 language: en-GB
 import:
   - "@cspell/dict-en-gb/cspell-ext.json"
 dictionaries:
   - project-words
+  # For Markdown, cspell also loads these technical dictionaries, which accept
+  # US spellings such as "color" and "analyze". Turn them off for prose.
+  - "!html"
+  - "!npm"
+  - "!aws"
+# The en-GB dictionary accepts Oxford -ize forms and a few US spellings.
+# Flag the common ones so the house style (colour, centre, organise) holds.
+flagWords:
+  - color
+  - colors
+  - colored
+  - center
+  - centers
+  - centered
+  - behavior
+  - behaviors
+  - analyze
+  - analyzed
+  - analyzing
+  - favorite
+  - favorites
+  - organize
+  - organized
+  - organizer
+  - organizers
+  - organizing
 dictionaryDefinitions:
   - name: project-words
     path: ./.cspell/project-words.txt
