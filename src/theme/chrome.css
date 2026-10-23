@@ -94,7 +94,10 @@ header.header {
 .sb-tools select:focus-visible,
 /* Starlight renders the narrow-viewport menu toggle in the sidebar nav, not
    the header, but it sits on the bar. */
-button.sl-menu-button:focus-visible {
+button.sl-menu-button:focus-visible,
+/* The footer and the hero are dark too, so they share the one ring. */
+.sb-footer a:focus-visible,
+.sl-markdown-content .sb-hero a:focus-visible {
   outline: 2px solid var(--sb-focus-on-dark);
   /* Keep the offset: it puts bar colour on both sides of the ring. Flush
      against the chip or CTA fill the ring falls below 3:1. */
@@ -258,11 +261,6 @@ button.sl-menu-button:focus-visible {
   text-decoration: underline;
 }
 
-.sb-footer a:focus-visible {
-  outline: 2px solid var(--sb-focus-on-dark);
-  outline-offset: 2px;
-}
-
 .sb-footer__base {
   display: flex;
   flex-wrap: wrap;
@@ -342,12 +340,6 @@ button.sl-menu-button:focus-visible {
 .sl-markdown-content .sb-hero a.sb-cta--ghost {
   background: transparent;
   border: 1px solid var(--sb-cta-ghost-border);
-}
-
-.sl-markdown-content .sb-hero a:focus-visible {
-  outline: 2px solid var(--sb-focus-on-dark);
-  /* Keep the offset; see the header focus rule. */
-  outline-offset: 2px;
 }
 
 /* Mermaid sizes label boxes from a font measurement that can come out a few
