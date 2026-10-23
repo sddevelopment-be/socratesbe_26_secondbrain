@@ -46,7 +46,7 @@ sidebar, the search results, `llms.txt` and the agent API. `tags` and
 
 There is no required structure. These headings work well:
 
-- **Convener and context:** who proposed it and why.
+- **Context:** why the session was proposed and what question it asked.
 - **Key points:** what was said, shown or coded.
 - **Open questions:** what is still unresolved.
 - **Links:** slides, repositories, books, katas.
