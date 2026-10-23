@@ -43,6 +43,7 @@ export const socratesTheme: DocKittyTheme = {
     fonts: ['https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'],
   },
   slots: {
+    'dk:head': here('./SiteHead.astro'),
     'dk:site-header': here('./SiteHeader.astro'),
     'dk:site-footer': here('./SiteFooter.astro'),
   },
