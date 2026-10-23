@@ -40,8 +40,14 @@ audiences, so how it is built matters as much as what it holds.
 Before merge, a change passes:
 
 - `pnpm validate`: frontmatter against the convention;
-- `pnpm links`: strict internal link check;
+- `pnpm lint:md`: Markdown syntax;
+- `pnpm links` and `pnpm check:dist`: internal links, before and after the build;
+- `pnpm check`: type check;
 - `pnpm build`: a clean static build.
+
+Spelling (UK English, `pnpm spell`) is checked too but is advisory: it warns
+and never blocks a merge. CI runs all of this on every pull request and
+deploys `main` to GitHub Pages.
 
 One other participant reviews each pull request.
 

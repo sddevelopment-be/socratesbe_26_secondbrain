@@ -57,4 +57,7 @@ authors:
 - Never invent attendees, quotes or session content. Only name people who
   appear by name in the notes you were given.
 - Keep new pages `doc_status: draft` unless the human asks otherwise.
-- Before you finish, run `pnpm validate && pnpm links && pnpm build`.
+- Write in UK English (colour, behaviour, organise).
+- Before you finish, run `pnpm validate && pnpm lint:md && pnpm links && pnpm build`,
+  then `pnpm spell` and fix real typos (add project terms to
+  `.cspell/project-words.txt`).

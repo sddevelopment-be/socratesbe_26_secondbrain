@@ -35,23 +35,30 @@ The [code of conduct](https://confcodeofconduct.com/) applies here too.
 
 ## Run it locally
 
-Requires Node ≥ 22.22 and pnpm (`corepack enable`). No registry token is
+Requires Node ≥ 22.23.4 (Node 24 recommended) and pnpm (`corepack enable`). No registry token is
 needed: the toolkit installs from its public GitHub repository.
 
 ```sh
 pnpm install
 pnpm dev        # http://localhost:4321/socratesbe_26_secondbrain/
 pnpm validate   # frontmatter against the convention
+pnpm lint:md    # Markdown syntax
 pnpm links      # strict internal link check
+pnpm check      # type check
 pnpm build      # static site + llms.txt + RSS + agent API in dist/
+pnpm check:dist # every link in the built site resolves
+pnpm spell      # UK English spelling (advisory)
 ```
+
+CI (`.github/workflows/docsite.yml`) runs the same checks on every pull
+request and deploys `main` to GitHub Pages.
 
 ## Layout
 
 | Path | What it is |
 |---|---|
 | [`docs/`](docs) | The content: one folder per section, `README.md` as each section's index. |
-| [`docs/_meta/`](docs/_meta) | Section registry, bibliography and tools catalogs. |
+| [`docs/_meta/`](docs/_meta) | Section registry, bibliography and tools catalogues. |
 | [`src/theme/`](src/theme) | The SoCraTes BE chrome: tokens, header, footer. |
 | [`src/pages/`](src/pages) | Route endpoints for RSS, `llms.txt` and the agent API. |
 | [`.kittify/charter/`](.kittify/charter) | The Spec Kitty project charter. |
