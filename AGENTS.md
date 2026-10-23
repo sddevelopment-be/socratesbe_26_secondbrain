@@ -50,6 +50,8 @@ authors:
 
 ### Rules
 
+- Never push to `main`. Work on a topic branch and open a pull request; `main`
+  is protected (see `docs/development/branch-protection.md`).
 - Link to other pages with relative `.md` links (`../sessions/foo.md`). The
   build rewrites them, and they still work on GitHub.
 - A published page must not link to a draft. Publish the target or keep both
