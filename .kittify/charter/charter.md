@@ -27,8 +27,11 @@ audiences, so how it is built matters as much as what it holds.
    copies.
 2. **Unconference spirit.** Low ceremony, anyone may contribute, and
    whatever happens is what gets written down. A draft is better than nothing.
-3. **People first.** Write about ideas, not people. Name participants only
-   with their consent. The SoCraTes code of conduct applies.
+3. **People first.** Write about ideas, not people. Participant names are
+   not added to the site: not as conveners, speakers, attendees or the
+   source of a quote. The one exception is a contributor's own handle in a
+   page's `authors` list, which they add themselves. The SoCraTes code of
+   conduct applies.
 4. **Agents draft, humans decide.** Agent-written content is welcome but is
    reviewed by a human before it is merged. Agents never invent attendees,
    quotes or session content.
@@ -49,7 +52,10 @@ Spelling (UK English, `pnpm spell`) is checked too but is advisory: it warns
 and never blocks a merge. CI runs all of this on every pull request and
 deploys `main` to GitHub Pages.
 
-One other participant reviews each pull request.
+One other participant reviews each pull request. The reviewer also reads for
+participant names. There is no automated name detection: the project relies
+on the good will of contributors and reviewers to proofread, catch common
+names and remove them.
 
 ## Out of scope
 

@@ -51,7 +51,9 @@ There is no required structure. These headings work well:
 - **Open questions:** what is still unresolved.
 - **Links:** slides, repositories, books, katas.
 
-Write about ideas, not people. Only name participants who agreed to be named.
+Write about ideas, not people. Do not add participant names, including the
+convener's: write "the convener" or "a participant" instead. Your own handle
+in `authors` is the only exception. Reviewers check for names before merging.
 
 ## 4. Link it
 

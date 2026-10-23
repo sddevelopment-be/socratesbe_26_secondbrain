@@ -15,7 +15,7 @@ goals:
   - Add their own notes quickly, without learning a new tool.
   - Follow up on a conversation after the unconference ends.
 responsibilities:
-  - Writes in their own words and only names people who agreed to it.
+  - Writes in their own words and adds no participant names, only their own handle in `authors`.
   - Marks unfinished pages as drafts.
 ---
 

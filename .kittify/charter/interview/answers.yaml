@@ -23,11 +23,14 @@ answers:
   quality_gates: >-
     Frontmatter validation, strict link check and a clean build before merge.
     Pages that are not ready stay `doc_status: draft`. No personal data about
-    attendees without their consent; attribute contributions only as people
-    choose to be named.
+    attendees. Participant names are not added to the site (as conveners,
+    speakers, attendees or the source of a quote); a contributor may list
+    only their own handle in `authors`.
   review_policy: >-
     Low ceremony, unconference style: anyone may propose content via pull
     request; one other participant (human or agent-assisted human) reviews.
+    Reviewers proofread for participant names; there is no automated name
+    detection.
     Content is kept in the spirit of the SoCraTes code of conduct.
   performance_targets: >-
     The static site builds in under a minute and every page is usable without
