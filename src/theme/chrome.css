@@ -23,7 +23,7 @@ header.header {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  color: #ffffff;
+  color: var(--sb-bar-strong);
   text-decoration: none;
   flex-shrink: 0;
 }
@@ -47,7 +47,7 @@ header.header {
 }
 
 .sb-brand__word strong {
-  color: #ff7200;
+  color: var(--sb-bar-accent);
   font-weight: 800;
 }
 
@@ -75,19 +75,19 @@ header.header {
 }
 
 .sb-nav a:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  background: var(--sb-bar-hover-bg);
+  color: var(--sb-bar-strong);
 }
 
 .sb-nav a[aria-current='page'] {
   background: #007bff;
-  color: #ffffff;
+  color: var(--sb-chip-text);
 }
 
 .sb-nav a.sb-nav__agents {
   font-family: var(--dk-font-mono);
   font-size: 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid var(--sb-bar-outline);
 }
 
 .sb-search {
@@ -112,7 +112,7 @@ header.header {
 }
 
 .sb-tools a:hover {
-  color: #ffffff;
+  color: var(--sb-bar-strong);
 }
 
 .sb-tools select option {
@@ -154,7 +154,7 @@ header.header {
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--sb-bar-rule);
 }
 
 .sb-footer__views ul {
@@ -169,13 +169,13 @@ header.header {
 
 .sb-footer__views-label {
   margin-inline-end: 0.5rem;
-  color: #ffffff;
+  color: var(--sb-bar-strong);
   font-weight: 600;
 }
 
 .sb-footer .sb-footer__views a {
   padding: 0.2rem 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid var(--sb-bar-outline);
   border-radius: var(--dk-radius-pill);
   font-family: var(--dk-font-mono);
   font-size: 0.8rem;
@@ -183,15 +183,16 @@ header.header {
 }
 
 .sb-footer .sb-footer__views a:hover {
-  border-color: #4da3ff;
-  color: #ffffff;
+  border-color: var(--sb-bar-highlight);
+  color: var(--sb-bar-strong);
 }
 
-/* The brand hover blue: white on #007bff is 4.0:1, below AA for this size. */
+/* The brand hover blue: white on the brand primary is 4.0:1, below AA for
+   this size, so current-page pills use --sb-chip-bg. */
 .sb-footer .sb-footer__views a[aria-current='page'] {
-  border-color: #0056b3;
-  background: #0056b3;
-  color: #ffffff;
+  border-color: var(--sb-chip-bg);
+  background: var(--sb-chip-bg);
+  color: var(--sb-chip-text);
 }
 
 .sb-footer__cols {
@@ -205,11 +206,11 @@ header.header {
   margin: 0 0 0.75rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--sb-bar-strong);
 }
 
 .sb-footer__title span {
-  color: #4da3ff;
+  color: var(--sb-bar-highlight);
 }
 
 .sb-footer ul {
@@ -228,12 +229,12 @@ header.header {
 }
 
 .sb-footer a:hover {
-  color: #ffffff;
+  color: var(--sb-bar-strong);
   text-decoration: underline;
 }
 
 .sb-footer a:focus-visible {
-  outline: 2px solid #4da3ff;
+  outline: 2px solid var(--sb-bar-focus);
   outline-offset: 2px;
 }
 
@@ -266,15 +267,15 @@ header.header {
   margin-block: 0 2rem;
   padding: 2.5rem 2rem;
   border-radius: var(--dk-radius-lg);
-  color: #ffffff;
+  color: var(--sb-hero-text);
   background:
-    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
-    linear-gradient(135deg, #9001a5 0%, #10171a 100%);
+    linear-gradient(var(--sb-hero-scrim), var(--sb-hero-scrim)),
+    linear-gradient(135deg, var(--sb-hero-from) 0%, var(--sb-hero-to) 100%);
   box-shadow: var(--sb-shadow);
 }
 
 .sl-markdown-content .sb-hero :is(h2, p, strong) {
-  color: #ffffff;
+  color: var(--sb-hero-text);
 }
 
 .sl-markdown-content .sb-hero h2 {
@@ -297,21 +298,21 @@ header.header {
   padding: 0.6rem 1.6rem;
   border-radius: var(--dk-radius-pill);
   background: #007bff;
-  color: #ffffff;
+  color: var(--sb-cta-text);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
 .sl-markdown-content .sb-hero a.sb-cta:hover {
-  background: #0056b3;
+  background: var(--sb-cta-bg-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 6px 16px var(--sb-cta-glow);
 }
 
 .sl-markdown-content .sb-hero a.sb-cta--ghost {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--sb-ghost-border);
 }
 
 /* Mermaid sizes label boxes from a font measurement that can come out a few
