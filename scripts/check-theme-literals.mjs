@@ -28,9 +28,10 @@
  *   node scripts/check-theme-literals.mjs [file ...]   (default: src/theme/chrome.css)
  */
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 const files = process.argv.slice(2);
-if (files.length === 0) files.push('src/theme/chrome.css');
+if (files.length === 0) files.push(fileURLToPath(new URL('../src/theme/chrome.css', import.meta.url)));
 
 const HEX = /#[0-9a-f]{3,8}\b/gi;
 const ENCODED_HEX = /%23[0-9a-f]{3,8}\b/gi;
@@ -171,7 +172,13 @@ if (selfTest.length > 0) {
 
 const found = [];
 for (const file of files) {
-  const css = readFileSync(file, 'utf8');
+  let css;
+  try {
+    css = readFileSync(file, 'utf8');
+  } catch (error) {
+    console.error(`✗ cannot read ${file}: ${error.code ?? error.message}`);
+    process.exit(1);
+  }
   const lines = css.split('\n');
   for (const n of offendingLines(css)) found.push(`${file}:${n}: ${lines[n - 1].trim()}`);
 }
