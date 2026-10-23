@@ -59,7 +59,6 @@
   --sb-enso-blue: #0077ff;
   --sb-enso-red: #b32004;
   --sb-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --sb-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
 
   /* The bars and the hero are dark in both schemes, so everything drawn on
      them is declared once here. Never alias --dk-color-accent*: it lightens
@@ -137,5 +136,4 @@
   --sb-bar: #161719;
   --sb-bar-deep: #111214;
   --sb-shadow: 0 4px 6px rgba(0, 0, 0, 0.35);
-  --sb-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.4);
 }
