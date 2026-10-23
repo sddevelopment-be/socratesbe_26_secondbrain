@@ -90,8 +90,9 @@ function literalOffsets(css) {
     });
     for (const regex of [HEX, ENCODED_HEX, COLOUR_FUNCTION]) for (const i of offsets(regex, value)) found.push(valueAt + i);
     if (COLOUR_PROPERTY.test(property)) {
-      // var(--sb-white) names a token, not a colour.
-      const bare = value.replace(/var\([^)]*\)/gi, (v) => v.replace(/[^\n]/g, ' '));
+      // var(--sb-white) names a token, not a colour; blank only the name, so a
+      // fallback (`var(--sb-bar, white)`) is still scanned.
+      const bare = value.replace(/var\(\s*--[\w-]+/gi, (v) => v.replace(/[^\n]/g, ' '));
       for (const word of bare.matchAll(/(?<![\w-])[a-z]+(?![\w-])/gi))
         if (NAMED.has(word[0].toLowerCase())) found.push(valueAt + word.index);
     }
@@ -124,7 +125,7 @@ const fixtures = {
     'a { color: oklch(1 0 0); }',
     'a { color: color(display-p3 1 1 1); }',
     'a { color: color-mix(in srgb, var(--sb-bar) 50%, var(--sb-bar-text)); }',
-    'a { color: white; }',
+    'a { color: var(--sb-bar, white); }',
     'a { border: 1px solid Black; }',
     'a { outline-color: rebeccapurple; }',
     'a { box-shadow: 0 0 0 2px navy; }',
