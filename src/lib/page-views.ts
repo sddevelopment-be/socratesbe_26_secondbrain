@@ -30,13 +30,12 @@ export const RESERVED_PREFIXES = ['api', 'okf'] as const;
 /** The toolkit's page paths, refusing any page whose slug is under a reserved prefix. */
 export const getStaticPaths = (async (options) => {
   const paths = await pageRoute.getStaticPaths(options);
-  const entries = await getCollection('docs');
   for (const { params, props } of paths) {
     const slug = String(params.slug);
     const prefix = RESERVED_PREFIXES.find((p) => slug === p || slug.startsWith(`${p}/`));
     if (!prefix) continue;
     const id = (props as { id?: string }).id;
-    const file = entries.find((e) => e.id === id)?.filePath ?? slug;
+    const file = (await getCollection('docs')).find((e) => e.id === id)?.filePath ?? slug;
     throw new Error(
       `[page-views] ${file}: the slug "${slug}" is under the reserved prefix "${prefix}/", ` +
         `which the toolkit writes to. Move or rename the page (see docs/adr/0002-per-page-machine-views.md).`,
