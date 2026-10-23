@@ -15,10 +15,16 @@
   --r-main-font-size: 1.85rem;
 }
 
-/* The ensō stripe across the top of every slide. */
-.reveal-viewport {
-  border-top: 6px solid transparent;
-  border-image: linear-gradient(90deg, #0077ff 0 50%, #b32004 50% 100%) 1;
+/* The ensō stripe across the top of every slide. Drawn as an overlay so it
+   takes no space from reveal's own slide scaling. */
+.reveal-viewport::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  height: 6px;
+  background: linear-gradient(90deg, #0077ff 0 50%, #b32004 50% 100%);
+  pointer-events: none;
 }
 
 .reveal h1,
@@ -88,11 +94,17 @@
   border-bottom: 2px solid var(--dk-color-accent);
 }
 
-/* Big numbers on evidence slides: a paragraph that is only bold text. */
-.reveal p > strong:only-child {
+/* Big numbers on evidence slides: mark the paragraph with
+   <!-- .element: class="sb-stat" --> under it. */
+.reveal p.sb-stat,
+.reveal p.sb-stat strong {
   font-size: 1.6em;
   line-height: 1.1;
   color: var(--dk-color-text-accent);
+}
+
+.reveal p.sb-stat strong {
+  font-size: inherit;
 }
 
 /* Section dividers carry class="sb-section" and the hero gradient. */
