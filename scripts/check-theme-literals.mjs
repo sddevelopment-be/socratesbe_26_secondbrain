@@ -82,7 +82,7 @@ function literalOffsets(css) {
     let value = chunk[0].slice(colon + 1);
     // Inside url(): a data URI can carry hex, encoded or not; any other URL's
     // `#` starts a fragment (`url(#gradient)`, `url(icons.svg#face)`).
-    value = value.replace(/url\(\s*(['"]?)([\s\S]*?)\1\s*\)/gi, (whole, quote, target, at) => {
+    value = value.replace(/url\(\s*(['"]?)([\s\S]*?)\1\s*\)/gi, (whole, _quote, target, at) => {
       if (/^data:/i.test(target)) {
         for (const regex of [HEX, ENCODED_HEX]) for (const i of offsets(regex, whole)) found.push(valueAt + at + i);
       }
