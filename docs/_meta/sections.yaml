@@ -34,6 +34,12 @@ sections:
     type: Presentation
     purpose: Slide decks presented at, or about, SoCraTes BE 2026.
 
+  - id: development
+    label: Development
+    order: 47
+    type: Operations
+    purpose: How this repository is run, so a crowd of people and agents can work on it safely.
+
   - id: adr
     label: Decisions
     order: 50
