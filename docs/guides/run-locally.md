@@ -29,9 +29,21 @@ Run these before you open a pull request:
 
 ```sh
 pnpm validate     # frontmatter against the convention
+pnpm lint:md      # Markdown syntax
 pnpm links        # every internal link resolves
 pnpm build        # the full static site, plus llms.txt, RSS and the agent API
+pnpm check:dist   # every link in the built site resolves
+pnpm spell        # UK English spelling (advisory)
 ```
+
+The same checks run in CI on every pull request. Spelling is advisory: CI
+shows unknown words as warnings but never blocks a merge. Add names and
+project terms to `.cspell/project-words.txt`.
+
+## Deployment
+
+Every push to `main` builds the site and publishes it to GitHub Pages,
+without draft pages.
 
 No registry token is needed: the DocKitty toolkit is installed straight from
 its public GitHub repository.

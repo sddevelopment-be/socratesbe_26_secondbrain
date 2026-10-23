@@ -42,9 +42,14 @@ needed: the toolkit installs from its public GitHub repository.
 pnpm install
 pnpm dev        # http://localhost:4321/socratesbe_26_secondbrain/
 pnpm validate   # frontmatter against the convention
+pnpm lint:md    # Markdown syntax
 pnpm links      # strict internal link check
 pnpm build      # static site + llms.txt + RSS + agent API in dist/
+pnpm spell      # UK English spelling (advisory)
 ```
+
+CI (`.github/workflows/docsite.yml`) runs the same checks on every pull
+request and deploys `main` to GitHub Pages.
 
 ## Layout
 

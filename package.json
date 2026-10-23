@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "SoCraTes BE 2026 second brain — a docsite for humans and agents, built with DocKitty.",
+  "description": "SoCraTes BE 2026 second brain \u2014 a docsite for humans and agents, built with DocKitty.",
   "packageManager": "pnpm@12.3.4",
   "engines": {
     "node": ">=22.22.0"
@@ -15,7 +15,10 @@
     "check": "astro check",
     "validate": "dockitty-validate-frontmatter docs",
     "links": "dockitty-check-links docs --strict",
-    "new": "dockitty-new-doc"
+    "new": "dockitty-new-doc",
+    "lint:md": "markdownlint-cli2",
+    "spell": "cspell --no-progress",
+    "check:dist": "dockitty-assert-no-broken-links dist --base /socratesbe_26_secondbrain --site https://sddevelopment-be.github.io"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.3",
@@ -26,6 +29,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@cspell/dict-en-gb": "^5.0.38",
+    "cspell": "^10.4.0",
+    "markdownlint-cli2": "^0.24.0",
     "typescript": "^5.9.3"
   }
 }

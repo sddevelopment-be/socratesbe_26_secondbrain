@@ -30,7 +30,7 @@ sidebar:
   digital mirror of the schedule board.
 - **Meetup:** [meetup.com/socratesbe](https://www.meetup.com/socratesbe/)
 - **GitHub:** [github.com/socratesbe](https://github.com/socratesbe)
-- **Contact:** info@socratesbe.org
+- **Contact:** <info@socratesbe.org>
 
 ## Code of conduct
 

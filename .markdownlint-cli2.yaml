@@ -1,0 +1,20 @@
+# Markdown syntax checks for the docs tree. Style rules that fight the
+# DocKitty convention or prose-first writing are switched off.
+config:
+  default: true
+  MD013: false          # line length: prose wraps freely
+  MD033:                # inline HTML: allow the home-page hero
+    allowed_elements: [div, h2, p, a, br, strong]
+  MD041: false          # first line is frontmatter, not a heading
+  MD025:
+    front_matter_title: "" # the frontmatter title and the page H1 are the same heading
+  MD024:
+    siblings_only: true # repeated headings in different sections are fine
+  MD036: false          # slides use bold stats and italic source lines on purpose
+  MD060: false          # table column alignment: hand-aligned tables are not required
+globs:
+  - "docs/**/*.md"
+  - "README.md"
+ignores:
+  - "node_modules/**"
+  - "dist/**"

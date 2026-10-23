@@ -34,7 +34,7 @@ Point your agent at one of these instead of the HTML pages:
 
 A prompt that works well:
 
-> Read https://sddevelopment-be.github.io/socratesbe_26_secondbrain/llms.txt
+> Read `https://sddevelopment-be.github.io/socratesbe_26_secondbrain/llms.txt`
 > and summarise the sessions about testing. Link every claim to its page.
 
 Draft pages are left out of all four surfaces, so an agent only sees notes
