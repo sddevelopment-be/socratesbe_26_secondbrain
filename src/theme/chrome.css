@@ -23,7 +23,7 @@ header.header {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  color: var(--sb-bar-strong);
+  color: var(--sb-bar-text-strong);
   text-decoration: none;
   flex-shrink: 0;
 }
@@ -79,7 +79,7 @@ header.header {
 
 .sb-nav a:hover {
   background: var(--sb-bar-hover-bg);
-  color: var(--sb-bar-strong);
+  color: var(--sb-bar-text-strong);
 }
 
 .sb-nav a[aria-current='page'] {
@@ -122,7 +122,7 @@ header.header {
 }
 
 .sb-tools a:hover {
-  color: var(--sb-bar-strong);
+  color: var(--sb-bar-text-strong);
 }
 
 .sb-tools select option {
@@ -179,7 +179,7 @@ header.header {
 
 .sb-footer__views-label {
   margin-inline-end: 0.5rem;
-  color: var(--sb-bar-strong);
+  color: var(--sb-bar-text-strong);
   font-weight: 600;
 }
 
@@ -194,7 +194,7 @@ header.header {
 
 .sb-footer .sb-footer__views a:hover {
   border-color: var(--sb-bar-highlight);
-  color: var(--sb-bar-strong);
+  color: var(--sb-bar-text-strong);
 }
 
 /* White on the brand primary is 3.98:1, so current-page pills use --sb-chip-bg. */
@@ -215,7 +215,7 @@ header.header {
   margin: 0 0 0.75rem;
   font-size: 1rem;
   font-weight: 600;
-  color: var(--sb-bar-strong);
+  color: var(--sb-bar-text-strong);
 }
 
 .sb-footer__title span {
@@ -238,7 +238,7 @@ header.header {
 }
 
 .sb-footer a:hover {
-  color: var(--sb-bar-strong);
+  color: var(--sb-bar-text-strong);
   text-decoration: underline;
 }
 
