@@ -262,3 +262,10 @@ header.header {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.6);
 }
+
+/* Mermaid sizes label boxes from a font measurement that can come out a few
+   pixels short where Trebuchet MS is missing (most Linux machines). Let the
+   label overflow its box rather than clip. */
+figure.dk-diagram svg foreignObject {
+  overflow: visible;
+}

@@ -28,6 +28,12 @@ sections:
     type: Guide
     purpose: How humans and agents add to this second brain.
 
+  - id: presentations
+    label: Presentations
+    order: 45
+    type: Presentation
+    purpose: Slide decks presented at, or about, SoCraTes BE 2026.
+
   - id: adr
     label: Decisions
     order: 50

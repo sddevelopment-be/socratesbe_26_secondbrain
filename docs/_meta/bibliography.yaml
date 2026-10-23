@@ -24,3 +24,78 @@
   url: https://llmstxt.org
   issued: "2024"
   note: the agent-facing discovery index this site emits
+- id: dora-2023
+  type: report
+  title: Accelerate State of DevOps Report 2023
+  authors: [DORA, Google Cloud]
+  url: https://dora.dev/research/2023/dora-report/
+  issued: "2023"
+  note: chapter "Documentation is foundational"
+- id: stackoverflow-2024
+  type: webpage
+  title: Stack Overflow Developer Survey 2024 — Professional Developers
+  url: https://survey.stackoverflow.co/2024/professional-developers
+  issued: "2024"
+  note: 61% spend more than 30 minutes a day searching for answers
+- id: nygard-2011
+  type: webpage
+  title: Documenting Architecture Decisions
+  authors: [Michael Nygard]
+  container: Cognitect
+  url: https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions
+  issued: "2011"
+- id: liu-2023
+  type: article
+  title: "Lost in the Middle: How Language Models Use Long Contexts"
+  authors: [Nelson F. Liu, Kevin Lin, John Hewitt, Ashwin Paranjape, Michele Bevilacqua, Fabio Petroni, Percy Liang]
+  container: Transactions of the ACL
+  url: https://arxiv.org/abs/2307.03172
+  issued: "2023"
+- id: anthropic-context-2025
+  type: webpage
+  title: Effective context engineering for AI agents
+  authors: [Anthropic]
+  url: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+  issued: "2025"
+- id: vercel-agents-md-2026
+  type: webpage
+  title: AGENTS.md outperforms skills in our agent evals
+  authors: [Vercel]
+  url: https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals
+  issued: "2026"
+  note: vendor evaluation on Next.js 16 tasks
+- id: gloaguen-2026
+  type: article
+  title: Evaluating AGENTS.md
+  authors: [Gloaguen, Mündler, Müller, Raychev, Vechev]
+  container: ICLR 2026
+  url: https://arxiv.org/abs/2602.11988
+  issued: "2026"
+- id: evans-2003
+  type: book
+  title: "Domain-Driven Design: Tackling Complexity in the Heart of Software"
+  authors: [Eric Evans]
+  container: Addison-Wesley
+  url: https://www.domainlanguage.com/ddd/
+  issued: "2003"
+- id: martraire-2019
+  type: book
+  title: "Living Documentation: Continuous Knowledge Sharing by Design"
+  authors: [Cyrille Martraire]
+  container: Addison-Wesley
+  url: https://www.informit.com/store/living-documentation-continuous-knowledge-sharing-by-9780134689326
+  issued: "2019"
+- id: mayer-2009
+  type: book
+  title: Multimedia Learning (2nd ed.)
+  authors: [Richard E. Mayer]
+  container: Cambridge University Press
+  url: https://www.cambridge.org/core/books/multimedia-learning/
+  issued: "2009"
+  note: the multimedia principle — words and pictures beat words alone
+- id: korzybski-1933
+  type: book
+  title: Science and Sanity
+  authors: [Alfred Korzybski]
+  url: https://en.wikipedia.org/wiki/Science_and_Sanity
+  issued: "1933"
