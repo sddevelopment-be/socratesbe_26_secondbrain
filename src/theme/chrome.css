@@ -80,8 +80,15 @@ header.header {
 }
 
 .sb-nav a[aria-current='page'] {
-  background: #007bff;
+  background: var(--sb-chip-bg);
   color: var(--sb-chip-text);
+}
+
+.sb-brand:focus-visible,
+.sb-nav a:focus-visible,
+.sb-tools a:focus-visible {
+  outline: 2px solid var(--sb-bar-focus);
+  outline-offset: 2px;
 }
 
 .sb-nav a.sb-nav__agents {
@@ -297,7 +304,7 @@ header.header {
   margin-inline-end: 0.5rem;
   padding: 0.6rem 1.6rem;
   border-radius: var(--dk-radius-pill);
-  background: #007bff;
+  background: var(--sb-cta-bg);
   color: var(--sb-cta-text);
   font-weight: 600;
   text-decoration: none;
@@ -313,6 +320,11 @@ header.header {
 .sl-markdown-content .sb-hero a.sb-cta--ghost {
   background: transparent;
   border: 1px solid var(--sb-ghost-border);
+}
+
+.sl-markdown-content .sb-hero a:focus-visible {
+  outline: 2px solid var(--sb-bar-focus);
+  outline-offset: 2px;
 }
 
 /* Mermaid sizes label boxes from a font measurement that can come out a few
