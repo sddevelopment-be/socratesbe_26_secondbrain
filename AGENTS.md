@@ -31,6 +31,9 @@ Belgium 2026 unconference for humans and agents. Read
   unconference), `sessions/` (one page per session), `ideas/`, `guides/`
   (contributing), `adr/` (decisions).
 - The theme is in `src/theme/`. Set `--dk-*` tokens only, never `--sl-*`.
+- Chrome the toolkit has no token for (bars, hero, call-to-action buttons)
+  uses theme-private `--sb-*` tokens declared in `src/theme/socrates.css`,
+  never colour literals in `chrome.css`; `pnpm check` enforces this.
 
 ### Every page needs frontmatter
 
