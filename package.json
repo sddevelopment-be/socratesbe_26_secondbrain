@@ -18,7 +18,7 @@
     "new": "dockitty-new-doc",
     "lint:md": "markdownlint-cli2",
     "spell": "cspell --no-progress",
-    "check:dist": "dockitty-assert-no-broken-links dist --base /socratesbe_26_secondbrain --site https://sddevelopment-be.github.io"
+    "check:dist": "dockitty-assert-no-broken-links dist --base /socratesbe_26_secondbrain --site https://sddevelopment-be.github.io && node scripts/check-md-views.mjs dist https://sddevelopment-be.github.io/socratesbe_26_secondbrain"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.3",
