@@ -31,6 +31,7 @@ Run these before you open a pull request:
 pnpm validate     # frontmatter against the convention
 pnpm lint:md      # Markdown syntax
 pnpm links        # every internal link resolves
+pnpm check        # type check
 pnpm build        # the full static site, plus llms.txt, RSS and the agent API
 pnpm check:dist   # every link in the built site resolves
 pnpm spell        # UK English spelling (advisory)

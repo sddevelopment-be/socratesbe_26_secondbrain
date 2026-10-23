@@ -42,6 +42,7 @@ Before merge, a change passes:
 - `pnpm validate`: frontmatter against the convention;
 - `pnpm lint:md`: Markdown syntax;
 - `pnpm links` and `pnpm check:dist`: internal links, before and after the build;
+- `pnpm check`: type check;
 - `pnpm build`: a clean static build.
 
 Spelling (UK English, `pnpm spell`) is checked too but is advisory: it warns
