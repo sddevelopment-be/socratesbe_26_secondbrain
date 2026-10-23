@@ -25,7 +25,7 @@ agent can read the slides and speaker notes as text.
   section. **Space** walks through everything in order.
 - **Esc** shows an overview of all slides, **S** opens the speaker notes,
   **F** goes full screen.
-- **Print / PDF export** under each deck opens a print-ready view.
+- The **Print / PDF export** link listed for each deck below opens a print-ready view.
 
 Decks are split into sections, so a presenter short on time can skip a
 section with a single press of →.

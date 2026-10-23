@@ -16,11 +16,13 @@
 - id: common-docs
   type: webpage
   title: Common Docs
+  authors: [Christopher Skene]
   url: https://github.com/velvet-tiger/common-docs
   note: the documentation convention this tree follows
 - id: llms-txt-2024
   type: webpage
   title: The /llms.txt file
+  authors: [Jeremy Howard]
   url: https://llmstxt.org
   issued: "2024"
   note: the agent-facing discovery index this site emits
@@ -30,7 +32,12 @@
   authors: [DORA, Google Cloud]
   url: https://dora.dev/research/2023/dora-report/
   issued: "2023"
-  note: chapter "Documentation is foundational"
+  note: chapter "Documentation is foundational"; the deck quotes DORA's 2023 summary
+- id: diataxis
+  type: webpage
+  title: "Diátaxis: a systematic approach to technical documentation"
+  authors: [Daniele Procida]
+  url: https://diataxis.fr
 - id: stackoverflow-2024
   type: webpage
   title: Stack Overflow Developer Survey 2024 — Professional Developers
@@ -68,7 +75,7 @@
   type: article
   title: Evaluating AGENTS.md
   authors: [Gloaguen, Mündler, Müller, Raychev, Vechev]
-  container: ICLR 2026
+  container: arXiv 2602.11988
   url: https://arxiv.org/abs/2602.11988
   issued: "2026"
 - id: evans-2003

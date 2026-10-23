@@ -25,6 +25,8 @@ external_references:
   - type: biblio
     id: common-docs
   - type: biblio
+    id: diataxis
+  - type: biblio
     id: mayer-2009
   - type: biblio
     id: liu-2023
@@ -46,7 +48,11 @@ sidebar:
   hidden: true
 ---
 
+<!-- markdownlint-disable MD036 -- slides use bold stats and italic source lines -->
+
 One Markdown tree. Two kinds of reader. SoCraTes BE 2026.
+
+Note: Introduce yourself, then say the one-line pitch: one Markdown tree, read by people in a browser and by agents as data. This deck is itself a page on the site, so an agent can read these notes too.
 
 ## You have two new colleagues
 
@@ -88,15 +94,17 @@ Note: Optional section, about five minutes. Skip with the right arrow if the roo
 
 Trunk-based development, CI, testing: they all pay off more when the team can find out how things work.
 
-Note: DORA has measured internal documentation quality since 2021. The 2023 report has a chapter titled "Documentation is foundational". The finding is not that docs replace practices; it is that docs multiply the payoff of the practices you already have. DORA's 2023 summary also reports about 25% higher team performance with quality documentation; quote that number with the source if asked.
+Note: DORA has measured internal documentation quality since 2021. The 2023 report has a chapter titled "Documentation is foundational"; the quote is from DORA's own 2023 summary. The finding is not that docs replace practices; it is that docs multiply the payoff of the practices you already have. DORA's 2023 summary infographic also reports about 25% higher team performance with quality documentation; cite it as the infographic if asked.
 
 ### Half an hour a day, every day
 
 **61%**
 
+<!-- .element: class="sb-stat" -->
+
 of professional developers spend more than 30 minutes a day searching for answers or solutions.
 
-*Stack Overflow Developer Survey 2024, n ≈ 65,000*
+*Stack Overflow Developer Survey 2024, professional developers*
 
 Note: Thirty minutes a day is more than two working weeks a year, per person. Much of it is searching for things someone already knew. Documentation is how that knowledge stops living in one head.
 
@@ -104,11 +112,11 @@ Note: Thirty minutes a day is more than two working weeks a year, per person. Mu
 
 > A newcomer who finds a decision without its rationale has two choices: blindly accept it, or blindly change it.
 >
-> *Michael Nygard, Documenting Architecture Decisions, 2011*
+> *Michael Nygard, Documenting Architecture Decisions, 2011 (paraphrased)*
 
 Both are expensive. One freezes the codebase; the other breaks it.
 
-Note: This is the paper that introduced architecture decision records. Paraphrased on the slide, but the two options are his exact words. LLMs are the ultimate newcomer: they will happily do either, confidently. Recording the why is what lets both humans and agents change things safely.
+Note: This is the post that introduced architecture decision records. The slide paraphrases it; his own words for the two options are "Blindly accept the decision" and "Blindly change it". LLMs are the ultimate newcomer: they will happily do either, confidently. Recording the why is what lets both humans and agents change things safely.
 
 ### Docs rot because of their shape
 
@@ -165,7 +173,7 @@ Note: Walk the arrows left to right. The important part is the fan-out on the ri
 ```yaml
 title: Add a session note
 description: Create a page for a session in five minutes.
-doc_status: active      # drafts never reach llms.txt or the API
+doc_status: active      # drafts are never listed in llms.txt or the index
 type: Guide             # derived from the section
 kind: How-To            # Diátaxis-style quadrant
 related: [sessions]     # a broken link fails the build
@@ -174,7 +182,7 @@ related: [sessions]     # a broken link fails the build
 | Field | Humans see | Agents get |
 |---|---|---|
 | `title`, `description` | sidebar, search | `llms.txt`, index |
-| `doc_status` | draft banner | excluded until ready |
+| `doc_status` | draft banner | not listed until ready |
 | `related` | related-pages block | `_links.related` |
 
 Note: This is the trick. The metadata that makes docs browsable for people is most of what an agent needs. So every field has to earn its keep twice, and the build validates it.
@@ -187,7 +195,7 @@ Note: This is the trick. The metadata that makes docs browsable for people is mo
 - **Accessibility lane** in CI, light and dark.
 - **Dogfooded**: DocKitty documents itself in its own convention, with 64 ADRs.
 
-Note: Docs-as-code means the same review and CI as code. In this very repository a pull request runs pnpm validate, pnpm links and pnpm build. The charter lets a team adapt the convention without forking the tool.
+Note: Docs-as-code means the same review and CI as code. In this very repository every pull request runs frontmatter validation, Markdown lint, link checks and a full build in CI, and main is protected. The charter lets a team adapt the convention without forking the tool.
 
 ## Diagrams as code
 
@@ -215,7 +223,7 @@ flowchart LR
   N[Session notes] --> PR[Pull request] --> S[Second brain]
 ```
 
-Note: The source is a Mermaid fence with two optional comment lines. DocKitty turns title and description into the figure caption and the accessible name of the SVG. It is themed from the same tokens as the site, so it follows light and dark mode. People learn better from words and pictures than from words alone; that is Mayer's multimedia principle.
+Note: The source is a Mermaid fence with two optional comment lines. DocKitty turns the description into the figure caption, and the title and description into the SVG's accessible name and description. It is themed from the same tokens as the site, so it follows light and dark mode. People learn better from words and pictures than from words alone; that is Mayer's multimedia principle.
 
 ### One diagram, three readers
 
@@ -242,7 +250,7 @@ Note: Core section, about eight minutes. This is the heart of the talk.
 | `api/pages/<slug>.json` | One page: metadata, `_links`, raw Markdown |
 | `api/content-graph.json` | Pages, personas, citations and their relations |
 
-*"An agent can follow links instead of building URLs. There is no embedding server to run and no chunking to tune."*
+*"There is no embedding server to run and no chunking to tune, and it works for any crawler."*, DocKitty, agent-first rationale
 
 Note: DocKitty deliberately does not ship a RAG index. It gives agents a small, structured map and lets them fetch exactly the pages they need, following links the way a browser user would. llms.txt is Jeremy Howard's 2024 proposal for an LLM-friendly site index.
 
@@ -252,7 +260,7 @@ Note: DocKitty deliberately does not ship a RAG index. It gives agents a small, 
 >
 > *Liu et al., Lost in the Middle, 2023*
 
-<!-- two separate quotes -->
+And from the people building the models:
 
 > Good context engineering means "finding the smallest possible set of high-signal tokens".
 >
@@ -265,11 +273,11 @@ Note: Dumping a whole wiki into a prompt is not documentation for agents. Models
 | Study | Finding |
 |---|---|
 | Vercel, 2026 | A compact docs index in `AGENTS.md`: **100%** on their evals vs **53%** without |
-| ETH Zurich, 2026 | Generic context files do **not** generally improve task success, and cost 20% more |
+| ETH Zurich, 2026 | Context files do **not** generally improve task success, and cost over 20% more |
 
 **Specific, current, curated docs help. Generic overviews do not.**
 
-Note: These two results look contradictory and are not. Vercel's file was a curated, specific docs index for one framework; ETH measured generic repository overviews across many projects. One vendor, one paper: treat them as signals. The common lesson is the DocKitty argument: write the specific thing once, keep it current, and let both audiences read it.
+Note: These two results look contradictory and are not. Vercel's file was a curated, specific docs index for one framework; ETH found that repository overviews in general, including LLM-generated ones, did not help, while files describing non-standard practices did. One vendor, one paper: treat them as signals. The common lesson is the DocKitty argument: write the specific thing once, keep it current, and let both audiences read it.
 
 ### A shared language
 
@@ -278,7 +286,7 @@ Note: These two results look contradictory and are not. Vercel's file was a cura
 - **ADRs**: the why, immutable, superseded but never edited.
 - **Personas**: who a page is for, human or agent, as structured data.
 
-*"A change in the language is a change to the model."*, Eric Evans
+*"Recognize that a change in the language is a change to the model."*, Eric Evans
 
 Note: Ubiquitous language from domain-driven design, living documentation in Martraire's sense. When the glossary, the specs and the decisions are first-class pages, a human and an agent use the same words for the same things. That is what lets them check each other's work.
 
@@ -308,7 +316,7 @@ Note: This is the loop this very site runs on. The participant and the agent nev
 
 This deck is a page in the second brain. So is everything else.
 
-Note: Optional section. If the network is down, skip the demo and go straight to "Your turn".
+Note: Optional section. If the network is down, press → to skip the demo; the call to action is in the closing section.
 
 ### Live: ask the site what it knows
 
@@ -325,14 +333,6 @@ curl -s $SITE/api/pages/presentations/doc-kitty.json | jq '.title'
 
 Note: Fallback if the site is not deployed yet: run pnpm dev and use `SITE=http://localhost:4321/socratesbe_26_secondbrain`. Show that this deck itself is in llms.txt and the agent API, so an agent can read these slides and these speaker notes as text. If there is no network at all, show the llms.txt file from a local pnpm build in dist/.
 
-### Your turn
-
-- **Add your session notes**: `docs/sessions/<slug>.md`, one pull request.
-- **Point your agent at it**: `llms.txt`, then `AGENTS.md` to contribute.
-- **Try DocKitty on your own docs**: `github.com/spec-kitty/doc-kitty`
-
-Note: Close the loop with the room: this second brain only works if people write in it. Ask for one session note per person before Sunday.
-
 ## The map is not the territory
 
 <!-- .slide: class="sb-section" data-background-gradient="linear-gradient(135deg, #9001a5 0%, #10171a 100%)" -->
@@ -343,7 +343,15 @@ Note: Close the loop with the room: this second brain only works if people write
 
 Docs are the map. Keep them correct, and both kinds of reader can find their way.
 
-Note: End here. The point is not that documentation is the system; it never is. The point is that a correct map, with a predictable structure, is useful to everyone who has to navigate, whether they think in neurons or in tokens.
+Note: The last word, then ↓ for the call to action and the sources. The point is not that documentation is the system; it never is. The point is that a correct map, with a predictable structure, is useful to everyone who has to navigate, whether they think in neurons or in tokens.
+
+### Your turn
+
+- **Add your session notes**: `docs/sessions/<slug>.md`, one pull request.
+- **Point your agent at it**: `llms.txt`, then `AGENTS.md` to contribute.
+- **Try DocKitty on your own docs**: `github.com/spec-kitty/doc-kitty`
+
+Note: Close the loop with the room: this second brain only works if people write in it. Ask for one session note per person before Sunday.
 
 ### Sources
 
