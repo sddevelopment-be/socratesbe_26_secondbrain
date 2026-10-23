@@ -32,6 +32,7 @@
     "@astrojs/check": "^0.9.4",
     "@cspell/dict-en-gb": "^5.0.38",
     "cspell": "^10.4.0",
+    "gray-matter": "^4.0.3",
     "markdownlint-cli2": "^0.24.0",
     "typescript": "^5.9.3"
   }
