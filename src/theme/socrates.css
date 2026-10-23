@@ -67,9 +67,12 @@
      only --sb-bar, --sb-bar-deep, --sb-shadow and --sb-shadow-hover are
      redeclared for the dark scheme. */
   --sb-bar-strong: #ffffff;
-  --sb-bar-accent: #ff7200;
+  --sb-wordmark: #ff7200;
   --sb-bar-highlight: #4da3ff;
-  --sb-bar-focus: #4da3ff;
+  /* Focus ring on the dark surfaces (bars, hero). Not --dk-color-focus-ring:
+     that falls back to --dk-color-text-accent, which follows the page scheme
+     and in light mode (#0062cc) is too dark to show on these surfaces. */
+  --sb-focus-on-dark: #4da3ff;
   --sb-bar-hover-bg: rgba(255, 255, 255, 0.08);
   --sb-bar-rule: rgba(255, 255, 255, 0.1);
   --sb-bar-outline: rgba(255, 255, 255, 0.25);
@@ -80,12 +83,14 @@
   --sb-cta-bg: #0069d9;
   --sb-cta-bg-hover: #0056b3;
   --sb-cta-text: #ffffff;
+  /* The hover glow keeps the brand primary's #007bff tint on purpose, so
+     moving it to a token changes nothing on screen. */
   --sb-cta-glow: rgba(0, 123, 255, 0.3);
   --sb-hero-from: #9001a5;
   --sb-hero-to: #10171a;
   --sb-hero-scrim: rgba(0, 0, 0, 0.35);
   --sb-hero-text: #ffffff;
-  --sb-ghost-border: rgba(255, 255, 255, 0.6);
+  --sb-cta-ghost-border: rgba(255, 255, 255, 0.6);
 }
 
 :root[data-theme='dark'] {

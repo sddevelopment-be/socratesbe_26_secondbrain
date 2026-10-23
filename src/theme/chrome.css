@@ -47,7 +47,7 @@ header.header {
 }
 
 .sb-brand__word strong {
-  color: var(--sb-bar-accent);
+  color: var(--sb-wordmark);
   font-weight: 800;
 }
 
@@ -90,7 +90,7 @@ header.header {
 .sb-brand:focus-visible,
 .sb-nav a:focus-visible,
 .sb-tools a:focus-visible {
-  outline: 2px solid var(--sb-bar-focus);
+  outline: 2px solid var(--sb-focus-on-dark);
   outline-offset: 2px;
 }
 
@@ -197,8 +197,7 @@ header.header {
   color: var(--sb-bar-strong);
 }
 
-/* The brand hover blue: white on the brand primary is 4.0:1, below AA for
-   this size, so current-page pills use --sb-chip-bg. */
+/* White on the brand primary is 3.98:1, so current-page pills use --sb-chip-bg. */
 .sb-footer .sb-footer__views a[aria-current='page'] {
   border-color: var(--sb-chip-bg);
   background: var(--sb-chip-bg);
@@ -244,7 +243,7 @@ header.header {
 }
 
 .sb-footer a:focus-visible {
-  outline: 2px solid var(--sb-bar-focus);
+  outline: 2px solid var(--sb-focus-on-dark);
   outline-offset: 2px;
 }
 
@@ -327,11 +326,11 @@ header.header {
 
 .sl-markdown-content .sb-hero a.sb-cta--ghost {
   background: transparent;
-  border: 1px solid var(--sb-ghost-border);
+  border: 1px solid var(--sb-cta-ghost-border);
 }
 
 .sl-markdown-content .sb-hero a:focus-visible {
-  outline: 2px solid var(--sb-bar-focus);
+  outline: 2px solid var(--sb-focus-on-dark);
   outline-offset: 2px;
 }
 
