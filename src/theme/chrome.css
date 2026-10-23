@@ -113,6 +113,15 @@ button.sl-menu-button:focus-visible {
   justify-content: flex-end;
 }
 
+/* Below 50rem the search button is a bare icon on the bar, and Starlight's
+   page-gray ink is invisible there in light mode. From 50rem up the button
+   has its own light fill, where Starlight's ink is right. */
+@media (max-width: 49.99rem) {
+  .sb-search button[data-open-modal] {
+    color: var(--sb-bar-text);
+  }
+}
+
 .sb-tools {
   display: none;
   align-items: center;
