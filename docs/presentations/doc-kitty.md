@@ -252,6 +252,8 @@ Note: DocKitty deliberately does not ship a RAG index. It gives agents a small, 
 >
 > *Liu et al., Lost in the Middle, 2023*
 
+<!-- two separate quotes -->
+
 > Good context engineering means "finding the smallest possible set of high-signal tokens".
 >
 > *Anthropic, Effective context engineering for AI agents, 2025*
@@ -321,7 +323,7 @@ curl -s $SITE/api/index.json \
 curl -s $SITE/api/pages/presentations/doc-kitty.json | jq '.title'
 ```
 
-Note: Fallback if the site is not deployed yet: run pnpm dev and use SITE=http://localhost:4321/socratesbe_26_secondbrain. Show that this deck itself is in llms.txt and the agent API, so an agent can read these slides and these speaker notes as text. If there is no network at all, show the llms.txt file from a local pnpm build in dist/.
+Note: Fallback if the site is not deployed yet: run pnpm dev and use `SITE=http://localhost:4321/socratesbe_26_secondbrain`. Show that this deck itself is in llms.txt and the agent API, so an agent can read these slides and these speaker notes as text. If there is no network at all, show the llms.txt file from a local pnpm build in dist/.
 
 ### Your turn
 
