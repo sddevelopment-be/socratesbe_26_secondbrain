@@ -12,7 +12,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check",
+    "check": "node scripts/check-theme-literals.mjs && astro check",
     "validate": "dockitty-validate-frontmatter docs",
     "links": "dockitty-check-links docs --strict",
     "new": "dockitty-new-doc",
