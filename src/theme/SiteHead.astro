@@ -1,0 +1,48 @@
+---
+/*
+ * SoCraTes BE head additions (dk:head slot). Advertises the page's machine
+ * views as <link rel="alternate">, next to the RSS and llms.txt links the
+ * toolkit adds to every page, so an agent reading the head finds them.
+ *
+ * A theme's dk:head replaces the toolkit's default, so this renders that
+ * default (HeadShare, the og:image / twitter:image metadata) first, with the
+ * props the toolkit's Head carrier passes it. This theme sets no
+ * `assets.socialImage`, so HeadShare's own site default applies.
+ */
+import type { Props as StarlightRoute } from '@astrojs/starlight/props';
+import HeadShare from '@spec-kitty/doc-toolkit/components/slots/HeadShare.astro';
+import { getCollection } from 'astro:content';
+import { slugFromEntryId } from '@spec-kitty/doc-toolkit';
+import { viewLinks, viewSlug } from '../lib/page-views';
+
+const route = (Astro.locals as unknown as { starlightRoute: StarlightRoute }).starlightRoute;
+const data = route.entry.data as unknown as {
+  title?: string;
+  hero_image?: { src: string; alt: string };
+  social_thumb?: { src: string; alt: string } | string;
+};
+const filePath = (route.entry as unknown as { filePath?: string }).filePath;
+
+// Only docs entries have machine views (see SiteFooter.astro for the matching).
+const entry = (await getCollection('docs')).find(
+  (e) => slugFromEntryId(e.id) === slugFromEntryId(route.entry.id),
+);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const views = entry ? viewLinks(base, viewSlug(entry.id)) : undefined;
+const alternates = views
+  ? [
+      { ...views.json, title: 'This page as JSON' },
+      { ...views.yaml, title: 'This page as YAML' },
+      { ...views.markdown, title: 'This page as Markdown' },
+    ]
+  : [];
+---
+
+<HeadShare
+  heroImage={data.hero_image}
+  socialThumb={data.social_thumb}
+  filePath={filePath}
+  title={data.title}
+  siteTitle={route.siteTitle}
+/>
+{alternates.map((link) => <link rel="alternate" type={link.type} title={link.title} href={link.href} />)}

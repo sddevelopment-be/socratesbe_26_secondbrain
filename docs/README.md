@@ -32,6 +32,9 @@ The same `docs/` tree feeds two kinds of reader:
 - **Agents** get machine-readable surfaces built from the same pages:
   - [`/llms.txt`](./llms.txt), the entry point for language models;
   - [`/api/index.json`](./api/index.json), a JSON map of every page and its metadata;
+  - every page in three more formats at its own address: add `.json`, `.yaml`
+    or `.md` to it, for example [`/context.json`](./context.json). The footer
+    of each page links to them;
   - [`/rss.xml`](./rss.xml), a feed of new and updated pages;
   - [`/sitemap-index.xml`](./sitemap-index.xml), for search engines.
 

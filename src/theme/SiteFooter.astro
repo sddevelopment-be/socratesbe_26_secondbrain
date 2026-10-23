@@ -1,10 +1,44 @@
 ---
 /*
  * SoCraTes BE footer band (dk:site-footer slot). Rendered below Starlight's
- * article footer on every page. Three columns like socratesbe.org's footer,
- * plus a darker base strip with contact and code of conduct.
+ * article footer on every page. A "this page as" row with the page's machine
+ * views, three columns like socratesbe.org's footer, and a darker base strip
+ * with contact and code of conduct.
  */
+import { getCollection } from 'astro:content';
+import { slugFromEntryId } from '@spec-kitty/doc-toolkit';
+import { viewSlug } from '../lib/page-views';
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const repo = 'https://github.com/sddevelopment-be/socratesbe_26_secondbrain';
+
+// The page being rendered, taken from Starlight's route data rather than the
+// URL. Only docs entries have machine views (not the 404 page); viewSlug names
+// them as the toolkit's routes do, 'home' for the root. Starlight gives the
+// root the id '' where the collection stores it as the toolkit's root id, so
+// both sides are compared as route slugs.
+const routeId = (Astro.locals as { starlightRoute?: { entry?: { id: string } } }).starlightRoute
+  ?.entry?.id;
+const entry =
+  routeId === undefined
+    ? undefined
+    : (await getCollection('docs')).find(
+        (e) => slugFromEntryId(e.id) === slugFromEntryId(routeId),
+      );
+const slug = entry ? viewSlug(entry.id) : '';
+const views = entry
+  ? [
+      { label: 'HTML', name: 'This page as HTML', href: Astro.url.pathname, current: true },
+      { label: 'JSON', name: 'This page as JSON', href: `${base}/${slug}.json` },
+      { label: 'YAML', name: 'This page as YAML', href: `${base}/${slug}.yaml` },
+      { label: 'Markdown', name: 'This page as Markdown', href: `${base}/${slug}.md` },
+      {
+        label: 'Source on GitHub',
+        name: "This page's source on GitHub",
+        href: `${repo}/blob/main/${entry.filePath}`,
+      },
+    ]
+  : [];
 
 const columns = [
   {
@@ -22,7 +56,7 @@ const columns = [
     highlight: 'second brain',
     links: [
       { label: 'How to contribute', href: `${base}/guides/` },
-      { label: 'Source on GitHub', href: 'https://github.com/sddevelopment-be/socratesbe_26_secondbrain' },
+      { label: 'Source on GitHub', href: repo },
       { label: 'Built with DocKitty', href: 'https://github.com/spec-kitty/doc-kitty' },
     ],
   },
@@ -32,6 +66,8 @@ const columns = [
     links: [
       { label: 'llms.txt', href: `${base}/llms.txt` },
       { label: 'Agent API (JSON)', href: `${base}/api/index.json` },
+      { label: 'Content graph', href: `${base}/api/content-graph.json` },
+      { label: 'OKF bundle', href: `${base}/okf/index.md` },
       { label: 'RSS feed', href: `${base}/rss.xml` },
       { label: 'Sitemap', href: `${base}/sitemap-index.xml` },
     ],
@@ -40,6 +76,28 @@ const columns = [
 ---
 
 <footer class="sb-footer">
+  {
+    views.length > 0 && (
+      <nav class="sb-footer__views" aria-labelledby="sb-footer-views-label">
+        <span class="sb-footer__views-label" id="sb-footer-views-label">
+          This page as
+        </span>
+        <ul>
+          {views.map((view) => (
+            <li>
+              <a
+                href={view.href}
+                aria-label={view.name}
+                aria-current={view.current ? 'page' : undefined}
+              >
+                {view.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )
+  }
   <div class="sb-footer__cols">
     {
       columns.map((col) => (

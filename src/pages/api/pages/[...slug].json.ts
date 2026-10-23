@@ -1,5 +1,6 @@
-import { agentPageRoute } from '@spec-kitty/doc-toolkit/routes';
+import type { APIRoute } from 'astro';
+import { jsonResponse, pageRecord, pageRoute } from '../../../lib/page-views';
 
-const route = agentPageRoute();
-export const getStaticPaths = route.getStaticPaths;
-export const GET = route.GET;
+// The canonical agent record, with links to the page's other views.
+export const getStaticPaths = pageRoute.getStaticPaths;
+export const GET: APIRoute = async (ctx) => jsonResponse(await pageRecord(ctx, 'api'));
