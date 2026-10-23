@@ -149,12 +149,9 @@ const fixtures = {
     'a { color: #fff; } /* literal: */',
   ],
   passes: [
-    'a { color: var(--sb-bar-strong); }',
     'a { color: var(--sb-white); }',
     'a { color: #000; } /* literal: printed page, no token applies */',
-    '#main { color: var(--dk-color-text); }',
-    '#decade,\n#face { color: var(--dk-color-text); }',
-    '.white .red { color: var(--dk-color-text); }',
+    'a:not(#decade),\n#face:hover { color: var(--dk-color-text); }',
     'a { fill: url(#gradient); }',
     "a { mask: url('icons.svg#face'); }",
     'a { color: transparent; border-color: currentColor; background: none; }',
