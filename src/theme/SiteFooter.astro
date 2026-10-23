@@ -6,20 +6,29 @@
  * with contact and code of conduct.
  */
 import { getCollection } from 'astro:content';
+import { slugFromEntryId } from '@spec-kitty/doc-toolkit';
+import { viewSlug } from '../lib/page-views';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const repo = 'https://github.com/sddevelopment-be/socratesbe_26_secondbrain';
 
-// The current page's slug, as the toolkit's routes name it ('home' for the
-// root). See src/lib/page-views.ts for the views themselves.
-const path = Astro.url.pathname.slice(base.length).replace(/^\/+|\/+$/g, '');
-const entry = (await getCollection('docs')).find(
-  (e) => e.id === path || (path === '' && e.filePath?.endsWith('docs/README.md')),
-);
-const slug = path === '' ? 'home' : path;
+// The page being rendered, taken from Starlight's route data rather than the
+// URL. Only docs entries have machine views (not the 404 page); viewSlug names
+// them as the toolkit's routes do, 'home' for the root. Starlight gives the
+// root the id '' where the collection stores it as the toolkit's root id, so
+// both sides are compared as route slugs.
+const routeId = (Astro.locals as { starlightRoute?: { entry?: { id: string } } }).starlightRoute
+  ?.entry?.id;
+const entry =
+  routeId === undefined
+    ? undefined
+    : (await getCollection('docs')).find(
+        (e) => slugFromEntryId(e.id) === slugFromEntryId(routeId),
+      );
+const slug = entry ? viewSlug(entry.id) : '';
 const views = entry
   ? [
-      { label: 'HTML', href: `${base}/${path}${path ? '/' : ''}`, current: true },
+      { label: 'HTML', href: Astro.url.pathname, current: true },
       { label: 'JSON', href: `${base}/${slug}.json` },
       { label: 'YAML', href: `${base}/${slug}.yaml` },
       { label: 'Markdown', href: `${base}/${slug}.md` },
