@@ -27,6 +27,8 @@ The agent never sees the theme. It reads the structured surfaces:
 - [`llms.txt`](../../../llms.txt), a short Markdown index of the site;
 - [`api/index.json`](../../../api/index.json), every page with its type, status,
   tags and links, plus one JSON record per page under `api/pages/`;
+- each page as JSON, YAML or Markdown at its own address, such as
+  [`context/audience/agent.json`](../../../context/audience/agent.json);
 - the raw Markdown in the repository, whose frontmatter carries the same
   metadata.
 

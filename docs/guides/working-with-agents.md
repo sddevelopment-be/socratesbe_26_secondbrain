@@ -29,7 +29,10 @@ Point your agent at one of these instead of the HTML pages:
 |---|---|---|
 | `llms.txt` | A Markdown index of every published page with its description | Giving a chat assistant context in one fetch |
 | `api/index.json` | Every page with type, kind, status, tags, dates and `_links` | Programmatic discovery and filtering |
-| `api/pages/<slug>.json` | One page's metadata and links | Following `related` pages |
+| `<slug>.json` | One page's metadata, raw Markdown and `_links`, at the page's own address (`context/about/` → `context/about.json`; the home page is `home.json`) | Following `related` and `alternate` links |
+| `<slug>.yaml` | The same record as YAML | Tools and people who prefer YAML |
+| `<slug>.md` | The page's Markdown, its metadata as frontmatter | Pasting one page into a chat |
+| `api/pages/<slug>.json` | The canonical record behind the views above | Programmatic use alongside `api/index.json` |
 | `rss.xml` | New and updated pages | Watching for changes |
 
 A prompt that works well:
@@ -37,7 +40,7 @@ A prompt that works well:
 > Read `https://sddevelopment-be.github.io/socratesbe_26_secondbrain/llms.txt`
 > and summarise the sessions about testing. Link every claim to its page.
 
-Draft pages are left out of all four surfaces, so an agent only sees notes
+Draft pages are left out of all of these on the live site, so an agent only sees notes
 their authors marked as ready.
 
 ## Writing with an agent

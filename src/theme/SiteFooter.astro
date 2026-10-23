@@ -1,10 +1,31 @@
 ---
 /*
  * SoCraTes BE footer band (dk:site-footer slot). Rendered below Starlight's
- * article footer on every page. Three columns like socratesbe.org's footer,
- * plus a darker base strip with contact and code of conduct.
+ * article footer on every page. A "this page as" row with the page's machine
+ * views, three columns like socratesbe.org's footer, and a darker base strip
+ * with contact and code of conduct.
  */
+import { getCollection } from 'astro:content';
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const repo = 'https://github.com/sddevelopment-be/socratesbe_26_secondbrain';
+
+// The current page's slug, as the toolkit's routes name it ('home' for the
+// root). See src/lib/page-views.ts for the views themselves.
+const path = Astro.url.pathname.slice(base.length).replace(/^\/+|\/+$/g, '');
+const entry = (await getCollection('docs')).find(
+  (e) => e.id === path || (path === '' && e.filePath?.endsWith('docs/README.md')),
+);
+const slug = path === '' ? 'home' : path;
+const views = entry
+  ? [
+      { label: 'HTML', href: `${base}/${path}${path ? '/' : ''}`, current: true },
+      { label: 'JSON', href: `${base}/${slug}.json` },
+      { label: 'YAML', href: `${base}/${slug}.yaml` },
+      { label: 'Markdown', href: `${base}/${slug}.md` },
+      { label: 'Source', href: `${repo}/blob/main/${entry.filePath}` },
+    ]
+  : [];
 
 const columns = [
   {
@@ -22,7 +43,7 @@ const columns = [
     highlight: 'second brain',
     links: [
       { label: 'How to contribute', href: `${base}/guides/` },
-      { label: 'Source on GitHub', href: 'https://github.com/sddevelopment-be/socratesbe_26_secondbrain' },
+      { label: 'Source on GitHub', href: repo },
       { label: 'Built with DocKitty', href: 'https://github.com/spec-kitty/doc-kitty' },
     ],
   },
@@ -32,6 +53,8 @@ const columns = [
     links: [
       { label: 'llms.txt', href: `${base}/llms.txt` },
       { label: 'Agent API (JSON)', href: `${base}/api/index.json` },
+      { label: 'Content graph', href: `${base}/api/content-graph.json` },
+      { label: 'OKF bundle', href: `${base}/okf/index.md` },
       { label: 'RSS feed', href: `${base}/rss.xml` },
       { label: 'Sitemap', href: `${base}/sitemap-index.xml` },
     ],
@@ -40,6 +63,18 @@ const columns = [
 ---
 
 <footer class="sb-footer">
+  {
+    views.length > 0 && (
+      <nav class="sb-footer__views" aria-label="This page in other formats">
+        <span class="sb-footer__views-label">This page as</span>
+        {views.map((view) => (
+          <a href={view.href} aria-current={view.current ? 'page' : undefined}>
+            {view.label}
+          </a>
+        ))}
+      </nav>
+    )
+  }
   <div class="sb-footer__cols">
     {
       columns.map((col) => (
