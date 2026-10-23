@@ -59,6 +59,14 @@ const TYPES = {
   markdown: 'text/markdown',
 } as const;
 
+/**
+ * YAML for the `.yaml` view and the `.md` frontmatter. `compat` quotes any
+ * string a YAML 1.1 reader (PyYAML, gray-matter, js-yaml) would take for
+ * another type, such as `2026-10-23T00:00:00Z`, `yes` or `on`, so the record
+ * reads back as the `.json` view does. Other strings stay plain.
+ */
+const YAML_OPTIONS = { lineWidth: 0, compat: 'yaml-1.1' } as const;
+
 /** The site root as an absolute URL without a trailing slash, base included. */
 function siteRoot(ctx: APIContext): string {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -102,7 +110,7 @@ export function jsonResponse(record: PageRecord): Response {
 }
 
 export function yamlResponse(record: PageRecord): Response {
-  return new Response(stringify(record, { lineWidth: 0 }), {
+  return new Response(stringify(record, YAML_OPTIONS), {
     headers: { 'Content-Type': `${TYPES.yaml}; charset=utf-8` },
   });
 }
@@ -144,7 +152,7 @@ async function absoluteLinks(ctx: APIContext, record: PageRecord, markdown: stri
 export async function markdownResponse(ctx: APIContext, record: PageRecord): Promise<Response> {
   const { markdown: raw = '', ...meta } = record;
   const markdown = await absoluteLinks(ctx, record, raw);
-  const body = `---\n${stringify(meta, { lineWidth: 0 })}---\n\n${markdown.trimStart()}`;
+  const body = `---\n${stringify(meta, YAML_OPTIONS)}---\n\n${markdown.trimStart()}`;
   return new Response(body, {
     headers: { 'Content-Type': `${TYPES.markdown}; charset=utf-8` },
   });
