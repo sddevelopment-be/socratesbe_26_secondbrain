@@ -37,7 +37,9 @@ export const socratesTheme: DocKittyTheme = {
   },
   customCss: ['./src/theme/socrates.css', './src/theme/chrome.css'],
   assets: {
-    favicon: here('./assets/favicon.svg'),
+    // A served path, not a file path: the toolkit hands any value starting
+    // with '/' straight to Starlight as a URL. The file lives in public/.
+    favicon: '/favicon.svg',
     fonts: ['https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'],
   },
   slots: {
