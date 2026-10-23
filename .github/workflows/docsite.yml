@@ -9,9 +9,11 @@ on:
 permissions:
   contents: read
 
+# A newer push to a pull request replaces its older run. Runs on main are
+# never cancelled, so a deploy in progress always finishes.
 concurrency:
   group: docsite-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   checks:
@@ -48,7 +50,7 @@ jobs:
         run: pnpm check:dist
 
       - name: Upload site for GitHub Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -73,17 +75,29 @@ jobs:
       - name: Spellcheck
         run: |
           set +e
-          pnpm exec cspell --no-progress --no-summary --unique > cspell.log
+          pnpm exec cspell --no-progress --no-summary --unique > cspell.log 2>&1
+          rc=$?
           set -e
-          count=$(grep -c ' - Unknown word' cspell.log || true)
+          count=$(grep -cE ' - (Unknown|Forbidden) word' cspell.log || true)
           # file:line:col - Unknown word (x) -> a warning annotation on that line
-          sed -nE 's/^([^:]+):([0-9]+):([0-9]+) - (Unknown word \(([^)]+)\).*)$/::warning file=\1,line=\2,col=\3,title=Spelling (en-GB)::\4/p' cspell.log
+          sed -nE 's/^([^:]+):([0-9]+):([0-9]+) - ((Unknown|Forbidden) word \(([^)]+)\).*)$/::warning file=\1,line=\2,col=\3,title=Spelling (en-GB)::\4/p' cspell.log
+          # Exit code 1 means "words found"; anything else means cspell itself failed.
+          if [ "$rc" -gt 1 ] || { [ "$rc" -ne 0 ] && [ "$count" -eq 0 ]; }; then
+            echo "::warning title=Spelling (en-GB)::cspell did not complete (exit $rc). See the job log."
+            cat cspell.log
+          fi
           {
             echo "### Spelling (UK English)"
-            if [ "$count" -eq 0 ]; then
+            if [ "$rc" -ne 0 ] && [ "$count" -eq 0 ]; then
+              echo "cspell did not complete (exit $rc):"
+              echo
+              echo '```'
+              cat cspell.log
+              echo '```'
+            elif [ "$count" -eq 0 ]; then
               echo "No unknown words."
             else
-              echo "$count unknown word(s). Fix the spelling, or add project vocabulary to \`.cspell/project-words.txt\`."
+              echo "$count spelling finding(s). Fix the spelling, or add project vocabulary to \`.cspell/project-words.txt\`."
               echo
               echo '```'
               cat cspell.log
@@ -93,7 +107,8 @@ jobs:
 
   deploy:
     name: Deploy to GitHub Pages
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # Pushes to main deploy; a manual run on main redeploys.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: checks
     runs-on: ubuntu-latest
     permissions:
