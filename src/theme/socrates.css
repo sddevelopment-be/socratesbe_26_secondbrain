@@ -5,8 +5,9 @@
  *
  * Brand anchors: primary #007bff (hover #0056b3), text #333 / headings #222,
  * light surface #f8f9fa, bars #262627 / #1f2125, ensō blue #0077ff and
- * red #b32004, the legacy orange #fe4918 and the hero violet #9001a5.
- * Link and fill blues are nudged darker in light mode to hold WCAG AA.
+ * red #b32004, the wordmark orange #ff7200 and the hero violet #9001a5.
+ * Link and fill blues are nudged darker in light mode to hold WCAG AA; white
+ * on #007bff is only 3.98:1, so no white text sits on the primary itself.
  */
 :root {
   --dk-color-bg: #ffffff;
@@ -59,6 +60,31 @@
   --sb-enso-red: #b32004;
   --sb-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --sb-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* The bars and the hero are dark in both schemes, so everything drawn on
+     them is declared once here. Never alias --dk-color-accent*: it lightens
+     in dark mode, where white on it would fail. Only --sb-bar and
+     --sb-bar-deep change with the scheme. */
+  --sb-bar-strong: #ffffff;
+  --sb-bar-accent: #ff7200;
+  --sb-bar-highlight: #4da3ff;
+  --sb-bar-focus: #4da3ff;
+  --sb-bar-hover-bg: rgba(255, 255, 255, 0.08);
+  --sb-bar-rule: rgba(255, 255, 255, 0.1);
+  --sb-bar-outline: rgba(255, 255, 255, 0.25);
+  /* Current-page pills: white on #0056b3 is 7.04:1. */
+  --sb-chip-bg: #0056b3;
+  --sb-chip-text: #ffffff;
+  /* Hero call to action: white on #0069d9 is 5.22:1. */
+  --sb-cta-bg: #0069d9;
+  --sb-cta-bg-hover: #0056b3;
+  --sb-cta-text: #ffffff;
+  --sb-cta-glow: rgba(0, 123, 255, 0.3);
+  --sb-hero-from: #9001a5;
+  --sb-hero-to: #10171a;
+  --sb-hero-scrim: rgba(0, 0, 0, 0.35);
+  --sb-hero-text: #ffffff;
+  --sb-ghost-border: rgba(255, 255, 255, 0.6);
 }
 
 :root[data-theme='dark'] {
