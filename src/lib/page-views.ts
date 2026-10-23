@@ -11,13 +11,38 @@
  * only re-point `self` and add `alternate` links between the views.
  */
 import { posix } from 'node:path';
-import type { APIContext } from 'astro';
+import type { APIContext, GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import { pageSourceId, slugFromEntryId } from '@spec-kitty/doc-toolkit';
 import { agentPageRoute } from '@spec-kitty/doc-toolkit/routes';
 import { stringify } from 'yaml';
+import { YAML_OPTIONS } from './yaml-view-options.mjs';
 
-export const pageRoute = agentPageRoute();
+const pageRoute = agentPageRoute();
+
+/**
+ * Top-level folders the toolkit writes into dist/: the agent API and the OKF
+ * bundle. A page under one would put its views where the toolkit's own output
+ * goes, and `okf/` is written last, so it would overwrite them silently.
+ */
+export const RESERVED_PREFIXES = ['api', 'okf'] as const;
+
+/** The toolkit's page paths, refusing any page whose slug is under a reserved prefix. */
+export const getStaticPaths = (async (options) => {
+  const paths = await pageRoute.getStaticPaths(options);
+  for (const { params, props } of paths) {
+    const slug = String(params.slug);
+    const prefix = RESERVED_PREFIXES.find((p) => slug === p || slug.startsWith(`${p}/`));
+    if (!prefix) continue;
+    const id = (props as { id?: string }).id;
+    const file = (await getCollection('docs')).find((e) => e.id === id)?.filePath ?? slug;
+    throw new Error(
+      `[page-views] ${file}: the slug "${slug}" is under the reserved prefix "${prefix}/", ` +
+        `which the toolkit writes to. Move or rename the page (see docs/adr/0002-per-page-machine-views.md).`,
+    );
+  }
+  return paths;
+}) satisfies GetStaticPaths;
 
 export type View = 'json' | 'yaml' | 'markdown' | 'api';
 
@@ -77,7 +102,7 @@ export function jsonResponse(record: PageRecord): Response {
 }
 
 export function yamlResponse(record: PageRecord): Response {
-  return new Response(stringify(record, { lineWidth: 0 }), {
+  return new Response(stringify(record, YAML_OPTIONS), {
     headers: { 'Content-Type': `${TYPES.yaml}; charset=utf-8` },
   });
 }
@@ -119,7 +144,7 @@ async function absoluteLinks(ctx: APIContext, record: PageRecord, markdown: stri
 export async function markdownResponse(ctx: APIContext, record: PageRecord): Promise<Response> {
   const { markdown: raw = '', ...meta } = record;
   const markdown = await absoluteLinks(ctx, record, raw);
-  const body = `---\n${stringify(meta, { lineWidth: 0 })}---\n\n${markdown.trimStart()}`;
+  const body = `---\n${stringify(meta, YAML_OPTIONS)}---\n\n${markdown.trimStart()}`;
   return new Response(body, {
     headers: { 'Content-Type': `${TYPES.markdown}; charset=utf-8` },
   });

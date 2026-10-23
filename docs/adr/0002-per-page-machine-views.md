@@ -53,8 +53,11 @@ and in a "This page as" row in the footer.
 - The three address patterns are a public contract. Renaming a page moves
   its views, as it moves its HTML.
 - The views share the site root's namespace with the toolkit's own output
-  (`api/`, `okf/`). A docs page whose slug starts with either could collide
-  with a generated file.
+  (`api/`, `okf/`). A docs page whose slug starts with either would collide
+  with a generated file, and the `okf/` export would overwrite it without a
+  warning. These prefixes are therefore reserved: the build stops with an
+  error naming the page (`RESERVED_PREFIXES` in `src/lib/page-views.ts`).
+  Do not add a docs folder called `api` or `okf`.
 - The `.md` view and the `okf/` bundle both give a page as Markdown, with
   different frontmatter. The agents guide says which to use for what.
 - Per-page views are a convention feature rather than something specific to
