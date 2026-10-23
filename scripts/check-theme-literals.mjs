@@ -57,7 +57,7 @@ const NAMED = new Set(
 
 // Properties whose value can carry a colour keyword.
 const COLOUR_PROPERTY =
-  /^(?:color|background(?:-color)?|border(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?(?:-color)?|outline(?:-color)?|text-decoration(?:-color)?|text-emphasis(?:-color)?|column-rule(?:-color)?|box-shadow|text-shadow|caret-color|accent-color|fill|stroke|stop-color|flood-color|lighting-color|scrollbar-color)$/i;
+  /^(?:color|background(?:-(?:color|image))?|border(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?(?:-color)?|border-image(?:-source)?|mask(?:-image)?|filter|outline(?:-color)?|text-decoration(?:-color)?|text-emphasis(?:-color)?|column-rule(?:-color)?|box-shadow|text-shadow|caret-color|accent-color|fill|stroke|stop-color|flood-color|lighting-color|scrollbar-color|-webkit-text-fill-color|-webkit-text-stroke(?:-color)?|-webkit-tap-highlight-color|--[\w-]+)$/i;
 
 /** Every match of a global regex in text, as offsets. */
 const offsets = (regex, text) => [...text.matchAll(regex)].map((m) => m.index);
@@ -129,7 +129,7 @@ const fixtures = {
     'a { border: 1px solid Black; }',
     'a { outline-color: rebeccapurple; }',
     'a { box-shadow: 0 0 0 2px navy; }',
-    'a {\n  background:\n    linear-gradient(red, blue);\n}',
+    'a {\n  background-image:\n    linear-gradient(red, blue);\n}',
     `a { background: url("data:image/svg+xml,%3Csvg fill='%23ff0000'/%3E"); }`,
     `a { background: url("data:image/svg+xml,<svg fill='#f00'/>"); }`,
     '/* white on #007bff */',
