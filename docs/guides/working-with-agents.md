@@ -33,7 +33,15 @@ Point your agent at one of these instead of the HTML pages:
 | `<slug>.yaml` | The same record as YAML | Tools and people who prefer YAML |
 | `<slug>.md` | The page's Markdown, its metadata as frontmatter | Pasting one page into a chat |
 | `api/pages/<slug>.json` | The canonical record behind the views above | Programmatic use alongside `api/index.json` |
+| `okf/index.md` | Every page as Markdown in the OKF 0.2 layout, linked within the bundle | Copying the whole second brain into another tool |
 | `rss.xml` | New and updated pages | Watching for changes |
+
+`<slug>.md` and the `okf/` bundle both give a page as Markdown, built from the
+same source file, so the text is the same; the bundle also lists the page's
+references. They differ in their frontmatter and links. `<slug>.md` uses this site's vocabulary (`doc_status`,
+`route`, `_links`) and links to the live pages, so use it to fetch one page.
+The bundle uses the OKF vocabulary (`status`, `generated`) and links within
+itself, so use it to take everything at once.
 
 A prompt that works well:
 
