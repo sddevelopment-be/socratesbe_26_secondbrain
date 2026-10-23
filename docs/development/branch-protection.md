@@ -60,12 +60,14 @@ They also bring failure modes of their own:
   `main` is published, then read back by the next agent as fact, which builds
   on it. Protection breaks the loop at the only point where every change passes
   through.
-- **Self-approval.** An agent running on a maintainer's token can push a
-  commit and approve its own work. Requiring approval of the *latest* push from
-  *someone else* closes that gap.
+- **Self-approval.** GitHub never lets a pull request's author approve it.
+  But an agent working on your token can push commits onto *someone else's*
+  pull request, which you could then approve. Requiring approval of the
+  *latest* push from someone who did not push it closes that gap.
 - **Prompt injection by pull request.** Text in a contributed page or issue can
-  try to steer an agent that later reads it. Review on the way in is the first
-  line of defence.
+  try to steer an agent that later reads it. Review is the first line of
+  defence for content that reaches `main`. Agents should still treat open pull
+  requests and issues as untrusted input.
 
 The principle from the [project charter](https://github.com/sddevelopment-be/socratesbe_26_secondbrain/blob/main/.kittify/charter/charter.md)
 is **agents draft, humans decide**. Branch protection is how that principle
@@ -75,15 +77,14 @@ holds when no one is watching.
 
 ```mermaid
 %% title: The protected path to main
-%% description: A participant or an agent works on a branch and opens a pull request. Required CI checks and a review by someone other than the last pusher must both pass, with all conversations resolved, before a squash merge to main, which then deploys the site.
+%% description: A participant or an agent works on a branch and opens a pull request. The merge gate needs green required checks, an approval from someone other than the last pusher, and resolved conversations; if any is missing, the work goes back to the branch. Once all hold, a squash merge to main deploys the site.
 flowchart LR
   P[Participant] --> B[Topic branch]
   A[Agent] --> B
   B --> PR[Pull request]
-  PR --> CI{"Checks green?"}
-  PR --> R{"Reviewed by another person?"}
-  CI -- yes --> M[Squash merge to main]
-  R -- yes --> M
+  PR --> G{"Checks green, approved, threads resolved?"}
+  G -- no --> B
+  G -- yes --> M[Squash merge to main]
   M --> D[Deploy to GitHub Pages]
 ```
 
@@ -94,7 +95,8 @@ road, so every change gets the same checks.
 
 Use a **repository ruleset** (Settings → Rules → Rulesets) targeting the
 default branch. Rulesets are free for public repositories, apply to
-administrators too, and can be exported and imported as JSON.
+administrators unless they are on the bypass list, and can be exported and
+imported as JSON.
 
 | Rule | Setting | Why |
 |---|---|---|
@@ -103,7 +105,7 @@ administrators too, and can be exported and imported as JSON.
 | Require a pull request before merging | on | No direct pushes: every change is visible and reviewable. |
 | Required approvals | 1 | One other participant reads every change before it goes live. |
 | Dismiss stale approvals when new commits are pushed | on | An approval covers exactly what was reviewed, not later commits. |
-| Require approval of the most recent reviewable push | on | Whoever pushed last cannot be the one who approves, which stops self-approval through a shared or agent token. |
+| Require approval of the most recent reviewable push | on | Whoever pushed last cannot approve, so an agent pushing on your token cannot get its commits approved by you. Authors can never approve their own pull request anyway. |
 | Require conversation resolution before merging | on | Open review questions block the merge until they are answered. |
 | Allowed merge methods | squash only | One commit per pull request: a readable mainline and a clean unit to revert. |
 | Require linear history | on | Keeps history straight and easy to bisect, and works with squash merges. |
@@ -114,8 +116,10 @@ administrators too, and can be exported and imported as JSON.
 Leave **`Spelling (UK English, advisory)`** out of the required checks. It is
 deliberately advisory: a typo should never block a contribution.
 
-The `Syntax checks and build` check can only be selected after the workflow has
-run once, which the first pull request takes care of.
+Apply the ruleset only once the docsite workflow is on `main`. The UI lists
+the `Syntax checks and build` check only after it has run, but the JSON and
+the API accept any name. A required check that never reports leaves every open
+pull request waiting forever.
 
 ## Repository settings to go with it
 
@@ -164,34 +168,49 @@ Save this as `main-ruleset.json`:
       "type": "required_status_checks",
       "parameters": {
         "strict_required_status_checks_policy": true,
-        "required_status_checks": [{ "context": "Syntax checks and build" }]
+        "required_status_checks": [
+          { "context": "Syntax checks and build", "integration_id": 15368 }
+        ]
       }
     }
   ]
 }
 ```
 
-Then import it in the UI (Settings → Rules → Rulesets → New ruleset → Import a
-ruleset), or create it with the GitHub CLI:
+`actor_id: 5` is the built-in *Admin* repository role. `integration_id: 15368`
+is the GitHub Actions app: only a check reported by Actions satisfies the rule,
+not a commit status that anyone with write access could post under the same
+name.
+
+**Update the existing ruleset rather than adding a second one.** Rulesets
+stack: GitHub applies every active ruleset and the strictest rule wins, so a
+second ruleset works but hides the real policy across two places. This
+repository already has a ruleset named `TRUNK` on the default branch. Replace
+its contents with the JSON above (keeping its name, if you prefer):
 
 ```sh
-gh api --method POST repos/sddevelopment-be/socratesbe_26_secondbrain/rulesets \
-  --input main-ruleset.json
+REPO=repos/sddevelopment-be/socratesbe_26_secondbrain
+ID=$(gh api $REPO/rulesets --jq '.[] | select(.name == "TRUNK") | .id')
+gh api --method PUT $REPO/rulesets/$ID --input main-ruleset.json
 ```
 
-`actor_id: 5` is the built-in *Admin* repository role.
+With no existing ruleset, create it instead with
+`gh api --method POST $REPO/rulesets --input main-ruleset.json`, or import the
+file in the UI (Settings → Rules → Rulesets → New ruleset → Import a ruleset).
 
 ## A small team of maintainers
 
-With "approval of the most recent push" on, nobody can approve their own pull
-request. That is the point, but it also means a lone maintainer cannot merge
-their own work without a second person.
+GitHub never lets authors approve their own pull request. With one required
+approval, that means a lone maintainer cannot merge their own work without a
+second person.
 
 The ruleset above handles this with a narrow bypass. Repository admins can
-merge a pull request without the approval, but **only through a pull request**:
-they still cannot push to `main` directly, and the merge still shows up as a
-bypass in the audit log. Use it for the occasional solo fix, not as the normal
-path.
+merge a pull request without meeting the rules, but **only through a pull
+request**: they still cannot push to `main` directly, and each bypass is
+recorded in the ruleset's rule insights. The bypass skips *every* rule on that
+pull request, not just the approval: red checks, unresolved threads and an
+out-of-date branch too. So use it only when the checks are green, for the
+occasional solo fix, not as the normal path.
 
 Once there are two or more active maintainers, remove the bypass entry and let
 every change wait for a second pair of eyes.
@@ -203,9 +222,10 @@ every change wait for a second pair of eyes.
 - An agent's token should not be an admin token. A fine-grained token with
   contents and pull-request write access on this repository is enough, and it
   is not on the bypass list.
-- The human who asked the agent for the change should not approve it alone. The
-  "most recent push" rule makes the reviewer someone other than whoever
-  (or whatever) pushed last.
+- The human who asked the agent for the change should not approve it alone.
+  The "most recent push" rule only helps when the agent pushes on that human's
+  token. When the agent pushes from its own bot account, the requester can
+  still approve, so agree as a team that someone else reviews agent work.
 - Agents should read review comments as part of their loop. Unresolved threads
   block the merge, so answering them is part of finishing the job.
 
@@ -220,8 +240,10 @@ When that hurts, switch to a **merge queue**:
 
 1. Add `merge_group:` to the `on:` triggers in `.github/workflows/docsite.yml`,
    so the checks run on the queue's temporary branches.
-2. Turn on "Require merge queue" in the ruleset and turn off "Require branches
-   to be up to date".
+2. Turn on "Require merge queue" in the ruleset, set the queue's merge method
+   to **squash** (linear history requires it), and turn off "Require branches
+   to be up to date". The queue has its own settings for grouping and group
+   size; the defaults are fine to start with.
 
 The queue tests each change on top of everything queued before it and merges
 in order, so contributors stop chasing `main`.
