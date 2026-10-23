@@ -91,7 +91,10 @@ header.header {
 .sb-nav a:focus-visible,
 .sb-search button[data-open-modal]:focus-visible,
 .sb-tools a:focus-visible,
-.sb-tools select:focus-visible {
+.sb-tools select:focus-visible,
+/* Starlight renders the narrow-viewport menu toggle in the sidebar nav, not
+   the header, but it sits on the bar. */
+button.sl-menu-button:focus-visible {
   outline: 2px solid var(--sb-focus-on-dark);
   /* Keep the offset: it puts bar colour on both sides of the ring. Flush
      against the chip or CTA fill the ring falls below 3:1. */
