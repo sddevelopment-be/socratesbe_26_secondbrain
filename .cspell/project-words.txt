@@ -34,3 +34,6 @@ Vechev
 Vercel
 evals
 stackoverflow
+pipx
+kittify
+worktrees
