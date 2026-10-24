@@ -1,6 +1,6 @@
 ---
 title: Your first Spec Kitty mission
-description: A 15-minute lightning session on spec-driven development with AI agents, from an empty repository to a first consolidated Spec Kitty mission.
+description: A 15-minute lightning talk on spec-driven development with AI agents, from the two questions behind every change to a first consolidated Spec Kitty mission.
 doc_status: active
 type: Context
 kind: Reference
@@ -49,7 +49,7 @@ external_references:
     note: the MIT-licensed source and issue tracker; the place to report a command that does not match the docs
   - url: https://github.com/spec-kitty/spec-kitty-charter
     title: spec-kitty-charter
-    note: where charter governance is heading (a separate service with charter packs); an early build, not what you install today
+    note: where charter governance is heading next, a separate charter service; proposed and in early build. The organisation charter packs in the talk already ship in the 4.0 CLI
 ---
 
 # Your first Spec Kitty mission
@@ -59,7 +59,7 @@ external_references:
 
 ## Session overview
 
-A 15-minute lightning talk with slides:
+A 15-minute lightning talk with a deck:
 [Your first Spec Kitty mission](../presentations/spec-kitty-first-mission.md).
 
 Spec Kitty is an open-source command-line tool for spec-driven development
@@ -69,9 +69,9 @@ implementation; people decide what to build and make the final call.
 
 | Section | Time | Question it answers |
 |---|---|---|
-| Two questions before any code | 1.5 min | What do we build, and how? |
+| Two questions before any code | 1 min | What do we build, and how? |
 | What makes a good prompt | 2 min | What does an agent need from me? |
-| How Spec Kitty helps | 3.5 min | What happens between idea and landed change? |
+| How Spec Kitty helps | 3.5 min (3 without the optional work-package slide) | What happens between idea and landed change? |
 | The charter system | 3.5 min | How do the rules reach every agent, role and tool? |
 | Three ways to work | 1 min | Mission, governed op, or ad hoc? |
 | How to start | 3 min | What do I type tomorrow morning? |
@@ -104,7 +104,7 @@ Then, in either case:
 git checkout -b first-mission
 spec-kitty verify-setup
 
-spec-kitty charter interview --profile minimal
+spec-kitty charter interview --profile minimal   # the shortest interview
 spec-kitty charter generate --from-interview
 spec-kitty charter synthesize             # then commit the files it lists
 spec-kitty charter status
@@ -122,17 +122,19 @@ Git repository or a commit; specify needs both. Then, in your agent, run
 |---|---|---|---|
 | specify | `/spec-kitty.specify` | you answer the interview | `spec.md`, requirements checklist |
 | plan | `/spec-kitty.plan` | you confirm the plan | `plan.md`, plus research, data model, contracts where needed |
-| tasks | `/spec-kitty.tasks` | agent | `tasks.md`, one `tasks/WP…` file per work package |
-| implement | `spec-kitty next --agent <agent> --mission <mission>` | agent | changes in a worktree per lane |
+| tasks | `/spec-kitty.tasks` | agent | `tasks.md`, one `tasks/WP…` file per work package (a bounded slice of the mission) |
+| analyse | `/spec-kitty.analyze` | agent | `analysis-report.md`: do spec, plan and tasks agree? |
+| implement | `spec-kitty next --agent <agent> --mission <mission>` | agent | changes in a worktree per execution lane (a group of work packages) |
 | review | `/spec-kitty.review` | a reviewer who is not the author | approved, or sent back with feedback |
 | accept | `spec-kitty accept` | you | a readiness check |
-| consolidate | `spec-kitty consolidate` | you run it, after accepting | the work on your local branch, worktrees cleaned up; the pull request is still yours to open |
+| consolidate | `spec-kitty consolidate` | you run it, after accepting | the work on your local branch, worktrees cleaned up; `--push` publishes to your remote |
 
-Three ways to work, lightest first: ad hoc with your agent, where the
-charter guidance is already in its instructions and `spec-kitty charter
-context --action <step>` shows the rules for a step; a governed op with
-`spec-kitty dispatch "<request>"` for a one-sitting task, run under the
-right profile with a record; or a full mission when the work needs a spec.
+Three ways to work, from fully tracked to fully interactive: a full mission
+when the work needs a spec; a governed op, `spec-kitty dispatch "<request>"`,
+for a one-sitting task, run under the right agent profile with the charter
+loaded and a record kept; or ad hoc, pairing with your agent, where
+`spec-kitty charter context --action <step>` renders the charter's rules for
+a step on demand.
 
 ## Recap
 
