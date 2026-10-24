@@ -8,6 +8,7 @@ const inRoom = (slot: SlotView, key: string): SessionView[] =>
   slot.sessions.filter((s) => s.location.kind === 'room' && s.location.room.key === key);
 ---
 
+<p class="sched-scroll-hint">Scroll sideways for more rooms.</p>
 <div class="sched-table-wrap not-content" role="region" aria-labelledby={`cap-${day.date}`} tabindex="0" data-layout="table" data-pagefind-ignore>
   <table class="sched-table">
     <caption id={`cap-${day.date}`}>Schedule for {day.weekday} {day.dateLabel}</caption>

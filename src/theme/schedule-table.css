@@ -66,6 +66,8 @@
   background: var(--dk-color-surface-2);
   font-variant-numeric: tabular-nums;
   border-inline-start: 0;
+  /* Cells slide under this column when scrolled, so its edge doubles as the cue. */
+  box-shadow: 0.25rem 0 0.5rem -0.25rem var(--dk-color-border-strong);
 }
 
 [data-schedule] .sched-table td ul {
@@ -90,15 +92,26 @@
   font-size: 0.875rem;
 }
 
-[data-schedule] .sched-table-break {
+[data-schedule] .sched-table td.sched-table-break {
   text-align: center;
   font-weight: 600;
   color: var(--dk-color-text-muted);
   background: var(--dk-color-surface-2);
 }
 
+[data-schedule] .sched-scroll-hint {
+  display: none;
+  margin: 0 0 0.25rem;
+  font-size: 0.875rem;
+  color: var(--dk-color-text-muted);
+}
+
 @media (min-width: 64rem) {
   [data-schedule] .sched-table-wrap {
+    display: block;
+  }
+
+  [data-schedule] .sched-scroll-hint {
     display: block;
   }
 
