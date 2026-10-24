@@ -1,6 +1,6 @@
 /**
  * The schedule view model: one plain object that every renderer reads (the
- * page layouts, and later the API and text views). Pure: no file reads, no
+ * page layouts, the API and text views). Pure: no file reads, no
  * clock. Callers pass the validated schedule, the set of published note ids,
  * the site constants and the note template text.
  */
