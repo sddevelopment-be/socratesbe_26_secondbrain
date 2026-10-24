@@ -26,5 +26,8 @@ prove that GitHub honours the link.
 | Account without write access (fork flow) | pending operator | pending operator | Check that the fork-and-propose flow keeps the prefilled body. |
 | Phone browser | pending operator | pending operator | Check that the long link is not truncated by the browser or messenger. |
 
+The runs are tracked in
+[issue #15](https://github.com/sddevelopment-be/socratesbe_26_secondbrain/issues/15).
+
 If a run fails, the fallback beside the link still works: the template on
 GitHub and the "Add a session note" guide.
