@@ -24,8 +24,6 @@ export function ukDateOf(date) {
   return ukDate.format(new Date(`${date.slice(0, 10)}T00:00:00Z`));
 }
 
-const JUMP_TYPES = ['session', 'lunch', 'closing', 'dinner'];
-
 export function weekdayOf(date) {
   return weekdayName.format(new Date(`${date}T00:00:00Z`));
 }
@@ -98,7 +96,7 @@ export function buildScheduleView({ schedule, publishedIds, site, template }) {
       dataFileUrl: `https://github.com/${site.owner}/${site.repo}/blob/${site.branch}/docs/_meta/schedule/${day.date}.yaml`,
       snapshot: { date: day.snapshot.slice(0, 10), dateLabel: ukDateOf(day.snapshot), time: day.snapshot.slice(11, 16) },
       slots,
-      jumpSlots: slots.filter((slot) => JUMP_TYPES.includes(slot.type)),
+      jumpSlots: slots, // every validated slot type gets a jump link
       sections: SECTION_ORDER.map((key) => ({
         key,
         heading: SECTION_HEADINGS[key],
