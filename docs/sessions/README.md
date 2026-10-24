@@ -15,14 +15,13 @@ sidebar:
 
 # Sessions
 
-One page per session. Name the file after the session
-(`docs/sessions/<short-slug>.md`) and follow
-[Add a session note](../guides/add-a-session-note.md).
+[See the schedule](./schedule.md) for every session on the marketplace board,
+by day, time and room.
 
-A note does not have to be complete. Publish what you have as a draft
-(`doc_status: draft`) and let others add to it.
+To start notes for a session, open it on the schedule and choose **Start the
+notes**. Prefer to start from nothing? Follow
+[Add a session note](../guides/add-a-session-note.md). No GitHub account? Post
+your notes in the [SoCraTes Slack](https://socratesbe.org/slack/) and an
+organiser will add them.
 
-## Notes so far
-
-- [A second brain for humans and agents](./second-brain-for-humans-and-agents.md):
-  the session that started this site.
+The notes already written are listed below, and the list updates itself.

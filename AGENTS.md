@@ -68,8 +68,19 @@ authors:
   source of a quote. Write "the convener" or "a participant" instead. The only
   name on a page is a contributor's own handle in `authors`, added by them.
   Reviewers proofread for names; there is no automated check.
-- Keep new pages `doc_status: draft` unless the human asks otherwise.
+- Keep new pages `doc_status: draft` unless the human asks otherwise. The
+  exception is a session note: it is published when merged, so it is
+  `doc_status: active`. A draft note for a scheduled session fails
+  `pnpm check:schedule`.
+- The schedule is YAML in `docs/_meta/schedule/` (one file per day). Do not
+  write comments or anchors in it, put double quotes around every text value
+  (only `uncertain` is a bare `true` or `false`), use `YAML_OPTIONS` from
+  `src/lib/yaml-view-options.mjs` when you generate YAML, and never change a
+  session `id`, except to remove a participant name (then rename its note file
+  in the same change).
 - Write in UK English (colour, behaviour, organise).
-- Before you finish, run `pnpm validate && pnpm lint:md && pnpm links && pnpm build`,
-  then `pnpm spell` and fix real typos (add project terms to
+- Before you finish, run
+  `pnpm validate && pnpm lint:md && pnpm links && pnpm check:schedule && pnpm test && pnpm build`,
+  then `pnpm check:dist` (it includes the post-build schedule check,
+  `scripts/check-schedule-dist.mjs`), then `pnpm spell` and fix real typos (add project terms to
   `.cspell/project-words.txt`).
