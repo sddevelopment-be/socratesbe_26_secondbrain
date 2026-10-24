@@ -43,6 +43,12 @@ jobs:
       - name: Type check
         run: pnpm check
 
+      - name: Schedule data
+        run: pnpm check:schedule
+
+      - name: Unit tests
+        run: pnpm test
+
       - name: Build
         run: pnpm build
 
@@ -54,6 +60,27 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
+  schedule-fixture:
+    name: Two-day schedule fixture
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build the fixture (never uploaded)
+        run: node scripts/build-schedule-fixture.mjs
+
+      - name: Check the fixture build
+        run: node scripts/check-schedule-dist.mjs dist-fixture --fixture
 
   spelling:
     name: Spelling (UK English, advisory)
