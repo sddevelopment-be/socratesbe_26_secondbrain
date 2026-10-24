@@ -41,7 +41,7 @@ const inRoom = (slot: SlotView, key: string): SessionView[] =>
                         {sessions.map((s) => (
                           <li data-session-id={s.id} data-note-state={s.note.state} data-note-id={s.note.state === 'published' ? s.id : undefined}>
                             <span class="sched-table-title">{s.title}</span>
-                            {s.uncertain && <span class="sched-table-uncertain">partly unreadable — <a href={day.dataFileUrl}>correct it<span class="sr-only"> for {s.title}</span></a></span>}
+                            {s.uncertain && <span class="sched-table-uncertain">partly unreadable — <a href={day.dataFileUrl}>correct it on GitHub<span class="sr-only"> for {s.title}</span></a></span>}
                             {s.note.state === 'published' ? (
                               <a class="sched-table-action sched-note--read" href={s.note.href}>
                                 Read the notes<span class="sr-only"> for {s.title}</span>

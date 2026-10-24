@@ -23,7 +23,7 @@ const { session: s, dataFileUrl } = Astro.props;
   {
     s.uncertain && (
       <p class="sched-uncertain">
-        Partly unreadable on the board — <a href={dataFileUrl}>correct it</a>
+        Partly unreadable on the board — <a href={dataFileUrl}>correct it on GitHub<span class="sr-only"> for {s.title}</span></a>
       </p>
     )
   }
