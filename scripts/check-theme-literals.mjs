@@ -25,13 +25,18 @@
  *
  * It reads the source, so it runs without a build.
  *
- *   node scripts/check-theme-literals.mjs [file ...]   (default: src/theme/chrome.css)
+ *   node scripts/check-theme-literals.mjs [file ...]   (default: src/theme/chrome.css and src/theme/schedule*.css)
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const files = process.argv.slice(2);
-if (files.length === 0) files.push(fileURLToPath(new URL('../src/theme/chrome.css', import.meta.url)));
+if (files.length === 0) {
+  const themeDir = fileURLToPath(new URL('../src/theme/', import.meta.url));
+  files.push(`${themeDir}chrome.css`);
+  for (const name of readdirSync(themeDir).sort())
+    if (/^schedule.*\.css$/.test(name)) files.push(`${themeDir}${name}`);
+}
 
 const HEX = /#[0-9a-f]{3,8}\b/gi;
 const ENCODED_HEX = /%23[0-9a-f]{3,8}\b/gi;

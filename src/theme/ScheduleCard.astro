@@ -1,0 +1,52 @@
+---
+/** One session card in the list layout. */
+const { session: s, dataFileUrl } = Astro.props;
+---
+
+<li
+  class="sched-card"
+  id={`session-${s.id}`}
+  data-session-id={s.id}
+  data-note-state={s.note.state}
+  data-note-id={s.note.state === 'published' ? s.id : undefined}
+>
+  <h4 class="sched-title">{s.title}</h4>
+  {s.description && <p class="sched-description">{s.description}</p>}
+  <p class="sched-location">
+    {
+      s.location.kind === 'room'
+        ? [s.location.room.name, ...s.location.room.facts].join(' · ')
+        : s.location.label
+    }
+    {s.start && <> · from <time datetime={s.start}>{s.start}</time></>}
+  </p>
+  {
+    s.uncertain && (
+      <p class="sched-uncertain">
+        Partly unreadable on the board — <a href={dataFileUrl}>correct it</a>
+      </p>
+    )
+  }
+  <p class="sched-actions">
+    {
+      s.note.state === 'published' ? (
+        <a class="sched-note sched-note--read" href={s.note.href}>
+          Read the notes<span class="sr-only"> for {s.title}</span>
+        </a>
+      ) : (
+        <>
+          <a class="sched-note sched-note--start" href={s.startNotes.url}>
+            Start the notes<span class="sr-only"> for {s.title} (on GitHub, sign-in needed)</span>
+          </a>
+          <a class="sched-fallback" href={s.fallback.templateUrl}>
+            or copy the template<span class="sr-only"> for {s.title}</span>
+          </a>
+          <span class="sched-fallback-sep" aria-hidden="true">·</span>
+          <a class="sched-fallback" href={s.fallback.guideHref}>
+            read the guide<span class="sr-only"> for {s.title}</span>
+          </a>
+        </>
+      )
+    }
+  </p>
+</li>

@@ -1,0 +1,9 @@
+rooms:
+  - key: "main-hall"
+    name: "Main hall"
+    size: "XL"
+    equipment: ["projector"]
+  - key: "side-room"
+    name: "Side room"
+    size: "S"
+    equipment: []

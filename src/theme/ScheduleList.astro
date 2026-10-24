@@ -1,0 +1,37 @@
+---
+/** The phone layout: timed slots as a plain list of cards (sections are in ScheduleSections). No JavaScript. */
+import ScheduleCard from './ScheduleCard.astro';
+import type { DayView, SlotView, SessionView } from '../lib/schedule/view.mjs';
+
+const { day } = Astro.props as { day: DayView };
+const slotNames = { lunch: 'Lunch', closing: 'Closing', dinner: 'Dinner' } as Record<string, string>;
+---
+
+<div class="sched-list" data-layout="list">
+  <ul class="sched-jump" role="list" aria-label={`Jump to a time on ${day.weekday}`}>
+    {
+      day.jumpSlots.map((slot) => (
+        <li>
+          <a href={`#slot-${day.date}-${slot.key}`}>{slot.start}</a>
+        </li>
+      ))
+    }
+  </ul>
+  {
+    day.slots.map((slot: SlotView) => (
+      <div class="sched-slot" data-slot-type={slot.type}>
+        <h3 id={`slot-${day.date}-${slot.key}`}>
+          <time datetime={`${day.date}T${slot.start}`}>{slot.start}</time>
+          {slot.type !== 'session' && <span class="sched-slot-name">{slotNames[slot.type]}</span>}
+        </h3>
+        {slot.type === 'session' && (
+          <ul class="sched-cards" role="list">
+            {slot.sessions.map((s: SessionView) => (
+              <ScheduleCard session={s} dataFileUrl={day.dataFileUrl} />
+            ))}
+          </ul>
+        )}
+      </div>
+    ))
+  }
+</div>

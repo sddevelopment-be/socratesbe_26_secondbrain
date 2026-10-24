@@ -1,0 +1,39 @@
+---
+/**
+ * Layout for `kind: Schedule` pages. The page's own intro (the Markdown body)
+ * comes first, then the schedule, rendered from the one view model.
+ * No data logic lives here: see src/lib/schedule/view.mjs.
+ */
+import { getScheduleView } from '../lib/schedule/source';
+import ScheduleList from './ScheduleList.astro';
+import ScheduleSections from './ScheduleSections.astro';
+import ScheduleTable from './ScheduleTable.astro';
+import DaySwitcher from './DaySwitcher.astro';
+
+const view = await getScheduleView();
+const slackUrl = 'https://socratesbe.org/slack/';
+---
+
+<slot />
+<div data-schedule class="not-content">
+  <DaySwitcher days={view.days} />
+  {
+    view.days.map((day) => (
+      <section class="sched-day" data-day={day.date} aria-labelledby={`day-${day.date}`}>
+        <h2 id={`day-${day.date}`}>
+          {day.weekday} <time class="sched-date" datetime={day.date}>{day.dateLabel}</time>
+        </h2>
+        <p class="sched-snapshot">
+          Transcribed from the board at {day.snapshot.time} on <time datetime={day.snapshot.date}>{day.snapshot.dateLabel}</time>. The board in the venue is
+          authoritative.
+        </p>
+        <ScheduleTable day={day} rooms={view.rooms} />
+        <ScheduleList day={day} />
+        <ScheduleSections day={day} />
+      </section>
+    ))
+  }
+  <p class="sched-slack">
+    No GitHub account? Post your notes in the <a href={slackUrl}>SoCraTes Slack</a> and someone will open the pull request.
+  </p>
+</div>

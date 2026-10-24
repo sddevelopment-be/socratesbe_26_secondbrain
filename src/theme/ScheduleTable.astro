@@ -1,0 +1,79 @@
+---
+/** The wide-screen layout: one table per day, rooms across, slots down. No JavaScript. */
+import type { DayView, SlotView, SessionView } from '../lib/schedule/view.mjs';
+
+const { day, rooms } = Astro.props as { day: DayView; rooms: { key: string; name: string; facts: string[] }[] };
+const slotNames = { lunch: 'Lunch', closing: 'Closing', dinner: 'Dinner' } as Record<string, string>;
+const inRoom = (slot: SlotView, key: string): SessionView[] =>
+  slot.sessions.filter((s) => s.location.kind === 'room' && s.location.room.key === key);
+---
+
+<div class="sched-table-wrap not-content" role="region" aria-labelledby={`cap-${day.date}`} tabindex="0" data-layout="table" data-pagefind-ignore>
+  <table class="sched-table">
+    <caption id={`cap-${day.date}`}>Schedule for {day.weekday} {day.dateLabel}</caption>
+    <thead>
+      <tr>
+        <td></td>
+        {
+          rooms.map((room) => (
+            <th scope="col">
+              {room.name}
+              <span class="sched-room-facts">{room.facts.join(' · ')}</span>
+            </th>
+          ))
+        }
+      </tr>
+    </thead>
+    <tbody>
+      {
+        day.slots.map((slot: SlotView) => (
+          <tr data-slot-type={slot.type}>
+            <th scope="row">
+              <time datetime={`${day.date}T${slot.start}`}>{slot.start}</time>
+            </th>
+            {slot.type === 'session' ? (
+              rooms.map((room) => {
+                const sessions = inRoom(slot, room.key);
+                return (
+                  <td>
+                    {sessions.length > 0 && (
+                      <ul role="list">
+                        {sessions.map((s) => (
+                          <li data-session-id={s.id} data-note-state={s.note.state} data-note-id={s.note.state === 'published' ? s.id : undefined}>
+                            <span class="sched-table-title">{s.title}</span>
+                            {s.uncertain && <span class="sched-table-uncertain">partly unreadable — <a href={day.dataFileUrl}>correct it<span class="sr-only"> for {s.title}</span></a></span>}
+                            {s.note.state === 'published' ? (
+                              <a class="sched-table-action sched-note--read" href={s.note.href}>
+                                Read the notes<span class="sr-only"> for {s.title}</span>
+                              </a>
+                            ) : (
+                              <span class="sched-table-actions">
+                                <a class="sched-table-action sched-note--start" href={s.startNotes.url}>
+                                  Start the notes<span class="sr-only"> for {s.title} (on GitHub, sign-in needed)</span>
+                                </a>
+                                <a class="sched-table-action sched-table-fallback" href={s.fallback.templateUrl}>
+                                  template<span class="sr-only">: Copy the template for {s.title}</span>
+                                </a>
+                                <a class="sched-table-action sched-table-fallback" href={s.fallback.guideHref}>
+                                  guide<span class="sr-only">: Read the guide for {s.title}</span>
+                                </a>
+                              </span>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </td>
+                );
+              })
+            ) : (
+              <td colspan={rooms.length} class="sched-table-break">
+                {slotNames[slot.type]}
+              </td>
+            )}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

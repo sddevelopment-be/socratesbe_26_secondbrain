@@ -1,0 +1,24 @@
+---
+/** Board sections (lunch tables, outside, evening, other): one block per day, visible at every width. */
+import ScheduleCard from './ScheduleCard.astro';
+import type { DayView, SectionView, SessionView } from '../lib/schedule/view.mjs';
+
+const { day } = Astro.props as { day: DayView };
+---
+
+{
+  day.sections.length > 0 && (
+    <div class="sched-sections" data-layout="sections">
+      {day.sections.map((section: SectionView) => (
+        <div class="sched-slot sched-section" data-section={section.key}>
+          <h3 id={`section-${day.date}-${section.key}`}>{section.heading}</h3>
+          <ul class="sched-cards" role="list">
+            {section.sessions.map((s: SessionView) => (
+              <ScheduleCard session={s} dataFileUrl={day.dataFileUrl} />
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  )
+}

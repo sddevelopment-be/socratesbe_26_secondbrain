@@ -19,7 +19,9 @@ kitty-specs/*/.kittify/dossiers/
 
 # Docsite build output and dependencies
 node_modules/
+node_modules
 dist/
+dist-fixture/
 .astro/
 .env
 .env.local

@@ -1,0 +1,22 @@
+---
+/** Day links, newest first. Nothing at all for a single day. */
+import type { DayView } from '../lib/schedule/view.mjs';
+
+const { days } = Astro.props as { days: DayView[] };
+const ordered = days; // the view model already lists days newest first
+---
+
+{
+  ordered.length >= 2 && (
+    <ul class="sched-days" role="list" aria-label="Days">
+      {ordered.map((d, i) => (
+        <li>
+          <a href={`#day-${d.date}`} aria-current={i === 0 ? 'page' : undefined}>
+            {d.weekday} {d.dateLabel}
+            {i === 0 && <span class="sched-days-first"> (shown first)</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
