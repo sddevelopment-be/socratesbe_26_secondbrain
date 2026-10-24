@@ -1,0 +1,13 @@
+rooms:
+  - key: "sambre-meuse"
+    name: "Sambre / Meuse"
+    size: "XL"
+    equipment: ["projector", "screen"]
+  - key: "ourthe"
+    name: "Ourthe"
+    size: "L"
+    equipment: ["projector"]
+  - key: "lesse"
+    name: "Lesse"
+    size: "S"
+    equipment: []
