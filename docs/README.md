@@ -48,5 +48,7 @@ site navigation and the agent API, so one write serves both audiences.
 - [Sessions](./sessions/README.md): notes from the marketplace sessions.
 - [Ideas](./ideas/README.md): proposals and open questions that are not
   sessions yet.
+- [Sharing Stuff](./sharing/README.md): pinboards for books, movies, kudos
+  and impressions.
 - [Contribute](./guides/README.md): how to add a page, by hand or with an agent.
 - [Decisions](./adr/README.md): why this site is built the way it is.

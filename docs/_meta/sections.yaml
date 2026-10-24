@@ -22,6 +22,12 @@ sections:
     feeds: [rss]
     purpose: Session proposals, open questions and follow-ups that are not sessions yet.
 
+  - id: sharing
+    label: Sharing Stuff
+    order: 35
+    type: Context
+    purpose: Pinboards for recommended books and movies, kudos and impressions of the unconference.
+
   - id: guides
     label: Contribute
     order: 40
