@@ -38,6 +38,12 @@ sections:
     type: Operations
     purpose: How this repository is run, so a crowd of people and agents can work on it safely.
 
+  - id: changelog
+    label: Changelog
+    order: 48
+    type: Operations
+    purpose: What changed on this site, newest first.
+
   - id: adr
     label: Decisions
     order: 50
