@@ -68,7 +68,7 @@ sessions:
     slot: "1140"
   - id: "2026-10-23-spec-kitty-workshop"
     title: "Spec Kitty workshop"
-    description: "w/ Mr Kitty (bring laptop)"
+    description: "With Spec Kitty founder/maintainer (bring laptop)"
     room: "semois"
     slot: "1140"
   - id: "2026-10-23-live-coding-ai-agent"
