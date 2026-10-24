@@ -1,0 +1,24 @@
+{
+  "created_at": "2026-10-24T12:11:01.158223+00:00",
+  "documentation_state": {
+    "coverage_percentage": 0.0,
+    "divio_types_selected": [],
+    "generators_configured": [],
+    "iteration_mode": "initial",
+    "last_audit_date": null,
+    "target_audience": "developers"
+  },
+  "flattened": false,
+  "friendly_name": "Spec Kitty lightning talk (mission run)",
+  "mid8": "01M5PX4K",
+  "mission_id": "01M5PX4K4R51QGVGAG74ZXA8B7",
+  "mission_number": null,
+  "mission_slug": "spec-kitty-lightning-talk-01M5PX4K",
+  "mission_type": "documentation",
+  "pr_bound": true,
+  "purpose_context": "A demo at SoCraTes BE 2026 explains Spec Kitty to developers, some new to AI agents. The same deliverable (a slide deck on the hub and a session page with recap skeleton and annotated references) was first made ad hoc; this mission produces it again through the documentation workflow so the two outputs and processes can be compared.",
+  "purpose_tldr": "Produce a 15-minute Spec Kitty talk and its session page through a governed documentation mission, for comparison with an earlier ad-hoc version.",
+  "slug": "spec-kitty-lightning-talk-01M5PX4K",
+  "target_branch": "feat/demo-mission",
+  "topology": "single_branch"
+}
