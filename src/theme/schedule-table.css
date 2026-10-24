@@ -128,13 +128,13 @@
   text-decoration: none;
 }
 
-[data-schedule] .sched-days a[aria-current='page'] {
+[data-schedule] .sched-days a.sched-days-latest {
   border-color: var(--sb-chip-bg);
   background: var(--sb-chip-bg);
   color: var(--sb-chip-text);
 }
 
-[data-schedule] .sched-days-first {
+[data-schedule] .sched-days-note {
   white-space: pre;
 }
 

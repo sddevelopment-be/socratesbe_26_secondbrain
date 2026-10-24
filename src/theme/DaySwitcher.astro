@@ -11,9 +11,9 @@ const ordered = days; // the view model already lists days newest first
     <ul class="sched-days" role="list" aria-label="Days">
       {ordered.map((d, i) => (
         <li>
-          <a href={`#day-${d.date}`} aria-current={i === 0 ? 'page' : undefined}>
+          <a href={`#day-${d.date}`} class={i === 0 ? 'sched-days-latest' : undefined}>
             {d.weekday} {d.dateLabel}
-            {i === 0 && <span class="sched-days-first"> (shown first)</span>}
+            {i === 0 && <span class="sched-days-note"> (latest)</span>}
           </a>
         </li>
       ))}
