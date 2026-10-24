@@ -52,7 +52,7 @@ const inRoom = (slot: SlotView, key: string): SessionView[] =>
                                   Start the notes<span class="sr-only"> for {s.title} (on GitHub, sign-in needed)</span>
                                 </a>
                                 <a class="sched-table-action sched-table-fallback" href={s.fallback.templateUrl}>
-                                  template<span class="sr-only">: Copy the template for {s.title}</span>
+                                  template (<code>{s.id}.md</code>)<span class="sr-only">: Copy the template for {s.title}</span>
                                 </a>
                                 <a class="sched-table-action sched-table-fallback" href={s.fallback.guideHref}>
                                   guide<span class="sr-only">: Read the guide for {s.title}</span>

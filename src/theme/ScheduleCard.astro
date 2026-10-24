@@ -38,13 +38,15 @@ const { session: s, dataFileUrl } = Astro.props;
           <a class="sched-note sched-note--start" href={s.startNotes.url}>
             Start the notes<span class="sr-only"> for {s.title} (on GitHub, sign-in needed)</span>
           </a>
-          <a class="sched-fallback" href={s.fallback.templateUrl}>
-            or copy the template<span class="sr-only"> for {s.title}</span>
-          </a>
-          <span class="sched-fallback-sep" aria-hidden="true">·</span>
-          <a class="sched-fallback" href={s.fallback.guideHref}>
-            read the guide<span class="sr-only"> for {s.title}</span>
-          </a>
+          <span class="sched-fallbacks">
+            <a class="sched-fallback" href={s.fallback.templateUrl}>
+              or copy the template into <code>{s.id}.md</code>
+              <span class="sr-only"> for {s.title}</span>
+            </a>
+            <a class="sched-fallback" href={s.fallback.guideHref}>
+              read the guide<span class="sr-only"> for {s.title}</span>
+            </a>
+          </span>
         </>
       )
     }

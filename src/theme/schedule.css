@@ -169,6 +169,18 @@
   font-size: 0.875rem;
 }
 
+/* The two fallbacks wrap as whole links, so no separator can start a line. */
+[data-schedule] .sched-fallbacks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.75rem;
+}
+
+[data-schedule] .sched-fallback code {
+  margin-inline-start: 0.25em;
+  font-size: 0.8125rem;
+}
+
 [data-schedule] .sched-slack {
   margin: 0;
   padding: 0.75rem 1rem;
