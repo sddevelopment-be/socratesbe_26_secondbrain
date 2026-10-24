@@ -1,0 +1,33 @@
+rooms:
+  - key: "sambre-meuse"
+    name: "Sambre / Meuse"
+    size: "XL"
+    equipment: ["projector"]
+  - key: "ourthe"
+    name: "Ourthe"
+    size: "XL"
+    equipment: ["projector"]
+  - key: "ambleve"
+    name: "Amblève"
+    size: "L"
+    equipment: ["screen"]
+  - key: "wamme"
+    name: "Wamme"
+    size: "S"
+    equipment: []
+  - key: "vesdre"
+    name: "Vesdre"
+    size: "S"
+    equipment: []
+  - key: "lesse"
+    name: "Lesse"
+    size: "L"
+    equipment: ["projector"]
+  - key: "semois"
+    name: "Semois"
+    size: "L"
+    equipment: ["projector"]
+  - key: "lhomme"
+    name: "Lhomme"
+    size: "S"
+    equipment: []
