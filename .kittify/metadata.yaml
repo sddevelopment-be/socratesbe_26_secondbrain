@@ -4,9 +4,9 @@
 
 spec_kitty:
   schema_version: 3
-  version: 4.0.0rc7
+  version: 4.0.0rc8
   initialized_at: '2026-10-23T07:38:33.400558+00:00'
-  last_upgraded_at:
+  last_upgraded_at: '2026-10-24T11:56:03.888492+00:00'
   schema_capabilities:
     canonical_context: true
     event_log_authority: true
@@ -16,5 +16,3 @@ environment:
   python_version: 3.13.12
   platform: linux
   platform_version: Linux-7.0.0-38-generic-x86_64-with-glibc2.39
-migrations:
-  applied: []

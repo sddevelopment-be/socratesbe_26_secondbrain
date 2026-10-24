@@ -89,17 +89,6 @@
       "tool_key": "claude"
     },
     {
-      "file_hash": "a0337cd1e459b583345c57c0a9bbfea3098e651b65919f356902fc3de0ae954a",
-      "format": "claude-agent",
-      "output_path": ".claude/agents/drupal-dries.md",
-      "profile_urn": "agent_profile:drupal-dries",
-      "projection_version": 1,
-      "source_hash": "4abc5883bfa67fa88ee24e852f7aa1ea004246209394d156bce021b69741bc72",
-      "source_layer": "built-in",
-      "source_path": "${SPEC_KITTY_PACKS_ROOT}/built-in/agent_profiles/drupal-dries.agent.yaml",
-      "tool_key": "claude"
-    },
-    {
       "file_hash": "3fc3010f5fe2498a164c0d4130200f93898865e1e0fad04ceb8e4ee4880c144f",
       "format": "claude-agent",
       "output_path": ".claude/agents/frontend-freddy.md",
@@ -130,17 +119,6 @@
       "source_hash": "d31147245e98b300125d966ea32f9ba411de0bab683774b4d4c0b190c70f99b2",
       "source_layer": "built-in",
       "source_path": "${SPEC_KITTY_PACKS_ROOT}/built-in/agent_profiles/implementer-ivan.agent.yaml",
-      "tool_key": "claude"
-    },
-    {
-      "file_hash": "11347576888da9dad7f6a6e5177691b99062f265c92ab3895ef55da461448470",
-      "format": "claude-agent",
-      "output_path": ".claude/agents/java-jenny.md",
-      "profile_urn": "agent_profile:java-jenny",
-      "projection_version": 1,
-      "source_hash": "5fe490e66479990ff03f6b66a5f4a2b8f07bd76fd191685df303088fbf4d824f",
-      "source_layer": "built-in",
-      "source_path": "${SPEC_KITTY_PACKS_ROOT}/built-in/agent_profiles/java-jenny.agent.yaml",
       "tool_key": "claude"
     },
     {
@@ -196,17 +174,6 @@
       "source_hash": "1fa915e4c9874cd8135d9a324d95ae55686f68895f7b827858cc98bf49db86d4",
       "source_layer": "built-in",
       "source_path": "${SPEC_KITTY_PACKS_ROOT}/built-in/agent_profiles/planner-priti.agent.yaml",
-      "tool_key": "claude"
-    },
-    {
-      "file_hash": "0020b8f701e2e8ed548264c9c178dd49f69f05803d93d4f306cb16abc49e990b",
-      "format": "claude-agent",
-      "output_path": ".claude/agents/python-pedro.md",
-      "profile_urn": "agent_profile:python-pedro",
-      "projection_version": 1,
-      "source_hash": "7184286bd3a7e781c593940a235fd4171647f89c60dfd201c3498bc48e1328ea",
-      "source_layer": "built-in",
-      "source_path": "${SPEC_KITTY_PACKS_ROOT}/built-in/agent_profiles/python-pedro.agent.yaml",
       "tool_key": "claude"
     },
     {
@@ -364,17 +331,6 @@
       "tool_key": "codex"
     },
     {
-      "file_hash": "7080a88c886c0c6a02e6818fa9b974df66544d54f9aae85b4bf740211708df0f",
-      "format": "codex-agent",
-      "output_path": ".codex/agents/drupal-dries.toml",
-      "profile_urn": "agent_profile:drupal-dries",
-      "projection_version": 1,
-      "source_hash": "4abc5883bfa67fa88ee24e852f7aa1ea004246209394d156bce021b69741bc72",
-      "source_layer": "built-in",
-      "source_path": "${SPEC_KITTY_PACKS_ROOT}/built-in/agent_profiles/drupal-dries.agent.yaml",
-      "tool_key": "codex"
-    },
-    {
       "file_hash": "3282d0824e984598e1df245de16f9e2da79f334daacbaa6b271b382a431bc6da",
       "format": "codex-agent",
       "output_path": ".codex/agents/frontend-freddy.toml",
@@ -405,17 +361,6 @@
       "source_hash": "d31147245e98b300125d966ea32f9ba411de0bab683774b4d4c0b190c70f99b2",
       "source_layer": "built-in",
       "source_path": "${SPEC_KITTY_PACKS_ROOT}/built-in/agent_profiles/implementer-ivan.agent.yaml",
-      "tool_key": "codex"
-    },
-    {
-      "file_hash": "e6b5c65f759deff40c1f63b949d5b87d07e7053005084b661ab2442a6ab00d27",
-      "format": "codex-agent",
-      "output_path": ".codex/agents/java-jenny.toml",
-      "profile_urn": "agent_profile:java-jenny",
-      "projection_version": 1,
-      "source_hash": "5fe490e66479990ff03f6b66a5f4a2b8f07bd76fd191685df303088fbf4d824f",
-      "source_layer": "built-in",
-      "source_path": "${SPEC_KITTY_PACKS_ROOT}/built-in/agent_profiles/java-jenny.agent.yaml",
       "tool_key": "codex"
     },
     {
@@ -471,17 +416,6 @@
       "source_hash": "1fa915e4c9874cd8135d9a324d95ae55686f68895f7b827858cc98bf49db86d4",
       "source_layer": "built-in",
       "source_path": "${SPEC_KITTY_PACKS_ROOT}/built-in/agent_profiles/planner-priti.agent.yaml",
-      "tool_key": "codex"
-    },
-    {
-      "file_hash": "73552420ba82a229a73af6ad532791783db176cef231fe24c913779d0079976c",
-      "format": "codex-agent",
-      "output_path": ".codex/agents/python-pedro.toml",
-      "profile_urn": "agent_profile:python-pedro",
-      "projection_version": 1,
-      "source_hash": "7184286bd3a7e781c593940a235fd4171647f89c60dfd201c3498bc48e1328ea",
-      "source_layer": "built-in",
-      "source_path": "${SPEC_KITTY_PACKS_ROOT}/built-in/agent_profiles/python-pedro.agent.yaml",
       "tool_key": "codex"
     },
     {

@@ -12,14 +12,14 @@ sections:
     label: Sessions
     order: 20
     type: Context
-    feeds: [rss]
+    feeds: [sitemap, rss, llms, agent]
     purpose: Notes from marketplace sessions, written by the people who were there.
 
   - id: ideas
     label: Ideas
     order: 30
     type: Plan
-    feeds: [rss]
+    feeds: [sitemap, rss, llms, agent]
     purpose: Session proposals, open questions and follow-ups that are not sessions yet.
 
   - id: guides

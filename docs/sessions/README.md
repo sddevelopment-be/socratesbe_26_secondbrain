@@ -26,3 +26,5 @@ A note does not have to be complete. Publish what you have as a draft
 
 - [A second brain for humans and agents](./second-brain-for-humans-and-agents.md):
   the session that started this site.
+- [Your first Spec Kitty mission](./spec-kitty-first-mission.md): a
+  lightning talk on starting Spec Kitty in a new repository.
