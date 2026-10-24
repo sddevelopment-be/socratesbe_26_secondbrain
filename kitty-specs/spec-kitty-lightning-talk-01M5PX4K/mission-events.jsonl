@@ -1,2 +1,3 @@
 {"mission": "documentation", "payload": {"action": "discover", "agent": "claude", "decision_kind": "step", "mission_state": "discover", "result_input": "success", "wp_id": null}, "timestamp": "2026-10-24T12:12:19.093279+00:00", "type": "MissionNextInvoked"}
 {"mission": "documentation", "payload": {"action": "audit", "agent": "claude", "decision_kind": "step", "mission_state": "audit", "result_input": "success", "wp_id": null}, "timestamp": "2026-10-24T12:17:41.019734+00:00", "type": "MissionNextInvoked"}
+{"mission": "documentation", "payload": {"action": "design", "agent": "claude", "decision_kind": "step", "mission_state": "design", "result_input": "success", "wp_id": null}, "timestamp": "2026-10-24T12:24:36.452524+00:00", "type": "MissionNextInvoked"}
