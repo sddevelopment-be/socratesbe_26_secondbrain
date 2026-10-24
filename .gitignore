@@ -14,6 +14,7 @@
 .kittify/sync-state.json
 .kittify/workspaces/
 .worktrees/
+.claude/worktrees/
 kitty-ops/ops-index.jsonl
 kitty-specs/*/.kittify/dossiers/
 
