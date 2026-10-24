@@ -13,12 +13,14 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "node scripts/check-theme-literals.mjs && astro check",
+    "check:schedule": "node scripts/check-schedule.mjs",
+    "test": "node --test \"tests/**/*.test.mjs\"",
     "validate": "dockitty-validate-frontmatter docs",
     "links": "dockitty-check-links docs --strict",
     "new": "dockitty-new-doc",
     "lint:md": "markdownlint-cli2",
     "spell": "cspell --no-progress",
-    "check:dist": "dockitty-assert-no-broken-links dist --base /socratesbe_26_secondbrain --site https://sddevelopment-be.github.io && node scripts/check-md-views.mjs dist https://sddevelopment-be.github.io/socratesbe_26_secondbrain && node scripts/check-yaml-views.mjs dist"
+    "check:dist": "dockitty-assert-no-broken-links dist --base /socratesbe_26_secondbrain --site https://sddevelopment-be.github.io && node scripts/check-md-views.mjs dist https://sddevelopment-be.github.io/socratesbe_26_secondbrain && node scripts/check-yaml-views.mjs dist && node scripts/check-schedule-dist.mjs dist"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.3",

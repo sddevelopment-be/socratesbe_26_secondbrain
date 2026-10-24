@@ -35,7 +35,7 @@ export const socratesTheme: DocKittyTheme = {
     '--dk-radius-lg': '0.75rem',
     '--dk-radius-pill': '50px',
   },
-  customCss: ['./src/theme/socrates.css', './src/theme/chrome.css'],
+  customCss: ['./src/theme/socrates.css', './src/theme/chrome.css', './src/theme/schedule.css', './src/theme/schedule-table.css'],
   assets: {
     // A served path, not a file path: the toolkit hands any value starting
     // with '/' straight to Starlight as a URL. The file lives in public/.
@@ -47,6 +47,8 @@ export const socratesTheme: DocKittyTheme = {
     'dk:site-header': here('./SiteHeader.astro'),
     'dk:site-footer': here('./SiteFooter.astro'),
   },
+  // The toolkit's `Kind` type is closed; its runtime accepts any kind name.
+  layouts: { Schedule: here('./ScheduleLayout.astro') } as unknown as DocKittyTheme['layouts'],
 };
 
 export default socratesTheme;

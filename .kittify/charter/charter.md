@@ -44,7 +44,11 @@ Before merge, a change passes:
 
 - `pnpm validate`: frontmatter against the convention;
 - `pnpm lint:md`: Markdown syntax;
-- `pnpm links` and `pnpm check:dist`: internal links, before and after the build;
+- `pnpm links` and `pnpm check:dist`: internal links, before and after the
+  build. `check:dist` also runs the post-build schedule check
+  (`scripts/check-schedule-dist.mjs`);
+- `pnpm check:schedule`: schedule data in `docs/_meta/schedule/`;
+- `pnpm test`: unit tests for the schedule logic;
 - `pnpm check`: type check;
 - `pnpm build`: a clean static build.
 

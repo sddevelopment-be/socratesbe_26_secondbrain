@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schedule-rooms.schema.json",
+  "title": "Event-wide rooms (docs/_meta/schedule/rooms.yaml)",
+  "description": "List order is the board's left-to-right order. Keys must be unique (enforced by scripts/check-schedule.mjs).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["rooms"],
+  "properties": {
+    "rooms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key", "name", "size", "equipment"],
+        "properties": {
+          "key": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "name": { "type": "string", "minLength": 1 },
+          "size": { "enum": ["XL", "L", "S"] },
+          "equipment": { "type": "array", "uniqueItems": true, "items": { "enum": ["projector", "screen"] } }
+        }
+      }
+    }
+  }
+}

@@ -12,14 +12,12 @@ sections:
     label: Sessions
     order: 20
     type: Context
-    feeds: [rss]
     purpose: Notes from marketplace sessions, written by the people who were there.
 
   - id: ideas
     label: Ideas
     order: 30
     type: Plan
-    feeds: [rss]
     purpose: Session proposals, open questions and follow-ups that are not sessions yet.
 
   - id: guides
@@ -39,6 +37,12 @@ sections:
     order: 47
     type: Operations
     purpose: How this repository is run, so a crowd of people and agents can work on it safely.
+
+  - id: changelog
+    label: Changelog
+    order: 48
+    type: Operations
+    purpose: What changed on this site, newest first.
 
   - id: adr
     label: Decisions

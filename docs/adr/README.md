@@ -18,3 +18,4 @@ sidebar:
 | ADR | Decision | Status |
 |---|---|---|
 | [0001](./0001-dockitty-for-the-second-brain.md) | Build the second brain with DocKitty | Accepted |
+| [0003](./0003-schedule-as-structured-data.md) | Keep the schedule as structured data | Accepted |

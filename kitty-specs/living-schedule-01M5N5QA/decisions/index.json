@@ -1,0 +1,102 @@
+{
+  "entries": [
+    {
+      "created_at": "2026-10-23T20:02:48.588927Z",
+      "decision_id": "01M5N5QR4CVZVCBETCWGMVFZ11",
+      "final_answer": "Publish on merge: the note template sets doc_status: active and PR review is the gate; the schedule shows 'Read the notes' or 'Start the notes'.",
+      "input_key": "notes_lifecycle",
+      "mission_id": "01M5N5QABQRXVQ29J25ZQZ28MN",
+      "mission_slug": "living-schedule-01M5N5QA",
+      "opened_by": "cli",
+      "options": [
+        "Publish on merge (template prefills active)",
+        "Three states incl. draft in progress",
+        "Other"
+      ],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "When a session note is merged, does it appear on the site straight away, or can it be merged as a draft that the schedule shows as 'notes in progress'?",
+      "rationale": null,
+      "resolved_at": "2026-10-23T20:04:11.016302Z",
+      "resolved_by": null,
+      "slot_key": "specify.notes.lifecycle",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-23T20:04:12.855106Z",
+      "decision_id": "01M5N5TADQ7KC0QP8526PDDQ5F",
+      "final_answer": "Drop both: sticky colours and the framed outline are decoration of the physical wall and are not transcribed.",
+      "input_key": "board_markers",
+      "mission_id": "01M5N5QABQRXVQ29J25ZQZ28MN",
+      "mission_slug": "living-schedule-01M5N5QA",
+      "opened_by": "cli",
+      "options": [
+        "Neither: drop both",
+        "They mean something (describe)",
+        "Other"
+      ],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "Do the board's sticky colours or 'framed' outline carry a meaning the schedule should keep?",
+      "rationale": null,
+      "resolved_at": "2026-10-23T20:04:31.043276Z",
+      "resolved_by": null,
+      "slot_key": "specify.board.markers",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-23T20:04:32.970762Z",
+      "decision_id": "01M5N5TY2A3WY1YD0Q1W4FS4Z2",
+      "final_answer": "Multi-day ready data and pages; only the Friday 23 October board is transcribed; a day switcher appears once a second day exists; slot jump links, no live now/next highlight; fully static.",
+      "input_key": "first_release_scope",
+      "mission_id": "01M5N5QABQRXVQ29J25ZQZ28MN",
+      "mission_slug": "living-schedule-01M5N5QA",
+      "opened_by": "cli",
+      "options": [
+        "Multi-day data model, Friday only, no now/next",
+        "Plus now/next as JS enhancement",
+        "Other"
+      ],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "What does the first release cover beyond the Friday board: multi-day support and a live now/next highlight?",
+      "rationale": null,
+      "resolved_at": "2026-10-23T20:13:47.960998Z",
+      "resolved_by": null,
+      "slot_key": "specify.scope.first-release",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-23T20:13:49.819434Z",
+      "decision_id": "01M5N6BXVVMC1A86W5XVGPT3NT",
+      "final_answer": "Slack fallback: the schedule and hub tell people without GitHub to post notes in the SoCraTes Slack; a maintainer opens the PR.",
+      "input_key": "no_github_path",
+      "mission_id": "01M5N5QABQRXVQ29J25ZQZ28MN",
+      "mission_slug": "living-schedule-01M5N5QA",
+      "opened_by": "cli",
+      "options": [
+        "Slack fallback: post notes, a maintainer opens the PR",
+        "GitHub only",
+        "Other"
+      ],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "How can a participant without a GitHub account contribute notes?",
+      "rationale": null,
+      "resolved_at": "2026-10-23T20:14:15.372911Z",
+      "resolved_by": null,
+      "slot_key": "specify.contribution.no-github",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    }
+  ],
+  "mission_id": "01M5N5QABQRXVQ29J25ZQZ28MN",
+  "version": 1
+}

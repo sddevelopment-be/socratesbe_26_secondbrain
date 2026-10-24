@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "api-schedule.schema.json",
+  "title": "GET {base}/api/schedule.json — the machine-readable schedule",
+  "description": "Generated at build time from docs/_meta/schedule/*.yaml. Days are ordered newest first (the order the page shows them). note.url is present only for sessions with a published session note. The set of session ids and note states/targets must equal those on the schedule page and in its .md view (parity check).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "page",
+    "rooms",
+    "days"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "page": {
+      "type": "string",
+      "format": "uri",
+      "description": "Absolute URL of the human schedule page"
+    },
+    "rooms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "name",
+          "size",
+          "equipment"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "size": {
+            "enum": [
+              "XL",
+              "L",
+              "S"
+            ]
+          },
+          "equipment": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "projector",
+                "screen"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "days": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "date",
+          "snapshot",
+          "timezone",
+          "slots",
+          "sessions"
+        ],
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "snapshot": {
+            "type": "string"
+          },
+          "timezone": {
+            "const": "Europe/Brussels"
+          },
+          "slots": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "key",
+                "start",
+                "type"
+              ],
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "start": {
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "session",
+                    "lunch",
+                    "closing",
+                    "dinner"
+                  ]
+                }
+              }
+            }
+          },
+          "sessions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "title",
+                "uncertain",
+                "note"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "room": {
+                  "type": "string"
+                },
+                "place": {
+                  "type": "string"
+                },
+                "slot": {
+                  "type": "string"
+                },
+                "section": {
+                  "enum": [
+                    "lunch-tables",
+                    "outside",
+                    "evening",
+                    "other"
+                  ]
+                },
+                "start": {
+                  "type": "string"
+                },
+                "uncertain": {
+                  "type": "boolean"
+                },
+                "note": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "state",
+                    "id"
+                  ],
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "published",
+                        "none"
+                      ]
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "Absolute URL of the published session note; present only when state is published"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

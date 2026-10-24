@@ -1,0 +1,359 @@
+{
+  "mission_slug": "living-schedule-01M5N5QA",
+  "mission_number": "",
+  "mission_type": "",
+  "overall_verdict": "pass",
+  "criteria": [
+    {
+      "criterion_id": "FR-001",
+      "description": "Verify FR-001 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "docs/_meta/schedule/rooms.yaml (key,name,size,equipment; list order = board order) + 2026-10-23.yaml (date, snapshot 21:47, typed slots, sessions); validated by src/lib/schedule/model.mjs; pnpm check:schedule OK (49 sessions, 1 day, 8 rooms)",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:01:57.641286+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-001a",
+      "description": "Verify FR-001a is satisfied",
+      "proof_type": "automated_test",
+      "evidence": "model.mjs SESSION_FIELDS allow-list, TITLE_MAX 100/DESCRIPTION_MAX 140 in code points; pnpm test 'must fail: d: title of 101 code points', 'h: both room and place', 'i: extra field'; probe: 140-cp description ok, 141 -> [d], convener field -> [i]",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:00.091717+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-001b",
+      "description": "Verify FR-001b is satisfied",
+      "proof_type": "automated_test",
+      "evidence": "pnpm test 'formIdentity: FR-001b rule' + 'must fail: f: identity breaks the rule/impossible date/61 characters'; formIdentity reproduces all 49 real ids (0 mismatches)",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:02.527204+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-002",
+      "description": "Verify FR-002 is satisfied",
+      "proof_type": "automated_test",
+      "evidence": "pnpm test board.test.mjs 'the real Friday board has the counts' (49; 35 grid; 2/1@17:30/4/7; 8 rooms; 10 slots); ids identical to kitty-specs identity-checklist.md (49/49 diff-clean)",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:04.981451+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-002a",
+      "description": "Verify FR-002a is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "2026-10-23.yaml: 2 cut-off stickies carry uncertain: true (no transcription notes in descriptions); 'Chaos to Order' kept in other with description '(Thursday)'; board test asserts exactly 2 uncertain",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:07.423807+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-003",
+      "description": "Verify FR-003 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "ScheduleTable.astro; playwright 1280px no-JS: table visible, 8 room columns in board order, 10 slot row headers, Lunch/Closing/Dinner colspan rows, multiple sessions per cell as list",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:09.963285+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-004",
+      "description": "Verify FR-004 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "ScheduleList/ScheduleCard.astro; playwright 375px (JS on/off): scrollWidth 375 = clientWidth, 49 visible cards each with title and room/place in same card, grouped by slot",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:12.410746+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-005",
+      "description": "Verify FR-005 is satisfied",
+      "proof_type": "build_check",
+      "evidence": "pnpm check:dist -> check-schedule-dist.mjs dist 'the schedule in dist passes (real build)' (checkNoJs vs control page, checkLayouts counts from data, checkLinks targets) + self-test 'every injected violation is detected'; tests/schedule/dist.test.mjs",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:14.994610+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-006",
+      "description": "Verify FR-006 is satisfied",
+      "proof_type": "automated_test",
+      "evidence": "view.mjs roomFacts; view.test 'room facts in words' (['L room','projector'], ['S room']); built table headers e.g. 'Wamme S room', 'Ourthe XL room \u00b7 projector'",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:17.428639+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-007",
+      "description": "Verify FR-007 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "ScheduleSections.astro after list/table (research.md implementation decision); playwright 1280px: sections visible with headings Lunch tables/Outside/Evening/Other / not yet scheduled; Run Session 'from 17:30'",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:19.896308+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-008",
+      "description": "Verify FR-008 is satisfied",
+      "proof_type": "automated_test",
+      "evidence": "board.test: exactly 2 uncertain and a '?' title not uncertain; model.test is-tdd-dead uncertain=false; built page shows 2x 'Partly unreadable on the board \u2014 correct it' linking the data file. Note: table cells do not render the flag (no uncertain session is timed today)",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:22.376653+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-009",
+      "description": "Verify FR-009 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "ScheduleList.astro .sched-jump: 10 plain #slot-* links at top of day (playwright 375px, all 44px tall); targets checked by check:dist. Caveat: jump list lives in the phone list and is hidden at >=64rem where the table shows the whole day",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:24.853742+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-010",
+      "description": "Verify FR-010 is satisfied",
+      "proof_type": "build_check",
+      "evidence": "node scripts/build-schedule-fixture.mjs && node scripts/check-schedule-dist.mjs dist-fixture --fixture -> passes; two-day fixture data only (scripts/fixtures/schedule/two-day), both days on one page",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:27.292130+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-010a",
+      "description": "Verify FR-010a is satisfied",
+      "proof_type": "build_check",
+      "evidence": "fixture build: checkFixturePage asserts switcher with 2 day links; Saturday 24 first with aria-current and '(shown first)'; real one-day dist: 0 occurrences of sched-days (no switcher)",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:29.753894+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-011",
+      "description": "Verify FR-011 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "ScheduleLayout.astro; built page: 'Transcribed from the board at 21:47 on 23 October 2026. The board in the venue is authoritative.'; view.test snapshot assertion",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:32.235791+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-012",
+      "description": "Verify FR-012 is satisfied",
+      "proof_type": "build_check",
+      "evidence": "fixture check: checkFixturePage asserts published + none states, published sentinel linked to built note page, draft sentinel shown as none; view.test 'a published note links to its page; a session without one gets a prefill URL'",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:34.762602+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-013",
+      "description": "Verify FR-013 is satisfied",
+      "proof_type": "automated_test",
+      "evidence": "pnpm test links.test 'prefill for #legacy: TDD & why? ... passes the real validator' (+3 titles), filename docs/sessions/<id>.md, updated = day; links.mjs fillTemplate does exactly two substitutions",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:37.250707+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-013a",
+      "description": "Verify FR-013a is satisfied",
+      "proof_type": "build_check",
+      "evidence": "ScheduleCard/ScheduleTable render template + guide links beside every Start link; check:dist checkLinks + self-test passes on real build",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:39.702816+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-013b",
+      "description": "Verify FR-013b is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "docs/development/schedule-prefill-evidence.md lists the three runs (desktop write access, fork flow, phone) with a 'Prefill survived' column; outcomes deferred to open issue #15 (gh issue view 15: OPEN)",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:42.145952+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-014",
+      "description": "Verify FR-014 is satisfied",
+      "proof_type": "automated_test",
+      "evidence": "pnpm test 'valid fixture: no findings' with 2026-10-22-moved-across-days in a 2026-10-23 slot and its published note; view.test 'a session moved across days keeps the id it was first given'",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:44.592022+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-014a",
+      "description": "Verify FR-014a is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "docs/guides/add-a-session-note.md 'Keep the schedule current' and AGENTS.md: never change id except to remove a participant name, rename the note file in the same PR; ADR-0003 consequences",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:47.031841+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-015",
+      "description": "Verify FR-015 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "docs/_meta/templates/session-note.md: TL;DR, What we discussed, Learnings, Open questions and follow-ups, References, Write-ups; no-names comment at top; no convener heading; doc_status: active; commented authors with placeholder only",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:49.471170+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-016",
+      "description": "Verify FR-016 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "docs/sessions/README.md diff removes hand-kept 'Notes so far' and draft advice; built dist/sessions/index.html auto-lists second-brain-for-humans-and-agents and schedule (hub child)",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:51.918865+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-017",
+      "description": "Verify FR-017 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "lane-g 84a0425: home link 'See today's schedule' top 475/bottom 495 at 375x667 (playwright); hub 'See the schedule' at 360px; earlier fail recorded and fixed",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:orchestrator:acceptance",
+      "verified_at": "2026-10-24T12:07:28.308933+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-018",
+      "description": "Verify FR-018 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "Schedule page '.sched-slack' ('No GitHub account? Post your notes in the SoCraTes Slack...') and docs/sessions/README.md Slack sentence, both in built output",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:56.842845+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-019",
+      "description": "Verify FR-019 is satisfied",
+      "proof_type": "automated_test",
+      "evidence": "pnpm test: 'every FR-019 class has a must-fail patch' + 28 'must fail: <class>' tests asserting exactly one finding with class, file and line; valid fixture (published note + cross-day move) yields none; check.test exit codes",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:02:59.322785+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-019a",
+      "description": "Verify FR-019a is satisfied",
+      "proof_type": "build_check",
+      "evidence": "SCHEDULE_DATA_DIR=<empty dir> astro build -> exit 1 'Schedule data is invalid'; empty YAML files -> exit 1; valid data pnpm build exit 0; model.test 'loadSchedule throws ... unreadable and empty'",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:03:01.786920+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-020",
+      "description": "Verify FR-020 is satisfied",
+      "proof_type": "automated_test",
+      "evidence": "check.test 'every free-text value is in the proofreading list and the job summary (FR-020)' (marker per id/title/description/place/room name); real run prints '## Text to proofread for participant names'",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:03:04.274457+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-021",
+      "description": "Verify FR-021 is satisfied",
+      "proof_type": "build_check",
+      "evidence": "dist/api/schedule.json (schema_version, page, rooms, days[date,snapshot,timezone,slots,sessions w/ note]); checkApiShape + checkPaths in pnpm check:dist pass",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:03:06.761182+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-021a",
+      "description": "Verify FR-021a is satisfied",
+      "proof_type": "build_check",
+      "evidence": "dist/sessions/schedule.md/.json/.yaml each contain all 49 ids as text and link api/schedule.json (checkViewTokens + api-link checks in check:dist). Caveat: schedule page is not listed in llms.txt/api/index.json (pre-existing sections.yaml sessions feeds:[rss]); reachable via llms.txt -> Add a session note .md -> schedule.md",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:03:09.234372+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-021b",
+      "description": "Verify FR-021b is satisfied",
+      "proof_type": "build_check",
+      "evidence": "check-schedule-dist.mjs checkParity (html/api/md ids, note state and target vs data, non-empty) + checkPaths, passing in pnpm check:dist and fixture check; self-test detects injected violations",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:03:11.673954+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-022",
+      "description": "Verify FR-022 is satisfied",
+      "proof_type": "build_check",
+      "evidence": "fixture check: draft sentinel not linked from the schedule root and shown as none; checkSentinelAbsent on real dist; parity checks note targets only for published notes",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:03:14.127794+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-023",
+      "description": "Verify FR-023 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "docs/guides/add-a-session-note.md: start from schedule, template, publish on merge, Slack, existing note, no-names; step 4 and draft advice gone; AGENTS.md: session notes published on merge",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:03:16.608479+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-024",
+      "description": "Verify FR-024 is satisfied",
+      "proof_type": "automated_test",
+      "evidence": "check.test 'a date-prefixed note without a session warns; an undated note does not'; model.test 'orphanNotes lists date-prefixed notes'; real run: no warning for second-brain-for-humans-and-agents",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:03:19.058722+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    },
+    {
+      "criterion_id": "FR-025",
+      "description": "Verify FR-025 is satisfied",
+      "proof_type": "manual_inspection",
+      "evidence": "docs/adr/0003-schedule-as-structured-data.md; .kittify/charter/charter.md quality gates add pnpm check:schedule; AGENTS.md before-you-finish includes pnpm check:schedule and check:dist schedule check",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus:reviewer-renata:acceptance",
+      "verified_at": "2026-10-24T12:03:21.499942+00:00",
+      "notes": "TODO: replace with a real acceptance criterion"
+    }
+  ],
+  "negative_invariants": []
+}

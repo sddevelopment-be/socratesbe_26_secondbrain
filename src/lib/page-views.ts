@@ -17,6 +17,8 @@ import { pageSourceId, slugFromEntryId } from '@spec-kitty/doc-toolkit';
 import { agentPageRoute } from '@spec-kitty/doc-toolkit/routes';
 import { stringify } from 'yaml';
 import { YAML_OPTIONS } from './yaml-view-options.mjs';
+import { getScheduleView } from './schedule/source';
+import { scheduleMarkdown } from './schedule/text.mjs';
 
 const pageRoute = agentPageRoute();
 
@@ -92,6 +94,10 @@ export async function pageRecord(ctx: APIContext, view: View): Promise<PageRecor
     self,
     alternate: Object.values(others),
   };
+  // The schedule page is drawn from data, so its text views carry the data too.
+  if (slug === 'sessions/schedule') {
+    record.markdown = `${record.markdown ?? ''}\n\n${scheduleMarkdown(await getScheduleView(), siteRoot(ctx))}`;
+  }
   return record;
 }
 
