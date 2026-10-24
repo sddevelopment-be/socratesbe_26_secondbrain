@@ -2,12 +2,7 @@
 import { defineConfig } from 'astro/config';
 import { defineDocKittyIntegrations } from '@spec-kitty/doc-toolkit/config';
 import { socratesTheme } from './src/theme/index.ts';
-
-// GitHub Pages project site. For a custom domain, set SITE to it and BASE to ''.
-const OWNER = 'sddevelopment-be';
-const REPO = 'socratesbe_26_secondbrain';
-const SITE = `https://${OWNER}.github.io`;
-const BASE = `/${REPO}`;
+import { OWNER, REPO, SITE, BASE } from './site.config.mjs';
 
 export default defineConfig({
   site: SITE,
