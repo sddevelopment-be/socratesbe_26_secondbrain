@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schedule-day.schema.json",
+  "title": "One day of the SoCraTes BE 2026 schedule (docs/_meta/schedule/<YYYY-MM-DD>.yaml)",
+  "description": "Cross-reference rules (room keys exist, slot keys exist and are of type session, ids unique across days and note files, date equals file name, YAML 1.1/1.2 agreement, no draft note for a scheduled session) are enforced by scripts/check-schedule.mjs, not by this schema. Writing rules (no comments, quoted strings, bare booleans) are lexical and enforced by the check, not expressible here.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "date",
+    "snapshot",
+    "slots",
+    "sessions"
+  ],
+  "properties": {
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "snapshot": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T([01]\\d|2[0-3]):[0-5]\\d$",
+      "description": "Board snapshot, local time Europe/Brussels"
+    },
+    "slots": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "start",
+          "type"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start": {
+            "$ref": "#/$defs/time"
+          },
+          "type": {
+            "enum": [
+              "session",
+              "lunch",
+              "closing",
+              "dinner"
+            ]
+          }
+        }
+      }
+    },
+    "sessions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/session"
+      }
+    }
+  },
+  "$defs": {
+    "time": {
+      "type": "string",
+      "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+    },
+    "session": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 60,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}-[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Date prefix = day first added; not required to equal the containing file's date"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 140
+        },
+        "room": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "place": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "Display label, e.g. Outside"
+        },
+        "slot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "section": {
+          "enum": [
+            "lunch-tables",
+            "outside",
+            "evening",
+            "other"
+          ]
+        },
+        "start": {
+          "$ref": "#/$defs/time"
+        },
+        "uncertain": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "room"
+              ],
+              "not": {
+                "required": [
+                  "place"
+                ]
+              }
+            },
+            {
+              "required": [
+                "place"
+              ],
+              "not": {
+                "required": [
+                  "room"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "required": [
+                "slot"
+              ],
+              "not": {
+                "required": [
+                  "section"
+                ]
+              }
+            },
+            {
+              "required": [
+                "section"
+              ],
+              "not": {
+                "required": [
+                  "slot"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "if": {
+            "required": [
+              "start"
+            ]
+          },
+          "then": {
+            "required": [
+              "section"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

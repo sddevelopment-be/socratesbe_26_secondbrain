@@ -1,0 +1,200 @@
+{
+  "version": 1,
+  "mission_slug": "living-schedule-01M5N5QA",
+  "mission_id": "01M5N5QABQRXVQ29J25ZQZ28MN",
+  "mission_branch": "kitty/mission-living-schedule-01M5N5QA",
+  "target_branch": "feat/living-schedule",
+  "lanes": [
+    {
+      "lane_id": "lane-a",
+      "wp_ids": [
+        "WP01"
+      ],
+      "write_scope": [
+        "scripts/fixtures/schedule/patches.mjs",
+        "scripts/fixtures/schedule/valid/**",
+        "src/lib/schedule/model.mjs",
+        "tests/schedule/model.test.mjs"
+      ],
+      "predicted_surfaces": [
+        "api",
+        "artifact-rendering",
+        "tracker-integration"
+      ],
+      "depends_on_lanes": [],
+      "parallel_group": 0
+    },
+    {
+      "lane_id": "lane-c",
+      "wp_ids": [
+        "WP04"
+      ],
+      "write_scope": [
+        "astro.config.mjs",
+        "docs/_meta/templates/session-note.md",
+        "docs/development/schedule-prefill-evidence.md",
+        "site.config.mjs",
+        "src/lib/schedule/links.mjs",
+        "tests/schedule/links.test.mjs"
+      ],
+      "predicted_surfaces": [
+        "api",
+        "artifact-rendering",
+        "legacy-cleanup"
+      ],
+      "depends_on_lanes": [
+        "lane-a"
+      ],
+      "parallel_group": 1
+    },
+    {
+      "lane_id": "lane-planning",
+      "wp_ids": [
+        "WP02"
+      ],
+      "write_scope": [
+        "docs/_meta/schedule/2026-10-23.yaml",
+        "docs/_meta/schedule/rooms.yaml",
+        "kitty-specs/living-schedule-01M5N5QA/identity-checklist.md"
+      ],
+      "predicted_surfaces": [
+        "planning"
+      ],
+      "depends_on_lanes": [
+        "lane-a"
+      ],
+      "parallel_group": 1
+    },
+    {
+      "lane_id": "lane-b",
+      "wp_ids": [
+        "WP03"
+      ],
+      "write_scope": [
+        ".github/workflows/docsite.yml",
+        "package.json",
+        "scripts/check-schedule.mjs",
+        "tests/schedule/board.test.mjs",
+        "tests/schedule/check.test.mjs"
+      ],
+      "predicted_surfaces": [
+        "api",
+        "artifact-rendering"
+      ],
+      "depends_on_lanes": [
+        "lane-a",
+        "lane-planning"
+      ],
+      "parallel_group": 2
+    },
+    {
+      "lane_id": "lane-d",
+      "wp_ids": [
+        "WP05"
+      ],
+      "write_scope": [
+        "docs/sessions/schedule.md",
+        "scripts/check-theme-literals.mjs",
+        "src/lib/schedule/source.ts",
+        "src/lib/schedule/view.mjs",
+        "src/theme/ScheduleLayout.astro",
+        "src/theme/ScheduleList.astro",
+        "src/theme/index.ts",
+        "src/theme/schedule.css",
+        "tests/schedule/view.test.mjs"
+      ],
+      "predicted_surfaces": [
+        "api",
+        "app-shell",
+        "artifact-rendering",
+        "legacy-cleanup"
+      ],
+      "depends_on_lanes": [
+        "lane-a",
+        "lane-c",
+        "lane-planning"
+      ],
+      "parallel_group": 2
+    },
+    {
+      "lane_id": "lane-e",
+      "wp_ids": [
+        "WP06"
+      ],
+      "write_scope": [
+        "scripts/build-schedule-fixture.mjs",
+        "scripts/fixtures/schedule/two-day/**",
+        "src/theme/DaySwitcher.astro",
+        "src/theme/ScheduleTable.astro",
+        "src/theme/schedule-table.css"
+      ],
+      "predicted_surfaces": [
+        "api",
+        "app-shell",
+        "artifact-rendering",
+        "legacy-cleanup"
+      ],
+      "depends_on_lanes": [
+        "lane-d"
+      ],
+      "parallel_group": 3
+    },
+    {
+      "lane_id": "lane-g",
+      "wp_ids": [
+        "WP08"
+      ],
+      "write_scope": [
+        ".kittify/charter/charter.md",
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/adr/0003-schedule-as-structured-data.md",
+        "docs/adr/README.md",
+        "docs/guides/add-a-session-note.md",
+        "docs/sessions/README.md"
+      ],
+      "predicted_surfaces": [
+        "api",
+        "app-shell",
+        "artifact-rendering",
+        "legacy-cleanup"
+      ],
+      "depends_on_lanes": [
+        "lane-b",
+        "lane-d"
+      ],
+      "parallel_group": 3
+    },
+    {
+      "lane_id": "lane-f",
+      "wp_ids": [
+        "WP07"
+      ],
+      "write_scope": [
+        "scripts/check-schedule-dist.mjs",
+        "src/lib/page-views.ts",
+        "src/lib/schedule/text.mjs",
+        "src/pages/api/schedule.json.ts",
+        "tests/schedule/dist.test.mjs",
+        "tests/schedule/text.test.mjs"
+      ],
+      "predicted_surfaces": [
+        "api",
+        "app-shell",
+        "artifact-rendering"
+      ],
+      "depends_on_lanes": [
+        "lane-b",
+        "lane-d",
+        "lane-e"
+      ],
+      "parallel_group": 4
+    }
+  ],
+  "computed_at": "2026-10-23T20:46:37.207986+00:00",
+  "computed_from": "dependency_graph+ownership",
+  "planning_artifact_wps": [
+    "WP02"
+  ],
+  "planning_commit_sha": "b86342a98b7de4c0056c9af86f54ea8c17b528a5"
+}
