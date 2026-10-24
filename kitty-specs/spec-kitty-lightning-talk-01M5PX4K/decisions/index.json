@@ -1,0 +1,79 @@
+{
+  "entries": [
+    {
+      "created_at": "2026-10-24T12:12:43.696306Z",
+      "decision_id": "01M5PX7Q9GVCPVXCNWYXGCGSFC",
+      "final_answer": "Fresh research (fair comparison)",
+      "input_key": "research_baseline",
+      "mission_id": "01M5PX4K4R51QGVGAG74ZXA8B7",
+      "mission_slug": "spec-kitty-lightning-talk-01M5PX4K",
+      "opened_by": "cli",
+      "options": [
+        "Fresh research (fair comparison)",
+        "Reuse the earlier briefs",
+        "Fresh, then diff against the earlier briefs",
+        "Other"
+      ],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "Should the mission reuse the research briefs from the ad-hoc run, or research the sources fresh?",
+      "rationale": null,
+      "resolved_at": "2026-10-24T12:15:17.049763Z",
+      "resolved_by": null,
+      "slot_key": "specify.sources.research-baseline",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-24T12:12:45.489207Z",
+      "decision_id": "01M5PX7S1HR16PJ58JV6CMQHNY",
+      "final_answer": "Publish both (active, linked from hubs)",
+      "input_key": "publish_state",
+      "mission_id": "01M5PX4K4R51QGVGAG74ZXA8B7",
+      "mission_slug": "spec-kitty-lightning-talk-01M5PX4K",
+      "opened_by": "cli",
+      "options": [
+        "Publish both (active, linked from hubs)",
+        "Keep both as drafts",
+        "Other"
+      ],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "Should the mission's deck and session page be published (doc_status active, listed on the hub) or stay drafts?",
+      "rationale": null,
+      "resolved_at": "2026-10-24T12:15:19.189315Z",
+      "resolved_by": null,
+      "slot_key": "specify.scope.publish-state",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-24T12:12:47.313477Z",
+      "decision_id": "01M5PX7TTH1V72C6CNXN7VRCS7",
+      "final_answer": "Same audience",
+      "input_key": "audience_profile",
+      "mission_id": "01M5PX4K4R51QGVGAG74ZXA8B7",
+      "mission_slug": "spec-kitty-lightning-talk-01M5PX4K",
+      "opened_by": "cli",
+      "options": [
+        "Same audience",
+        "Adjust it",
+        "Other"
+      ],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "Is the audience the same as the ad-hoc run: developers (some daily agent users, some new or sceptical), 15-minute lightning slot, takeaways 'start tomorrow' and 'full lifecycle'?",
+      "rationale": null,
+      "resolved_at": "2026-10-24T12:15:21.017185Z",
+      "resolved_by": null,
+      "slot_key": "specify.audience.confirm",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    }
+  ],
+  "mission_id": "01M5PX4K4R51QGVGAG74ZXA8B7",
+  "version": 1
+}
