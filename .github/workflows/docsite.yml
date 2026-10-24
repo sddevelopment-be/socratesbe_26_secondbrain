@@ -136,7 +136,7 @@ jobs:
     name: Deploy to GitHub Pages
     # Pushes to main deploy; a manual run on main redeploys.
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: checks
+    needs: [checks, schedule-fixture]
     runs-on: ubuntu-latest
     permissions:
       pages: write
