@@ -58,3 +58,16 @@ excluded from every generated surface.
 - Raise upstream: P-02 (the documentation generate guard looks only under the
   mission folder) and the doc/CLI drift D-01 to D-08.
 - When 4.0 final ships, drop the release-candidate pin and the 3.2 `merge` note.
+
+## Post-mission revisions
+
+After acceptance, the maintainer asked for a narrative extension of the deck, run as governed ops rather than a new mission:
+
+| Op | Profile | Change |
+|---|---|---|
+| `01M5Q3REWFHA9ZXAY1998WYP0R` | researcher-robbie | facts R-60 to R-81 in `research.md` |
+| `01M5Q46J7Q2FJ37C5BY3MM9QVH` | reviewer-renata (squad: fact fidelity, audience and flow, terminology) | no must-fix fact errors; flow must-fix: commands in the concept sections, the charter used before its slide; terminology: lane, op, work package, charter/doctrine/pack synonyms |
+| `01M5Q4CRTFHD2638PJ4BSBMGSX` | comms-cleo | all squad findings folded: commands moved to notes and the how-to; generic labels on the overview; terms introduced before use; one name per concept (charter, doctrine, charter packs, work package, mission type, coding agent, governed op); slide density cut; section transitions; fact drifts corrected (plan outputs "where needed", the getting-started wording, orientation block, `.claude/` only, step-scoped context) |
+| `01M5Q42RH8S1AMSXQXWCMS6ETK` | comms-cleo | deck restructured from high level to detail: two questions; what makes a good prompt; how Spec Kitty helps (software-dev mission diagram); the charter system (layers, packs, mission types, roles, harnesses); three ways to work; how to start. Session page agenda updated. |
+
+Effect on the accepted spec: the deck now has 23 slides (NFR-001 allowed 16) with 14:40 of timed notes after remediation; the 15-minute limit still holds, and skipping the optional work-package slide gives 13:55. The slide-count deviation was accepted by the maintainer's request for the extra sections.

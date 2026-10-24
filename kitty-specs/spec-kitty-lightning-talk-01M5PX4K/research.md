@@ -94,3 +94,32 @@ read with `git show`); the public site and docs; the charter repository.
 | P-01 | A documentation mission blocked at its first step with `CHARTER_PREFLIGHT_FAILED: synthesized_drg missing`. `charter synthesize` refuses to write from a linked worktree. The seed artefacts were cherry-picked from another branch (`c5186ee`). Starting a first mission therefore needs `charter synthesize` in the root checkout (R-22). |
 | P-02 | The documentation runtime's generate guard looks for Markdown under `kitty-specs/<mission>/docs/`, not the repository's `docs/`. A project that publishes into its own site tree is blocked even when the pages exist. Recorded in `docs/generation-log.md`. |
 | P-03 | `spec-kitty upgrade` run inside a linked worktree wrote the worktree folder name (`demo-mission`) as the project name in the `AGENTS.md` orientation block; corrected by hand to `socratesbe-26-secondbrain`. |
+
+## Deck extension (governed Op 01M5Q3REWFHA9ZXAY1998WYP0R)
+
+Gathered 2026-10-24 for the narrative extension of the deck. `rc7:` = `git show v4.0.0rc7:<path>` in the local clone; CLI facts were checked on the public 4.0.0rc7.
+
+| ID | Fact | Source | Confidence |
+|---|---|---|---|
+| R-60 | "The specification answers: What are we building and why?" / "The plan answers: How will we build it?" | rc7:docs/architecture/spec-driven-development.md | docs (exact) |
+| R-61 | Specify focuses on WHAT users need and WHY, and avoids HOW (no tech stack, APIs, code structure). | `spec-kitty.specify` command template | CLI template |
+| R-62 | "It gives your agent a clear spec, a plan, and a checklist to work from — instead of a loose prompt and a hope." | https://docs.spec-kitty.ai/ | site (exact) |
+| R-63 | Good context engineering means "finding the smallest possible set of high-signal tokens"; prompts sit at the right altitude, between brittle hardcoded logic and vague guidance that falsely assumes shared context. | https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents | site (exact) |
+| R-64 | Context degrades as it grows ("context rot"); specialised sub-agents handle focused tasks with clean context windows. | same | site |
+| R-65 | The charter turns one machine-readable policy file into action-scoped context; "The agent does not invent governance; it reads and complies with what the charter says." | rc7:docs/context/charter-overview.md | docs (exact) |
+| R-66 | Doctrine is the layered, governed content that shapes how missions and agents behave (directives, tactics, styleguides, toolguides, paradigms, procedures, agent profiles). | rc7:docs/architecture/doctrine-kinds.md | docs |
+| R-67 | The charter offering has three layers: built-in (ships with the CLI), org (versioned remote packs, opt-in, fetched with `charter fetch`) and project (`.kittify/charter-packs/`, highest precedence). | rc7:docs/architecture/org-doctrine-layer.md; `charter fetch --help` | docs + CLI |
+| R-68 | Org packs let a company ship shared rules (e.g. a versioned security pack) without forking the CLI; `charter pack assemble` combines packs into one distributable. | org-doctrine-layer.md; `charter pack --help` | docs + CLI |
+| R-69 | A pack skill is one reviewed `<id>.skill.yaml`, so every configured agent tool gets the same skill; org packs can distribute skills. | rc7:docs/development/how-to/create-a-pack-skill.md | docs |
+| R-70 | `spec-kitty plugin build --target claude-code|codex` builds a plugin bundle with rendered command skills and agent profiles. | `plugin build --help` (rc7) | CLI |
+| R-71 | Mission types are configurable: four built-in (software-dev, research, documentation, plan, each with its own step sequence), plus custom types from project, org or user (`~/.kittify/missions/`) locations. | `mission list`; rc7:docs/api/missions.md | CLI + docs |
+| R-72 | software-dev steps: specify → plan → tasks → implement → review; analyse, accept and consolidate wrap around them. | `mission list --json`; R-31 to R-41 | CLI |
+| R-73 | Agent profiles give each role its own identity, routing and boundaries; 4.0.0rc7 lists 26 built-in profiles (e.g. researcher, architect, planner, implementer, reviewer). The docs say 18 (stale). | `profiles list` (rc7); rc7:docs/api/agent_profiles/index.md | CLI |
+| R-74 | A reviewer must differ from the latest implementer; a generic identity never counts as a reviewer. | rc7:docs/architecture/kanban-workflow.md | docs |
+| R-75 | "The agent that wrote the change is the one that says it's fine. Review becomes a rubber stamp at machine speed." | https://spec-kitty.ai/index.md | site (exact) |
+| R-76 | Commands are rendered from one shared template source and adapted per agent (Markdown, TOML or SKILL.md); "Spec Kitty maintains a single source of truth". | rc7:docs/architecture/ai-agent-architecture.md | docs (exact) |
+| R-77 | Agents can be added later with `spec-kitty agent config add`. | `agent config --help` (rc7) | CLI |
+| R-78 | Paths, lightest first: no Spec Kitty, an ad-hoc specialist session (`dispatch`), an adversarial squad, a full mission. "Choose the lightest path that still fits the work." | rc7:docs/guides/when-to-use-modes.md | docs (exact) |
+| R-79 | An Op creates no spec, branch or worktree; it routes to a profile, loads charter context, writes `kitty-ops/<id>.jsonl` and stays open until `profile-invocation complete`. | rc7:docs/context/ops-vs-missions.md | docs |
+| R-80 | "if you can describe the entire task in one sentence and expect it done in one sitting, it's an Op. If you'd naturally want to write a spec for it, or if \"let's continue this tomorrow\" makes sense, it's a Mission." | same | docs (exact) |
+| R-81 | Ad-hoc, interactive work can still use the charter: `spec-kitty charter context --action <action>` renders the governance for a step, and `init` writes an orientation block into the agent's instructions (e.g. `CLAUDE.md`) plus session-start and session-stop hooks. | `charter context --help`; this repo's `.claude/` | CLI + observed |
