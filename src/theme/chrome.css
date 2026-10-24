@@ -69,7 +69,8 @@ header.header {
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
-  padding: 0.35rem 0.8rem;
+  padding: 0.35rem 0.65rem;
+  white-space: nowrap;
   border-radius: var(--dk-radius-pill);
   /* Only what :hover changes; `all` would also fade the focus ring in. */
   transition:
