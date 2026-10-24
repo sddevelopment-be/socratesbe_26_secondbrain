@@ -83,3 +83,4 @@ read with `git show`); the public site and docs; the charter repository.
 | ID | Finding |
 |---|---|
 | P-01 | A documentation mission blocked at its first step with `CHARTER_PREFLIGHT_FAILED: synthesized_drg missing`. `charter synthesize` refuses to write from a linked worktree. The seed artefacts were cherry-picked from another branch (`c5186ee`). Starting a first mission therefore needs `charter synthesize` in the root checkout (R-22). |
+| P-02 | The documentation runtime's generate guard looks for Markdown under `kitty-specs/<mission>/docs/`, not the repository's `docs/`. A project that publishes into its own site tree is blocked even when the pages exist. Recorded in `docs/generation-log.md`. |
