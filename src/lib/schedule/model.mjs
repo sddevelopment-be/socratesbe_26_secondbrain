@@ -53,10 +53,10 @@ const ID_MAX = 60;
 const TITLE_MAX = 100;
 const DESCRIPTION_MAX = 140;
 const PLACE_MAX = 40;
-const SIZES = ['XL', 'L', 'S'];
-const EQUIPMENT = ['projector', 'screen'];
-const SLOT_TYPES = ['session', 'lunch', 'closing', 'dinner'];
-const SECTIONS = ['lunch-tables', 'outside', 'evening', 'other'];
+export const SIZES = ['XL', 'L', 'S'];
+export const EQUIPMENT = ['projector', 'screen'];
+export const SLOT_TYPES = ['session', 'lunch', 'closing', 'dinner'];
+export const SECTIONS = ['lunch-tables', 'outside', 'evening', 'other'];
 const SESSION_FIELDS = ['id', 'title', 'description', 'room', 'place', 'slot', 'section', 'start', 'uncertain'];
 
 const codePoints = (s) => [...s].length;

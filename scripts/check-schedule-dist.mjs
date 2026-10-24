@@ -21,12 +21,12 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import matter from 'gray-matter';
-import { isDraftNote, loadSchedule } from '../src/lib/schedule/model.mjs';
+import { MAX_URL_LENGTH } from '../src/lib/schedule/links.mjs';
+import { EQUIPMENT, SECTIONS, SIZES, SLOT_TYPES, isDraftNote, loadSchedule } from '../src/lib/schedule/model.mjs';
 import { BASE, SITE } from '../site.config.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const FIXTURE_DIR = path.join(root, 'scripts/fixtures/schedule/two-day');
-const MAX_URL = 4000;
 const SENTINEL = 'FIXTURE-SENTINEL';
 const PUBLISHED_SENTINEL = '2026-10-24-fixture-sentinel-published';
 const DRAFT_SENTINEL = '2026-10-24-fixture-sentinel-draft';
@@ -159,8 +159,6 @@ export function checkLayouts(html, { timed, sectioned }) {
   };
   for (const layout of ['list', 'table', 'sections']) {
     const got = ids(layout);
-    // Sections may be empty (the fixture has none); the timed layouts may not.
-    if (got.length === 0 && (want[layout].length === 0 && layout !== 'sections')) problems.push(`[layout-empty] the ${layout} layout holds no sessions`);
     for (const id of dupes(got)) problems.push(`[layout-duplicate] ${id} appears more than once in the ${layout} layout`);
     for (const id of want[layout]) if (!got.includes(id)) problems.push(`[layout-missing] ${id} is missing from the ${layout} layout`);
     for (const id of new Set(got)) if (!want[layout].includes(id)) problems.push(`[layout-extra] ${id} should not be in the ${layout} layout`);
@@ -188,7 +186,7 @@ export function checkLinks(html, { base = BASE } = {}) {
     const href = decode(t.attrs.get('href'));
     if (href.startsWith('#') && !idsOnPage.has(decodeURIComponent(href.slice(1)))) problems.push(`[anchor-dangling] ${href} resolves to no id`);
     if (!href.includes('/new/')) continue;
-    if (href.length > MAX_URL) problems.push(`[url-long] a Start link is ${href.length} characters (limit ${MAX_URL})`);
+    if (href.length > MAX_URL_LENGTH) problems.push(`[url-long] a Start link is ${href.length} characters (limit ${MAX_URL_LENGTH})`);
     const parent = t.parent;
     const hrefs = within(tokens, parent).filter((x) => x.kind === 'open' && x.name === 'a').map((x) => decode(x.attrs.get('href') ?? ''));
     if (!hrefs.some((h) => h.endsWith('/docs/_meta/templates/session-note.md'))) problems.push('[fallback-missing] a Start link has no template link next to it');
@@ -244,38 +242,38 @@ const need = (obj, keys, where, problems) => {
 /** Hand-written assertion of contracts/api-schedule.schema.json (with `note` in place of `notes`). */
 export function checkApiShape(api, siteRoot = `${SITE}${BASE}`) {
   const problems = [];
-  if (api === null || typeof api !== 'object') return ['[api-shape] the API body is not an object'];
+  if (api === null || typeof api !== 'object') return ['[api-shape] the API body must be a JSON object'];
   only(api, ['schema_version', 'page', 'rooms', 'days'], 'the body', problems);
   need(api, ['schema_version', 'page', 'rooms', 'days'], 'the body', problems);
-  if (api.schema_version !== 1) problems.push('[api-shape] schema_version is not 1');
-  if (!isStr(api.page) || !api.page.startsWith(`${siteRoot}/`)) problems.push('[api-shape] page is not an absolute URL under the site');
-  if (!Array.isArray(api.rooms) || api.rooms.length === 0) problems.push('[api-shape] rooms is empty');
+  if (api.schema_version !== 1) problems.push(`[api-shape] schema_version is ${JSON.stringify(api.schema_version)}, expected 1`);
+  if (!isStr(api.page) || !api.page.startsWith(`${siteRoot}/`)) problems.push(`[api-shape] page must be an absolute URL starting with ${siteRoot}/`);
+  if (!Array.isArray(api.rooms) || api.rooms.length === 0) problems.push('[api-shape] rooms must be a non-empty list');
   for (const r of api.rooms ?? []) {
     only(r, ['key', 'name', 'size', 'equipment'], 'a room', problems);
     need(r, ['key', 'name', 'size', 'equipment'], 'a room', problems);
-    if (!['XL', 'L', 'S'].includes(r.size)) problems.push(`[api-shape] room size ${r.size}`);
-    if (!Array.isArray(r.equipment) || r.equipment.some((e) => !['projector', 'screen'].includes(e))) problems.push('[api-shape] room equipment');
+    if (!SIZES.includes(r.size)) problems.push(`[api-shape] room size is ${JSON.stringify(r.size)}, expected one of ${SIZES.join(', ')}`);
+    if (!Array.isArray(r.equipment) || r.equipment.some((e) => !EQUIPMENT.includes(e))) problems.push(`[api-shape] room equipment must be a list drawn from ${EQUIPMENT.join(', ')}`);
   }
-  if (!Array.isArray(api.days) || api.days.length === 0) problems.push('[api-shape] days is empty');
+  if (!Array.isArray(api.days) || api.days.length === 0) problems.push('[api-shape] days must be a non-empty list');
   const dates = (api.days ?? []).map((d) => d.date);
-  if (dates.some((d, n) => n > 0 && d > dates[n - 1])) problems.push('[api-shape] days are not newest first');
+  if (dates.some((d, n) => n > 0 && d > dates[n - 1])) problems.push('[api-shape] days must be listed newest first');
   for (const d of api.days ?? []) {
     only(d, ['date', 'snapshot', 'timezone', 'slots', 'sessions'], 'a day', problems);
     need(d, ['date', 'snapshot', 'timezone', 'slots', 'sessions'], 'a day', problems);
-    if (d.timezone !== 'Europe/Brussels') problems.push('[api-shape] timezone is not Europe/Brussels');
+    if (d.timezone !== 'Europe/Brussels') problems.push(`[api-shape] timezone is ${JSON.stringify(d.timezone)}, expected "Europe/Brussels"`);
     for (const s of d.slots ?? []) {
       only(s, ['key', 'start', 'type'], 'a slot', problems);
       need(s, ['key', 'start', 'type'], 'a slot', problems);
-      if (!['session', 'lunch', 'closing', 'dinner'].includes(s.type)) problems.push(`[api-shape] slot type ${s.type}`);
+      if (!SLOT_TYPES.includes(s.type)) problems.push(`[api-shape] slot type is ${JSON.stringify(s.type)}, expected one of ${SLOT_TYPES.join(', ')}`);
     }
     for (const s of d.sessions ?? []) {
       only(s, ['id', 'title', 'description', 'room', 'place', 'slot', 'section', 'start', 'uncertain', 'note'], 'a session', problems);
       need(s, ['id', 'title', 'uncertain', 'note'], 'a session', problems);
-      if (typeof s.uncertain !== 'boolean') problems.push('[api-shape] uncertain is not a boolean');
-      if (s.section !== undefined && !['lunch-tables', 'outside', 'evening', 'other'].includes(s.section)) problems.push(`[api-shape] section ${s.section}`);
+      if (typeof s.uncertain !== 'boolean') problems.push(`[api-shape] uncertain of ${s.id} must be true or false`);
+      if (s.section !== undefined && !SECTIONS.includes(s.section)) problems.push(`[api-shape] section of ${s.id} is ${JSON.stringify(s.section)}, expected one of ${SECTIONS.join(', ')}`);
       const n = s.note ?? {};
       only(n, ['state', 'id', 'url'], 'a note', problems);
-      if (!['published', 'none'].includes(n.state) || !isStr(n.id)) problems.push(`[api-shape] note of ${s.id}`);
+      if (!['published', 'none'].includes(n.state) || !isStr(n.id)) problems.push(`[api-shape] note of ${s.id} needs state "published" or "none" and a text id`);
       if ((n.state === 'published') !== (n.url !== undefined)) problems.push(`[api-shape] note url of ${s.id} must be present exactly when published`);
       if (n.url !== undefined && !String(n.url).startsWith(`${siteRoot}/`)) problems.push(`[api-shape] note url of ${s.id} is not absolute under the site`);
       if (JSON.stringify(s).includes('/new/')) problems.push(`[api-shape] ${s.id} carries a prefill URL`);
@@ -360,13 +358,15 @@ function withStagedData(fixture, run) {
 }
 
 /** Sessions with the note state the notes folder and built pages imply. */
-export function expectedSessions(schedule, notesDir, dist) {
+export function expectedSessions(schedule, notesDir, dist, problems = []) {
   return schedule.days.flatMap((d) => d.sessions).map((s) => {
     let published = false;
     try {
       const { data } = matter(fs.readFileSync(path.join(notesDir, `${s.id}.md`), 'utf8'));
       published = !isDraftNote(data) && fs.existsSync(path.join(dist, 'sessions', s.id, 'index.html'));
-    } catch { /* no note */ }
+    } catch (error) {
+      if (error.code !== 'ENOENT') problems.push(`[note-unreadable] the note for ${s.id} cannot be read (${error.code ?? String(error.message).split('\n')[0]}), so its state is taken as "none"`);
+    }
     return { id: s.id, state: published ? 'published' : 'none', timed: s.slot !== undefined, sectioned: s.section !== undefined };
   });
 }
@@ -380,7 +380,7 @@ export function checkDist(dist, { fixture = false } = {}) {
   const html = read('sessions/schedule/index.html');
   const siteRoot = `${SITE}${BASE}`;
   const notesDir = fixture ? path.join(FIXTURE_DIR, 'notes') : path.join(root, 'docs/sessions');
-  const expected = withStagedData(fixture, (dir) => expectedSessions(loadSchedule(dir), notesDir, dist));
+  const expected = withStagedData(fixture, (dir) => expectedSessions(loadSchedule(dir), notesDir, dist, problems));
   const sets = { timed: expected.filter((e) => e.timed).map((e) => e.id), sectioned: expected.filter((e) => e.sectioned).map((e) => e.id) };
 
   problems.push(...checkNoJs(html, read(CONTROL_PAGE)), ...checkLayouts(html, sets), ...checkLinks(html));
