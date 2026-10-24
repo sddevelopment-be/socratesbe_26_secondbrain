@@ -24,4 +24,4 @@ notes**. Prefer to start from nothing? Follow
 your notes in the [SoCraTes Slack](https://socratesbe.org/slack/) and an
 organiser will add them.
 
-The notes already written are listed below, and the list updates itself.
+The pages in this section are listed below, and the list updates itself.
