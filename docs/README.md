@@ -10,13 +10,12 @@ authors:
   - agent:claude
 ---
 
-**[See today's schedule](./sessions/schedule.md)**
+<p class="sb-home-link"><a href="./sessions/schedule/">See the schedule</a></p>
 
 <div class="sb-hero">
   <h2>Learn, share, practice.<br />And write it down.</h2>
   <p>The shared memory of <strong>SoCraTes BE 2026</strong>: for software crafters, by software crafters, and readable by their agents too.</p>
   <a class="sb-cta" href="./sessions/">Browse sessions</a>
-  <a class="sb-cta" href="./sessions/schedule/">Schedule</a>
   <a class="sb-cta sb-cta--ghost" href="./guides/">Add your notes</a>
 </div>
 
