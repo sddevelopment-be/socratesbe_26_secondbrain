@@ -4,7 +4,8 @@ Gathered fresh on 2026-10-24 for FR-012 by two read-only researchers, with no
 reuse of the ad-hoc run's briefs (decision DM-01M5PX7Q9GVCPVXCNWYXGCGSFC).
 
 **Source authority, highest first**: the installed CLI (spec-kitty-cli
-4.0.0rc8, `--help` output); the local clone's newest docs tag (`v4.0.0rc7`,
+4.0.0rc8, `--help` output, re-checked on the public 4.0.0rc7 after decision
+DM-01M5PYY4HA569WK921Q6W6GFWR); the local clone's newest docs tag (`v4.0.0rc7`,
 read with `git show`); the public site and docs; the charter repository.
 
 **Confidence**: *CLI* = verified in `--help`; *docs* = documentation only;
@@ -26,7 +27,7 @@ read with `git show`); the public site and docs; the charter repository.
 | ID | Fact | Source | Confidence |
 |---|---|---|---|
 | R-10 | Prerequisites: Python 3.11+, Git, pipx, and a supported AI coding agent signed in with your own model account. | v4.0.0rc7:docs/guides/tutorials/getting-started.md; spec-kitty.ai/getting-started.md | docs |
-| R-11 | Install with `pipx install spec-kitty-cli`; a release candidate needs an exact pin such as `==4.0.0rc8`. | v4.0.0rc7:README.md | docs |
+| R-11 | Install with `pipx install spec-kitty-cli`; a release candidate needs an exact pin such as `==4.0.0rc7`. | v4.0.0rc7:README.md | docs |
 | R-12 | `spec-kitty init [name] --ai <keys>` initialises the current folder when no name is given; `--ai` takes comma-separated agent keys. | `init --help` | CLI |
 | R-13 | `init` creates `.kittify/` and the agent's command and skill folders (for example `.claude/`), and is safe to re-run. | `init --help` | CLI |
 | R-14 | `init` never touches Git: no repository, no commit. | `init --help` | CLI |
@@ -71,6 +72,7 @@ read with `git show`); the public site and docs; the charter repository.
 | R-48 | `charter generate` writes `charter.yaml` and auto-stages `.kittify/charter/charter.md`. | `charter generate --help`; scratch run in `docs/generation-log.md` | CLI |
 | R-49 | PyPI publishes stable 3.2.7 and pre-release 4.0.0rc7; 4.0.0rc8 is not on PyPI. `pipx install spec-kitty-cli` installs 3.2.7. | `pip index versions [--pre] spec-kitty-cli` | CLI |
 | R-50 | 3.2.7 has `merge` and `charter sync` but no `consolidate`; 4.0.0rc7 has `consolidate`, the charter interview/generate/synthesize/status commands, and no `charter sync`. | `--help` in throwaway virtualenvs | CLI |
+| R-51 | On 4.0.0rc7, `init` adds `.claude/` to `.gitignore`, so in an existing repository only `.kittify`, `.gitignore` and `.gitattributes` are committed. | scratch run, `docs/generation-log.md` | CLI (run) |
 
 ## Discrepancies (the CLI wins)
 
@@ -81,7 +83,7 @@ read with `git show`); the public site and docs; the charter repository.
 | D-03 | `spec-kitty implement WP##` moves to `doing` | `implement` is internal; `agent action implement` moves to in_progress | omit the internal command |
 | D-04 | "review" means per-WP review | `spec-kitty review` is the post-merge mission review | say "review a work package" vs "mission review" |
 | D-05 | Agent count "20+" (site), 16 or 17 (docs) | n/a | "over a dozen" |
-| D-06 | Docs show versions 3.1.5, 3.2, 4.0.0rc2 | 4.0.0rc8 | name 4.0.0rc8 |
+| D-06 | Docs show versions 3.1.5, 3.2, 4.0.0rc2 | 4.0.0rc8 locally; 4.0.0rc7 on PyPI | name 4.0.0rc7 (R-49) |
 | D-07 | Retrospective written "during merge" vs "at runtime terminus" | `mission close` saves it | "after landing" |
 | D-08 | `spec-kitty ops` sounds like Ops | it is Git reflog history | do not mention |
 
@@ -91,3 +93,4 @@ read with `git show`); the public site and docs; the charter repository.
 |---|---|
 | P-01 | A documentation mission blocked at its first step with `CHARTER_PREFLIGHT_FAILED: synthesized_drg missing`. `charter synthesize` refuses to write from a linked worktree. The seed artefacts were cherry-picked from another branch (`c5186ee`). Starting a first mission therefore needs `charter synthesize` in the root checkout (R-22). |
 | P-02 | The documentation runtime's generate guard looks for Markdown under `kitty-specs/<mission>/docs/`, not the repository's `docs/`. A project that publishes into its own site tree is blocked even when the pages exist. Recorded in `docs/generation-log.md`. |
+| P-03 | `spec-kitty upgrade` run inside a linked worktree wrote the worktree folder name (`demo-mission`) as the project name in the `AGENTS.md` orientation block; corrected by hand to `socratesbe-26-secondbrain`. |

@@ -80,15 +80,25 @@ Prerequisites: Python 3.11 or newer, pipx, Git, and a supported coding agent.
 
 ```sh
 pipx install "spec-kitty-cli==4.0.0rc7"   # add --force if you already have 3.x
+```
 
-# a new project
+For a new project:
+
+```sh
 spec-kitty init my-project --ai claude && cd my-project
 git init -b main && git add -A && git commit -m "init"
+```
 
-# or an existing repository: commit only the Spec Kitty files
+Or, in an existing repository, commit only the Spec Kitty files:
+
+```sh
 spec-kitty init --ai claude
 git add .kittify .gitignore .gitattributes && git commit -m "Add Spec Kitty"
+```
 
+Then, in either case:
+
+```sh
 git checkout -b first-mission
 spec-kitty verify-setup
 

@@ -17,7 +17,7 @@ stay deferred.
 
 ## Runnable-command evidence
 
-Run on 2026-10-24 with spec-kitty-cli 4.0.0rc8 in a throwaway directory
+First run on 2026-10-24 with the locally installed spec-kitty-cli 4.0.0rc8 in a throwaway directory
 outside the repository:
 
 | Command | Result |
@@ -30,9 +30,22 @@ outside the repository:
 | `spec-kitty charter synthesize` | wrote the synthesis artefacts and printed the files to commit |
 | `spec-kitty charter status` | charter source FRESH, synced bundle FRESH, synthesized DRG BUILT_IN_ONLY |
 
+### Re-run on the public release candidate 4.0.0rc7
+
+After decision DM-01M5PYY4HA569WK921Q6W6GFWR, in a throwaway virtualenv with
+`pip install "spec-kitty-cli==4.0.0rc7"`:
+
+| Path | Commands | Result |
+|---|---|---|
+| New project | `init my-project --ai claude`, `git init -b main`, `git add -A`, commit, `git checkout -b first-mission`, `verify-setup`, `charter interview --profile minimal --defaults`, `charter generate --from-interview`, `charter synthesize`, `charter status` | "All 74 files intact", "Verification complete"; charter source and bundle FRESH, DRG BUILT_IN_ONLY |
+| Existing repository (one commit, one uncommitted `wip.txt`) | `init --ai claude`; `git add .kittify .gitignore .gitattributes`; commit; `git checkout -b first-mission`; `verify-setup` | `.claude` is ignored by the new `.gitignore` (R-51); `wip.txt` stays uncommitted; "Verification complete" |
+
+On 3.2.7 (stable) `consolidate` does not exist and `merge` does; on
+4.0.0rc7 `consolidate` exists and `charter sync` does not (R-50).
+
 `--defaults` and `--non-interactive` were used only to run unattended; the
-deck shows the interactive forms. `pipx install` was not re-run (the CLI was
-already installed). The in-agent slash commands (specify onwards) are agent
+deck shows the interactive forms. `pipx` itself was not exercised: the rc7
+package was installed with `pip` into a virtualenv, which is the same package. The in-agent slash commands (specify onwards) are agent
 steps and were exercised by this mission itself.
 
 ## Claim trace

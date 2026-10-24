@@ -72,6 +72,56 @@
       "status": "resolved",
       "step_id": null,
       "summary_json": null
+    },
+    {
+      "created_at": "2026-10-24T12:42:26.730905Z",
+      "decision_id": "01M5PYY4HA569WK921Q6W6GFWR",
+      "final_answer": "Pin 4.0.0rc7",
+      "input_key": "cli_version",
+      "mission_id": "01M5PX4K4R51QGVGAG74ZXA8B7",
+      "mission_slug": "spec-kitty-lightning-talk-01M5PX4K",
+      "opened_by": "cli",
+      "options": [
+        "Pin 4.0.0rc7",
+        "Teach stable 3.2.7",
+        "Stable plus a note",
+        "Other"
+      ],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "Which Spec Kitty version should the talk teach, given 4.0.0rc8 is not on PyPI and stable 3.2.7 lacks consolidate?",
+      "rationale": null,
+      "resolved_at": "2026-10-24T12:42:28.952109Z",
+      "resolved_by": null,
+      "slot_key": "specify.scope.cli-version",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-24T12:42:31.183848Z",
+      "decision_id": "01M5PYY8WFF9CDWW17MTX6VQWT",
+      "final_answer": "Fold into this PR",
+      "input_key": "section_feeds",
+      "mission_id": "01M5PX4K4R51QGVGAG74ZXA8B7",
+      "mission_slug": "spec-kitty-lightning-talk-01M5PX4K",
+      "opened_by": "cli",
+      "options": [
+        "Separate PR",
+        "Fold into this PR",
+        "Leave as is",
+        "Other"
+      ],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "Fix sections.yaml feeds: [rss] (which hides Sessions and Ideas from llms.txt, the agent index and the sitemap) in this PR?",
+      "rationale": null,
+      "resolved_at": "2026-10-24T12:42:33.426749Z",
+      "resolved_by": null,
+      "slot_key": "specify.scope.section-feeds",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
     }
   ],
   "mission_id": "01M5PX4K4R51QGVGAG74ZXA8B7",

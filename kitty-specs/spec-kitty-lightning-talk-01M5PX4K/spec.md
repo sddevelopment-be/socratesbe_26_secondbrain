@@ -118,7 +118,7 @@ matters, and offers empty recap sections a participant can fill in.
 | ID | Requirement | Threshold | Status |
 |---|---|---|---|
 | NFR-001 | The talk fits the lightning slot. | Speaker-note timings total 15 minutes or less; at most 16 slides. | Proposed |
-| NFR-002 | Command accuracy. | 100% of commands shown on slides or the session page exist in spec-kitty-cli 4.0.0rc8. | Proposed |
+| NFR-002 | Command accuracy. | 100% of commands shown on slides or the session page exist in spec-kitty-cli 4.0.0rc7, the public release candidate (decision DM-01M5PYY4HA569WK921Q6W6GFWR; originally 4.0.0rc8, which is not on PyPI). | Proposed |
 | NFR-003 | Source traceability. | Every factual claim about Spec Kitty in the deliverables maps to at least one entry in the mission's research notes. | Proposed |
 | NFR-004 | Accessibility. | Every diagram has a title and a description; heading levels do not skip. | Proposed |
 | NFR-005 | Writing standard. | UK English; zero spelling issues in the project spell check. | Proposed |
@@ -165,8 +165,13 @@ matters, and offers empty recap sections a participant can fill in.
 
 - **ASM-001**: The presenter runs the deck from the hub (live site or a local preview).
 - **ASM-002**: The audience has a laptop and a supported coding agent; the talk does not cover choosing a model provider.
-- **ASM-003**: spec-kitty-cli 4.0.0rc8 is the version to describe; the local clone and the public docs may lag it.
+- **ASM-003**: spec-kitty-cli 4.0.0rc7, the public release candidate, is the version to teach (decision DM-01M5PYY4HA569WK921Q6W6GFWR); the local install is 4.0.0rc8, and the clone and public docs may lag both.
 - **ASM-004**: The session has not happened yet; the recap is filled in afterwards by participants.
+
+## Decisions after discover
+
+- DM-01M5PYY4HA569WK921Q6W6GFWR: teach the public release candidate 4.0.0rc7 (validate found that 4.0.0rc8 is not on PyPI and that the stable 3.2.7 lacks `consolidate`). Amends NFR-002 and ASM-003.
+- DM-01M5PYY8WFF9CDWW17MTX6VQWT: fold the `feeds: [rss]` fix for Sessions and Ideas into this pull request (validate found it hides those pages from `llms.txt`, the agent index and the sitemap). Widens scope by one configuration line.
 
 ## Out of Scope
 
