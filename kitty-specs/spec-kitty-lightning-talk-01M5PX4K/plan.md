@@ -83,7 +83,7 @@ workshop; the session page links to the official tutorials instead.
 ## Deck design
 
 Sectioned with `##` (→ skips a section) and `###` slides (↓). Every slide has
-a `Note:` with a timing. Budget: 14 slides, 14 min 15 s (NFR-001).
+a `Note:` with a timing. Budget: 14 slides, 13 min 15 s (NFR-001).
 
 | # | Slide | Purpose / Divio | Facts | Time |
 |---|---|---|---|---|

@@ -16,14 +16,16 @@ related:
 audience:
   - profile: participant
     guidance_text: >-
-      Developers: some use AI coding agents every day, others are new to
-      them or sceptical. Start with "Start tomorrow" for the commands, or
-      "The lifecycle at a glance" for the steps.
+      A 15-minute lightning talk for developers: some use AI coding agents
+      every day, others are new to them or sceptical. Start with "Start
+      tomorrow" for the commands, or "The lifecycle at a glance" for the
+      steps.
   - profile: agent
     guidance_text: >-
-      The commands were checked against spec-kitty-cli 4.0.0rc8 on
-      2026-10-24. Each reference carries a note on why it matters; cite the
-      reference URL, not this page, for Spec Kitty behaviour.
+      The commands were checked against spec-kitty-cli 4.0.0rc7, the public
+      release candidate, on 2026-10-24. Each reference carries a note on why
+      it matters; cite the reference URL, not this page, for Spec Kitty
+      behaviour.
 external_references:
   - type: tool
     id: spec-kitty
@@ -77,10 +79,16 @@ implementation; people decide what to build and make the final call.
 Prerequisites: Python 3.11 or newer, pipx, Git, and a supported coding agent.
 
 ```sh
-pipx install spec-kitty-cli
-spec-kitty init my-project --ai claude    # inside an existing repo: spec-kitty init --ai claude
-cd my-project
+pipx install "spec-kitty-cli==4.0.0rc7"   # add --force if you already have 3.x
+
+# a new project
+spec-kitty init my-project --ai claude && cd my-project
 git init -b main && git add -A && git commit -m "init"
+
+# or an existing repository: commit only the Spec Kitty files
+spec-kitty init --ai claude
+git add .kittify .gitignore .gitattributes && git commit -m "Add Spec Kitty"
+
 git checkout -b first-mission
 spec-kitty verify-setup
 
@@ -90,20 +98,23 @@ spec-kitty charter synthesize             # then commit the files it lists
 spec-kitty charter status
 ```
 
-`init` never creates a Git repository or a commit; specify needs both. Then,
-in your agent, run `/spec-kitty.specify` with one real backlog item.
+The exact pin matters: a plain `pipx install spec-kitty-cli` gives the stable
+3.2 line, where `consolidate` is still called `merge`. `init` never creates a
+Git repository or a commit; specify needs both. Then, in your agent, run
+`/spec-kitty.specify` with one real backlog item. These steps were checked on
+4.0.0rc7 on 24 October 2026.
 
 ## The lifecycle at a glance
 
 | Step | Command | Who decides | You get |
 |---|---|---|---|
 | specify | `/spec-kitty.specify` | you answer the interview | `spec.md`, requirements checklist |
-| plan | `/spec-kitty.plan` | you confirm the plan | `plan.md`, research, data model, contracts |
+| plan | `/spec-kitty.plan` | you confirm the plan | `plan.md`, plus research, data model, contracts where needed |
 | tasks | `/spec-kitty.tasks` | agent | `tasks.md`, one `tasks/WP…` file per work package |
 | implement | `spec-kitty next --agent <agent> --mission <mission>` | agent | changes in a worktree per lane |
 | review | `/spec-kitty.review` | a reviewer who is not the author | approved, or sent back with feedback |
 | accept | `spec-kitty accept` | you | a readiness check |
-| consolidate | `spec-kitty consolidate` | you | the work on your branch, worktrees cleaned up |
+| consolidate | `spec-kitty consolidate` | you run it, after accepting | the work on your local branch, worktrees cleaned up; the pull request is still yours to open |
 
 Too small for a mission? `spec-kitty dispatch "<request>"` runs a one-off
 request with the charter loaded and keeps a record.

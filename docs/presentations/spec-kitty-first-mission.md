@@ -23,8 +23,9 @@ audience:
   - profile: agent
     guidance_text: >-
       Slides and speaker notes are plain text. Every command was checked
-      against spec-kitty-cli 4.0.0rc8 on 2026-10-24; where the upstream docs
-      disagree with that version, the deck follows the installed CLI.
+      against spec-kitty-cli 4.0.0rc7, the public release candidate, on
+      2026-10-24; where the upstream docs disagree with that version, the
+      deck follows the CLI.
 external_references:
   - type: tool
     id: spec-kitty
@@ -41,7 +42,7 @@ sidebar:
   hidden: true
 ---
 
-Your first Spec Kitty mission. From an empty repository to a consolidated mission, in 15 minutes.
+Your first Spec Kitty mission. From an empty repository to a consolidated mission, in a 15-minute talk.
 
 Note: 0:30. Introduce yourself, then the pitch in the site's own words: your AI agents write the code, your people make the calls. The room has two halves: people who live in Claude Code or Codex, and people who have not let an agent near their code yet. Both get the same two promises: how to start tomorrow, and the whole lifecycle in one picture.
 
@@ -63,7 +64,7 @@ Note: 0:15. Optional section. If the room already writes specs first, press → 
 
 **Specs, plans, work packages and review state live next to the code.**
 
-Note: 1:30. The developers page puts it as: your agent asks first and writes a spec before it builds, then a separate reviewer checks the work against the spec and your rules. For the sceptics in the room: nothing here asks you to trust the agent more. It asks the agent to show its work, in files you can review like any pull request.
+Note: 1:30. The developers page puts it as: your agent asks first and writes a spec before it builds, then a separate reviewer checks the work against the spec and your rules. Two terms before we go on: a work package is one slice of the work; a worktree is a second checkout of the same repository, so two agents never edit the same files. For the sceptics in the room: nothing here asks you to trust the agent more. It asks the agent to show its work, in files you can review like any pull request.
 
 ## Start tomorrow
 
@@ -76,19 +77,23 @@ Note: 0:15. Core section. Do not skip.
 ### Install and initialise
 
 ```sh
-pipx install spec-kitty-cli
-spec-kitty init my-project --ai claude     # or, in a repo: spec-kitty init --ai claude
-cd my-project
+pipx install "spec-kitty-cli==4.0.0rc7"    # a release candidate needs the exact pin
 
+# a new project
+spec-kitty init my-project --ai claude && cd my-project
 git init -b main && git add -A && git commit -m "init"
-git checkout -b first-mission
-spec-kitty verify-setup
+
+# or an existing repository
+spec-kitty init --ai claude
+git add .kittify .gitignore .gitattributes && git commit -m "Add Spec Kitty"
+
+git checkout -b first-mission && spec-kitty verify-setup
 ```
 
 - `init` adds `.kittify/` and your agent's commands, for example `.claude/`.
 - **`init` never touches Git.** Without a first commit, specify fails.
 
-Note: 1:30. You need Python 3.11 or newer, pipx, Git, and a coding agent signed in with your own model account. Claude Code, Codex, Cursor, Copilot, Gemini and over a dozen more are supported; pass several as --ai claude,codex. Re-running init is safe. The Git warning is the one people hit first: init deliberately makes no commit, and specify needs one. This exact sequence was run on version 4.0.0rc8 the day before the talk.
+Note: 1:30. You need Python 3.11 or newer, pipx, Git, and a coding agent signed in with your own model account. Claude Code, Codex, Cursor, Copilot, Gemini and over a dozen more are supported; pass several as --ai claude,codex. Why the pin: a plain pipx install gives the stable 3.2 line, where consolidate is still called merge; this talk uses the 4.0 release candidate. If you already have 3.x, add --force. In an existing repository, commit only the Spec Kitty files, not your work in progress; init already keeps the agent folders out of Git. Both paths, and the charter steps on the next slide, were checked on 4.0.0rc7 on 24 October 2026.
 
 ### Give the repository a charter
 
@@ -99,13 +104,13 @@ spec-kitty charter synthesize                    # then commit what it lists
 spec-kitty charter status                        # everything fresh: you are ready
 ```
 
-> **People first.** Participant names are not added to the site.
+> **People first.** … Participant names are not added to the site.
 >
 > *This repository's charter*
 
-**The charter is the repository's rulebook. Spec Kitty feeds the relevant rules to the agent at every step.**
+**The charter is the repository's rulebook. Spec Kitty feeds the relevant rules to the agent at each governed step.**
 
-Note: 1:30. The charter holds purpose, principles, quality gates and review policy. The interview writes the answers to .kittify/charter/interview/answers.yaml; generate turns them into charter.yaml. Do not skip synthesize: a mission built for this very talk stopped at its first step because synthesis had not run. The example is from this site: one value statement that becomes a concrete review check. Upstream, a charter overhaul is being designed as a separate service with charter packs; it is an early build and not what you install today.
+Note: 1:30. The charter holds purpose, principles, quality gates and review policy. The interview writes the answers to .kittify/charter/interview/answers.yaml; generate turns them into charter.yaml and stages charter.md; synthesize prepares the charter for the runtime. Do not skip synthesize: a mission built for this very talk stopped at its first step because synthesis had not run. The example is from this site: one value statement that becomes a concrete review check. Upstream, a charter overhaul is being designed as a separate service with charter packs; it is an early build and not what you install today.
 
 ## The mission lifecycle
 
@@ -119,18 +124,18 @@ Note: 0:15. Core section, the heart of the talk.
 
 ```mermaid
 %% title: The Spec Kitty mission lifecycle
-%% description: You answer the specify interview and read the spec; the agent plans and splits the work into packages; agents implement each package; a separate reviewer approves it or sends it back; you accept the mission and consolidate it onto your branch.
+%% description: You answer the specify interview and read the spec; you confirm the plan; the agent splits the work into packages; agents implement each package; a separate reviewer approves it or sends it back; you accept the mission and consolidate it onto your branch.
 flowchart LR
-  S["specify<br/>(you answer)"] --> P[plan] --> T[tasks]
+  S["specify<br/>(you answer)"] --> P["plan<br/>(you confirm)"] --> T[tasks]
   T --> I[implement]
   I --> R["review<br/>(not the author)"]
   R -- changes needed --> I
   R -- approved --> A["accept<br/>(you decide)"] --> C[consolidate]
 ```
 
-Seven steps. You decide at three of them.
+Seven steps. You decide at three of them: specify, plan, accept.
 
-Note: 1:30. Walk it left to right. Specify and plan are interviews: the agent asks, you answer and confirm. Reading the spec is the cheapest review you will ever do, because no code exists yet. Review is done by someone other than the implementer, and accept is yours. The loop between implement and review is where agents do the heavy lifting.
+Note: 1:30. Walk it left to right. In specify the agent interviews you; in plan it asks its planning questions and waits for you to confirm the plan. Reading the spec is the cheapest review you will ever do, because no code exists yet. Review is done by someone other than the implementer, and accept is yours. The loop between implement and review is where agents do the heavy lifting.
 
 ### What each step leaves behind
 
@@ -152,7 +157,7 @@ Note: 1:30. Each specify run creates a new mission, so run it once and keep talk
 - `spec-kitty next` tells an agent the one next thing to do.
 - `/spec-kitty.status` shows the board: planned → in progress → for review → approved → done.
 
-Note: 1:30. Two meanings of "lane" trip people up: a status lane is a column on the board; an execution lane is a group of packages sharing one worktree. The runtime picks the worktree, not the agent. Daily agent users: this is what lets you run two or three agents at once without a merge fight.
+Note: 1:30. Two meanings of "lane" trip people up: a status lane is a column on the board; an execution lane is a group of packages sharing one worktree. Daily agent users: this is what lets you run two or three agents at once without a merge fight.
 
 ### Review, accept, consolidate
 
@@ -174,7 +179,7 @@ Note: 0:15. Closing.
 
 ### Tomorrow morning
 
-1. Install, `init`, commit, branch, `verify-setup`.
+1. Install with the `4.0.0rc7` pin, `init`, commit, branch, `verify-setup`.
 2. Write the charter: interview, generate, synthesize.
 3. `/spec-kitty.specify` one real item: a ticket, a postponed refactor, or docs only one person can write.
 

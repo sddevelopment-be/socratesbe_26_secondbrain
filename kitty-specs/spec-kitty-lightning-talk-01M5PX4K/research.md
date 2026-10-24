@@ -64,6 +64,13 @@ read with `git show`); the public site and docs; the charter repository.
 | R-41 | `spec-kitty consolidate` (or `/spec-kitty.consolidate`) lands the lanes on the target branch and cleans up worktrees; default strategy squash. | `consolidate --help` | CLI |
 | R-42 | After landing: a mission review (spec against code) and a retrospective. | `review --help`; `retrospect --help` | CLI |
 | R-43 | `spec-kitty dispatch "<request>"` opens a lightweight governed Op for ad-hoc work, with no mission. | `dispatch --help` | CLI |
+| R-44 | `/spec-kitty.plan` asks planning questions and waits until the human confirms an "Engineering Alignment" summary. | `~/.claude/commands/spec-kitty.plan.md` (installed command) | CLI-installed command |
+| R-45 | `/spec-kitty.review` reviews one work package implementation. | `~/.claude/commands/spec-kitty.review.md` | CLI-installed command |
+| R-46 | Suggested first missions: a real backlog ticket, a small refactor you keep putting off, or docs for a module only one person understands. | spec-kitty.ai/getting-started.md (checked with curl) | site |
+| R-47 | `consolidate` merges locally; publishing to origin is the separate `--push` step. | `consolidate --help` | CLI |
+| R-48 | `charter generate` writes `charter.yaml` and auto-stages `.kittify/charter/charter.md`. | `charter generate --help`; scratch run in `docs/generation-log.md` | CLI |
+| R-49 | PyPI publishes stable 3.2.7 and pre-release 4.0.0rc7; 4.0.0rc8 is not on PyPI. `pipx install spec-kitty-cli` installs 3.2.7. | `pip index versions [--pre] spec-kitty-cli` | CLI |
+| R-50 | 3.2.7 has `merge` and `charter sync` but no `consolidate`; 4.0.0rc7 has `consolidate`, the charter interview/generate/synthesize/status commands, and no `charter sync`. | `--help` in throwaway virtualenvs | CLI |
 
 ## Discrepancies (the CLI wins)
 
