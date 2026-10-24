@@ -35,7 +35,7 @@ export const socratesTheme: DocKittyTheme = {
     '--dk-radius-lg': '0.75rem',
     '--dk-radius-pill': '50px',
   },
-  customCss: ['./src/theme/socrates.css', './src/theme/chrome.css'],
+  customCss: ['./src/theme/socrates.css', './src/theme/chrome.css', './src/theme/references.css'],
   assets: {
     // A served path, not a file path: the toolkit hands any value starting
     // with '/' straight to Starlight as a URL. The file lives in public/.

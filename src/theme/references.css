@@ -1,0 +1,86 @@
+/*
+ * External references panel — compact cards, matching the Related panel.
+ *
+ * Why this exists: the toolkit's base slot (components/slots/ExternalReferences)
+ * renders the Spec Kitty brand theme's ReferenceItem molecule, but that
+ * molecule's CSS (.dk-icon, .dk-reference-item*) only ships with the brand
+ * theme. This site layers over the DocKitty default without the brand theme,
+ * so the rules never load and the inline SVG icon falls back to its intrinsic
+ * size. These rules supply them, scoped to the references panel, using tokens
+ * only (no colour literals; see scripts/check-theme-literals.mjs).
+ */
+
+/* Decorative glyph: 1em, inherits the muted foreground, never carries meaning. */
+.dk-references .dk-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Card: title and icon on the first row, then the citation key and the note. */
+.dk-references .dk-reference-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: var(--dk-space-xs);
+  row-gap: var(--dk-space-3xs);
+  min-height: 24px; /* WCAG 2.5.8 target size */
+  padding: var(--dk-space-sm) var(--dk-space-md);
+  border: 1px solid var(--dk-color-border);
+  border-radius: var(--dk-radius-md);
+  background: var(--dk-color-surface-1);
+  color: var(--dk-color-text);
+  text-decoration: none;
+}
+.dk-references .dk-reference-item:hover {
+  border-color: var(--dk-color-border-strong);
+}
+.dk-references .dk-reference-item:focus-visible {
+  outline: none;
+  box-shadow: var(--dk-shadow-focus);
+}
+
+.dk-references .dk-reference-item__title {
+  grid-column: 1;
+  grid-row: 1;
+  color: var(--dk-color-text-accent);
+  font-weight: var(--dk-weight-semibold);
+  overflow-wrap: anywhere;
+}
+.dk-references .dk-reference-item__icon {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  color: var(--dk-color-text-muted);
+}
+.dk-references .dk-reference-item__key {
+  grid-column: 1 / -1;
+  font-family: var(--dk-font-mono);
+  font-size: var(--dk-text-xs);
+  color: var(--dk-color-text-muted);
+  overflow-wrap: anywhere;
+}
+.dk-references .dk-reference-item__desc {
+  grid-column: 1 / -1;
+  font-size: var(--dk-text-sm);
+  color: var(--dk-color-text-muted);
+}
+
+/* The "(opens in a new tab)" hint is for assistive technology only; its hiding
+ * rule is also brand-theme CSS, so it is supplied here. */
+.dk-references .dk-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
