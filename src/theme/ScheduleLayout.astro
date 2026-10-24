@@ -16,6 +16,7 @@ const slackUrl = 'https://socratesbe.org/slack/';
 
 <slot />
 <div data-schedule class="not-content">
+  <p class="sched-hint">Start the notes opens GitHub, where you need to sign in.</p>
   <DaySwitcher days={view.days} />
   {
     view.days.map((day) => (

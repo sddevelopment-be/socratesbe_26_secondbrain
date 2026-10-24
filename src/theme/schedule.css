@@ -169,6 +169,18 @@
   font-size: 0.875rem;
 }
 
+[data-schedule] .sched-gh {
+  margin-inline-start: 0.25em;
+  font-weight: 400;
+  font-size: 0.875em;
+}
+
+[data-schedule] .sched-hint {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--dk-color-text-muted);
+}
+
 /* The two fallbacks wrap as whole links, so no separator can start a line. */
 [data-schedule] .sched-fallbacks {
   display: flex;

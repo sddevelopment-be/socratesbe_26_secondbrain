@@ -36,7 +36,8 @@ const { session: s, dataFileUrl } = Astro.props;
       ) : (
         <>
           <a class="sched-note sched-note--start" href={s.startNotes.url}>
-            Start the notes<span class="sr-only"> for {s.title} (on GitHub, sign-in needed)</span>
+            Start the notes<span class="sched-gh"> on GitHub</span>
+            <span class="sr-only"> for {s.title} (sign-in needed)</span>
           </a>
           <span class="sched-fallbacks">
             <a class="sched-fallback" href={s.fallback.templateUrl}>
