@@ -19,26 +19,13 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import matter from 'gray-matter';
 import { checkNotes, orphanNotes, validateSchedule } from '../src/lib/schedule/model.mjs';
 import { TEMPLATE_DESCRIPTION, patches } from './fixtures/schedule/patches.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const VALID = path.join(root, 'scripts/fixtures/schedule/valid');
-
-function option(name, fallback) {
-  const at = process.argv.indexOf(`--${name}`);
-  if (at < 0) return fallback;
-  if (!process.argv[at + 1]) {
-    console.error(`✗ --${name} needs a value`);
-    process.exit(1);
-  }
-  return path.resolve(process.argv[at + 1]);
-}
-const dataDir = option('data', path.join(root, 'docs/_meta/schedule'));
-const notesDir = option('notes', path.join(root, 'docs/sessions'));
-const templateFile = option('template', path.join(root, 'docs/_meta/templates/session-note.md'));
 
 const sessionIds = (schedule) => schedule.days.flatMap((d) => d.sessions.map((s) => s.id));
 
@@ -49,15 +36,18 @@ function allFindings(dir, notes, templateDescription) {
   return { findings: [...findings, ...checkNotes(sessionIds(schedule), notes, templateDescription)], schedule };
 }
 
-/** Self-test: the valid fixture is clean and each patch yields exactly its finding. */
-function selfTest() {
+/**
+ * Self-test: the valid fixture is clean and each patch yields exactly its finding.
+ * Returns the problems found; exported so a test can prove it notices a wrong expectation.
+ */
+export function selfTest(patchList = patches) {
   const problems = [];
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'check-schedule-'));
   try {
     const run = (dir) => allFindings(dir, path.join(dir, 'sessions'), TEMPLATE_DESCRIPTION).findings;
     const clean = run(VALID);
     if (clean.length > 0) problems.push(`the valid fixture reports ${clean.length} finding(s): ${clean[0].text}`);
-    for (const [i, patch] of patches.entries()) {
+    for (const [i, patch] of patchList.entries()) {
       const dir = path.join(tmp, String(i));
       fs.cpSync(VALID, dir, { recursive: true });
       const file = path.join(dir, patch.file);
@@ -78,52 +68,82 @@ function selfTest() {
   return problems;
 }
 
-const broken = selfTest();
-if (broken.length > 0) {
-  console.error(`✗ check-schedule self-test failed (the guard itself is broken):\n  ${broken.join('\n  ')}`);
-  process.exit(1);
-}
-
-// The template arrives with the session-note work; until then class (k) is skipped.
-let templateDescription = '';
-try {
-  templateDescription = String(matter(fs.readFileSync(templateFile, 'utf8')).data.description ?? '');
-} catch {
-  console.log(`ℹ no session-note template at ${path.relative(root, templateFile)}; skipping the placeholder-description check (class k)`);
-}
-
-const { findings, schedule } = allFindings(dataDir, notesDir, templateDescription);
-if (findings.length > 0) {
-  console.error(findings.map((f) => `✗ ${f.text}`).join('\n'));
-  console.error(`✗ ${findings.length} schedule finding(s)`);
-  process.exit(1);
-}
-
-// FR-024: date-prefixed notes with no session. A warning only.
-const ids = sessionIds(schedule);
-for (const name of orphanNotes(ids, notesDir)) {
-  console.log(`⚠ ${path.relative(root, path.join(notesDir, name))}: no session on the schedule has this identity`);
-}
-
-// FR-020: every free-text value, so a reviewer can scan it for participant names.
-const lines = [];
-for (const room of schedule.rooms) lines.push(`room name: ${room.name}`);
-for (const day of schedule.days) {
-  for (const s of day.sessions) {
-    lines.push(`id: ${s.id}`, `title: ${s.title}`);
-    if (s.description !== undefined) lines.push(`description: ${s.description}`);
-    if (s.place !== undefined) lines.push(`place: ${s.place}`);
+function option(name, fallback) {
+  const at = process.argv.indexOf(`--${name}`);
+  if (at < 0) return fallback;
+  if (!process.argv[at + 1]) {
+    console.error(`✗ --${name} needs a value`);
+    process.exit(1);
   }
+  return path.resolve(process.argv[at + 1]);
 }
-const proofreading = ['## Text to proofread for participant names', '', ...lines.map((l) => `- ${l}`), ''].join('\n');
-console.log(`\n${proofreading}`);
-if (process.env.GITHUB_STEP_SUMMARY) {
+const dataDir = option('data', path.join(root, 'docs/_meta/schedule'));
+const notesDir = option('notes', path.join(root, 'docs/sessions'));
+const templateFile = option('template', path.join(root, 'docs/_meta/templates/session-note.md'));
+
+function main() {
+  const dataDir = option('data', path.join(root, 'docs/_meta/schedule'));
+  const notesDir = option('notes', path.join(root, 'docs/sessions'));
+  const templateFile = option('template', path.join(root, 'docs/_meta/templates/session-note.md'));
+  const broken = selfTest();
+  if (broken.length > 0) {
+    console.error(`✗ check-schedule self-test failed (the guard itself is broken):\n  ${broken.join('\n  ')}`);
+    process.exit(1);
+  }
+
+  // A missing template skips class (k) with a notice; an unreadable or unparsable one is a finding.
+  let templateDescription = '';
+  let templateProblem;
   try {
-    fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${proofreading}\n`);
+    templateDescription = String(matter(fs.readFileSync(templateFile, 'utf8')).data.description ?? '').trim();
+    if (!templateDescription) templateProblem = 'the template has no description to compare notes against';
   } catch (error) {
-    console.log(`⚠ could not write the job summary: ${error.code ?? error.message}`);
+    if (error.code === 'ENOENT') {
+      console.log(`ℹ no session-note template at ${path.relative(root, templateFile)}; skipping the placeholder-description check (class k)`);
+    } else {
+      templateProblem = `the template cannot be read (${error.code ?? String(error.message).split('\n')[0]})`;
+    }
   }
+  if (templateProblem) {
+    console.error(`✗ ${path.relative(root, templateFile)}: ${templateProblem}, so class (k) cannot be checked`);
+    process.exit(1);
+  }
+
+  const { findings, schedule } = allFindings(dataDir, notesDir, templateDescription);
+  if (findings.length > 0) {
+    console.error(findings.map((f) => `✗ ${f.text}`).join('\n'));
+    console.error(`✗ ${findings.length} schedule finding(s)`);
+    process.exit(1);
+  }
+
+  // FR-024: date-prefixed notes with no session. A warning only.
+  const ids = sessionIds(schedule);
+  for (const name of orphanNotes(ids, notesDir)) {
+    console.log(`⚠ ${path.relative(root, path.join(notesDir, name))}: no session on the schedule has this identity`);
+  }
+
+  // FR-020: every free-text value, so a reviewer can scan it for participant names.
+  const lines = [];
+  for (const room of schedule.rooms) lines.push(`room name: ${room.name}`);
+  for (const day of schedule.days) {
+    for (const s of day.sessions) {
+      lines.push(`id: ${s.id}`, `title: ${s.title}`);
+      if (s.description !== undefined) lines.push(`description: ${s.description}`);
+      if (s.place !== undefined) lines.push(`place: ${s.place}`);
+    }
+  }
+  const proofreading = ['## Text to proofread for participant names', '', ...lines.map((l) => `- ${l}`), ''].join('\n');
+  console.log(`\n${proofreading}`);
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    try {
+      fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${proofreading}\n`);
+    } catch (error) {
+      console.log(`⚠ could not write the job summary: ${error.code ?? error.message}`);
+    }
+  }
+
+  const sessions = ids.length;
+  console.log(`✓ schedule: ${sessions} sessions across ${schedule.days.length} day(s), ${schedule.rooms.length} rooms (self-test: ${patches.length} patches)`);
 }
 
-const sessions = ids.length;
-console.log(`✓ schedule: ${sessions} sessions across ${schedule.days.length} day(s), ${schedule.rooms.length} rooms (self-test: ${patches.length} patches)`);
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
