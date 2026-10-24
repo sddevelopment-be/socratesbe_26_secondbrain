@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * The chrome stylesheet takes every colour from a token: `--dk-*` where the
+ * The chrome and references stylesheets take every colour from a token: `--dk-*` where the
  * toolkit has one, otherwise a theme-private `--sb-*` token declared in
  * src/theme/socrates.css. This check fails on a colour literal in it:
  *
@@ -25,13 +25,17 @@
  *
  * It reads the source, so it runs without a build.
  *
- *   node scripts/check-theme-literals.mjs [file ...]   (default: src/theme/chrome.css)
+ *   node scripts/check-theme-literals.mjs [file ...]   (default: chrome.css, references.css)
  */
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const files = process.argv.slice(2);
-if (files.length === 0) files.push(fileURLToPath(new URL('../src/theme/chrome.css', import.meta.url)));
+if (files.length === 0) {
+  for (const f of ['chrome.css', 'references.css']) {
+    files.push(fileURLToPath(new URL(`../src/theme/${f}`, import.meta.url)));
+  }
+}
 
 const HEX = /#[0-9a-f]{3,8}\b/gi;
 const ENCODED_HEX = /%23[0-9a-f]{3,8}\b/gi;
