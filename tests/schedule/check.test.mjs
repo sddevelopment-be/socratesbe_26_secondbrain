@@ -65,7 +65,7 @@ test('a broken data file exits 1 and names the class on stderr', () => {
   fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace(patch.find, () => patch.replace));
   const result = check(dir);
   assert.equal(result.status, 1);
-  assert.match(result.stderr, /✗ .*2026-10-23\.yaml:25 \[e\]/);
+  assert.match(result.stderr, /✗ .*2026-10-23\.yaml:25 \[e duplicate\]/);
 });
 
 test('a draft note for a scheduled session exits 1 (class j)', () => {
@@ -75,7 +75,7 @@ test('a draft note for a scheduled session exits 1 (class j)', () => {
   fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace(patch.find, () => patch.replace));
   const result = check(dir);
   assert.equal(result.status, 1);
-  assert.match(result.stderr, /\[j\]/);
+  assert.match(result.stderr, /\[j draft note\] .*set `doc_status: active` or delete the note/);
 });
 
 test('a date-prefixed note without a session warns; an undated note does not', () => {

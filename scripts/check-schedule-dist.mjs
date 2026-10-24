@@ -21,7 +21,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import matter from 'gray-matter';
-import { loadSchedule } from '../src/lib/schedule/model.mjs';
+import { isDraftNote, loadSchedule } from '../src/lib/schedule/model.mjs';
 import { BASE, SITE } from '../site.config.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -364,8 +364,8 @@ export function expectedSessions(schedule, notesDir, dist) {
   return schedule.days.flatMap((d) => d.sessions).map((s) => {
     let published = false;
     try {
-      const status = matter(fs.readFileSync(path.join(notesDir, `${s.id}.md`), 'utf8')).data.doc_status ?? 'draft';
-      published = status !== 'draft' && fs.existsSync(path.join(dist, 'sessions', s.id, 'index.html'));
+      const { data } = matter(fs.readFileSync(path.join(notesDir, `${s.id}.md`), 'utf8'));
+      published = !isDraftNote(data) && fs.existsSync(path.join(dist, 'sessions', s.id, 'index.html'));
     } catch { /* no note */ }
     return { id: s.id, state: published ? 'published' : 'none', timed: s.slot !== undefined, sectioned: s.section !== undefined };
   });

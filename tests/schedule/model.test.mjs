@@ -69,7 +69,7 @@ for (const patch of patches) {
     assert.equal(finding.class, patch.expect.class);
     assert.equal(finding.line, patch.expect.line);
     assert.equal(path.basename(finding.file), path.basename(patch.file));
-    assert.match(finding.text, new RegExp(`^.+:${finding.line} \\[${finding.class}\\] .+`));
+    assert.match(finding.text, new RegExp(`^.+:${finding.line} \\[${finding.class} ${CLASSES[finding.class]}\\] .+`));
   });
 }
 
@@ -77,7 +77,7 @@ test('loadSchedule throws listing the findings on unreadable and empty data', ()
   for (const cls of ['a', 'b']) {
     const dir = copyFixture();
     applyPatch(dir, patches.find((p) => p.expect.class === cls));
-    assert.throws(() => loadSchedule(dir), (err) => err.findings.length === 1 && err.findings[0].class === cls && err.message.includes(`[${cls}]`));
+    assert.throws(() => loadSchedule(dir), (err) => err.findings.length === 1 && err.findings[0].class === cls && err.message.includes(`[${cls} ${CLASSES[cls]}]`));
   }
 });
 

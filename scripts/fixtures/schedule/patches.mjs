@@ -63,6 +63,13 @@ export const patches = [
     expect: { class: 'c', line: 34 },
   },
   {
+    name: 'c: unquoted title that starts with a comment (the value is swallowed, one finding)',
+    file: DAY,
+    find: '    title: "TDD #1: the team\'s Q&A … 🎉"',
+    replace: '    title: #1: Q&A …',
+    expect: { class: 'c', line: 34 },
+  },
+  {
     name: 'c: uncertain is a quoted word',
     file: DAY,
     find: '    uncertain: true',

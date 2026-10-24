@@ -7,7 +7,8 @@
  *
  * Findings follow FR-019: classes a-k are evaluated in order and a fault is
  * reported once, under the first class it matches. A finding reads
- * `<file>:<line> [<class>] <explanation>`.
+ * `<file>:<line> [<class> <short name>] <explanation>`, the file relative to the
+ * repository root.
  *
  * FR-019 names no class for value-shape faults, so they map as follows: text
  * that is too long, an enum value outside its list, a time/date/room-key that
@@ -23,6 +24,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { LineCounter, Parser, isMap, isScalar, isSeq, parseDocument } from 'yaml';
 import matter from 'gray-matter';
 
@@ -67,8 +69,16 @@ function isRealDate(text) {
   return date.getUTCFullYear() === y && date.getUTCMonth() === mo - 1 && date.getUTCDate() === d;
 }
 
+const REPO_ROOT = fileURLToPath(new URL('../../../', import.meta.url));
+
+/** A path as findings print it: relative to the repository root when inside it. */
+function shown(file) {
+  const rel = path.relative(REPO_ROOT, file);
+  return rel && !rel.startsWith('..') && !path.isAbsolute(rel) ? rel.split(path.sep).join('/') : file;
+}
+
 export function makeFinding(cls, file, line, message) {
-  return { class: cls, file, line, message, text: `${file}:${line} [${cls}] ${message}` };
+  return { class: cls, file, line, message, text: `${shown(file)}:${line} [${cls} ${CLASSES[cls]}] ${message}` };
 }
 
 // ---------------------------------------------------------------- identity
@@ -197,8 +207,18 @@ function checkWritingRules(ctx) {
     ctx.add('c', line, message);
   };
 
+  // A comment swallows the rest of its line, so it can hide a value (`title: #1: Q&A`).
+  // The comment finding covers that line's value; it is not also reported as empty.
+  const valuesByLine = new Map();
+  const collect = (node) => {
+    if (isMap(node)) node.items.forEach((pair) => collect(pair.value));
+    else if (isSeq(node)) node.items.forEach(collect);
+    else if (isScalar(node)) valuesByLine.set(ctx.line(node), node);
+  };
+  collect(ctx.doc.contents);
   for (const offset of commentOffsets(ctx.src)) {
-    flag(ctx.lc.linePos(offset).line, 'comments are not allowed in schedule data');
+    const line = ctx.lc.linePos(offset).line;
+    flag(line, 'comments are not allowed in schedule data', valuesByLine.get(line));
   }
 
   const checkValue = (node, key) => {
@@ -573,6 +593,14 @@ export function loadSchedule(dir) {
 }
 
 /**
+ * Whether a note's frontmatter makes it a draft: a note without `doc_status`
+ * counts as one, as on the site. The same rule as `isDraftStatus` in
+ * `@spec-kitty/doc-toolkit/lib/vocabulary-core.mjs`, which the toolkit exports
+ * there but not from its package entry point, so it is repeated here once.
+ */
+export const isDraftNote = (data) => (data.doc_status ?? 'draft') === 'draft';
+
+/**
  * FR-019 (j) and (k) for the notes of scheduled sessions.
  * `templateDescription` is the placeholder description of
  * docs/_meta/templates/session-note.md, read by the caller.
@@ -602,13 +630,11 @@ export function checkNotes(sessionIds, notesDir, templateDescription) {
       }
       return 1;
     };
-    // Same rule as isDraftStatus in @spec-kitty/doc-toolkit lib/vocabulary-core.mjs
-    // (not exported): a note without doc_status counts as a draft, as on the site.
-    if ((data.doc_status ?? 'draft') === 'draft') {
-      findings.push(makeFinding('j', file, lineOf('doc_status'), `the note for scheduled session '${id}' is a draft (doc_status ${data.doc_status === undefined ? 'is missing' : `is '${data.doc_status}'`}); publish it or remove it`));
+    if (isDraftNote(data)) {
+      findings.push(makeFinding('j', file, lineOf('doc_status'), `the note for scheduled session '${id}' is a draft (doc_status ${data.doc_status === undefined ? 'is missing' : `is '${data.doc_status}'`}): set \`doc_status: active\` or delete the note`));
     }
     if (templateDescription && String(data.description ?? '').trim() === templateDescription.trim()) {
-      findings.push(makeFinding('k', file, lineOf('description'), `the note for scheduled session '${id}' still has the template description`));
+      findings.push(makeFinding('k', file, lineOf('description'), `the note for scheduled session '${id}' still has the template description; write one sentence about the session`));
     }
   }
   return findings;
