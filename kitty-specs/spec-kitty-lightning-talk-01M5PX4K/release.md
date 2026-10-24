@@ -58,3 +58,14 @@ excluded from every generated surface.
 - Raise upstream: P-02 (the documentation generate guard looks only under the
   mission folder) and the doc/CLI drift D-01 to D-08.
 - When 4.0 final ships, drop the release-candidate pin and the 3.2 `merge` note.
+
+## Post-mission revisions
+
+After acceptance, the maintainer asked for a narrative extension of the deck, run as governed ops rather than a new mission:
+
+| Op | Profile | Change |
+|---|---|---|
+| `01M5Q3REWFHA9ZXAY1998WYP0R` | researcher-robbie | facts R-60 to R-81 in `research.md` |
+| `01M5Q42RH8S1AMSXQXWCMS6ETK` | comms-cleo | deck restructured from high level to detail: two questions; what makes a good prompt; how Spec Kitty helps (software-dev mission diagram); the charter system (layers, packs, mission types, roles, harnesses); three ways to work; how to start. Session page agenda updated. |
+
+Effect on the accepted spec: the deck now has 23 slides (NFR-001 allowed 16) with 14:55 of timed notes; the 15-minute limit still holds, and skipping the optional work-package slide gives 14:10. The slide-count deviation was accepted by the maintainer's request for the extra sections.

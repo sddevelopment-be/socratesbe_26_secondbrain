@@ -69,10 +69,12 @@ implementation; people decide what to build and make the final call.
 
 | Section | Time | Question it answers |
 |---|---|---|
-| Why specs before code | 2 min | Why not just prompt the agent? |
-| Start tomorrow | 3.5 min | What do I type on day one? |
-| The mission lifecycle | 6 min | What happens between idea and landed change? |
-| Your turn | 2 min | What do I try first? |
+| Two questions before any code | 1.5 min | What do we build, and how? |
+| What makes a good prompt | 2 min | What does an agent need from me? |
+| How Spec Kitty helps | 3.5 min | What happens between idea and landed change? |
+| The charter system | 3.5 min | How do the rules reach every agent, role and tool? |
+| Three ways to work | 1 min | Mission, governed op, or ad hoc? |
+| How to start | 3 min | What do I type tomorrow morning? |
 
 ## Start tomorrow
 
@@ -126,8 +128,11 @@ Git repository or a commit; specify needs both. Then, in your agent, run
 | accept | `spec-kitty accept` | you | a readiness check |
 | consolidate | `spec-kitty consolidate` | you run it, after accepting | the work on your local branch, worktrees cleaned up; the pull request is still yours to open |
 
-Too small for a mission? `spec-kitty dispatch "<request>"` runs a one-off
-request with the charter loaded and keeps a record.
+Three ways to work, lightest first: ad hoc with your agent, where the
+charter guidance is already in its instructions and `spec-kitty charter
+context --action <step>` shows the rules for a step; a governed op with
+`spec-kitty dispatch "<request>"` for a one-sitting task, run under the
+right profile with a record; or a full mission when the work needs a spec.
 
 ## Recap
 
