@@ -4,9 +4,12 @@ import { readFileSync } from 'node:fs';
 import { loadSchedule } from '../../src/lib/schedule/model.mjs';
 import { buildScheduleView } from '../../src/lib/schedule/view.mjs';
 import { OWNER, REPO, BRANCH, BASE } from '../../site.config.mjs';
+import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 
-const schedule = loadSchedule('scripts/fixtures/schedule/valid');
-const template = readFileSync('docs/_meta/templates/session-note.md', 'utf8');
+const schedule = loadSchedule(join(ROOT, 'scripts/fixtures/schedule/valid'));
+const template = readFileSync(join(ROOT, 'docs/_meta/templates/session-note.md'), 'utf8');
 const site = { owner: OWNER, repo: REPO, branch: BRANCH, base: BASE };
 const view = buildScheduleView({ schedule, publishedIds: new Set(['2026-10-23-event-storming']), site, template });
 const day = (date) => view.days.find((d) => d.date === date);

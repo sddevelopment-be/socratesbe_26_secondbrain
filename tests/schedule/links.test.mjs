@@ -7,9 +7,11 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { noteState, notePath, guideHref, templateUrl, startNotesUrl } from '../../src/lib/schedule/links.mjs';
 import { OWNER, REPO, BRANCH } from '../../site.config.mjs';
+import { fileURLToPath } from 'node:url';
+const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 
-const template = readFileSync('docs/_meta/templates/session-note.md', 'utf8');
-const validator = join(process.cwd(), 'node_modules/.bin/dockitty-validate-frontmatter');
+const template = readFileSync(join(ROOT, 'docs/_meta/templates/session-note.md'), 'utf8');
+const validator = join(ROOT, 'node_modules/.bin/dockitty-validate-frontmatter');
 const base = { owner: OWNER, repo: REPO, branch: BRANCH, day: '2026-10-24', template };
 
 function decode(url) {
@@ -21,7 +23,7 @@ function validate(id, body) {
   const root = mkdtempSync(join(tmpdir(), 'prefill-'));
   mkdirSync(join(root, 'docs/sessions'), { recursive: true });
   mkdirSync(join(root, 'docs/_meta'), { recursive: true });
-  copyFileSync('docs/_meta/sections.yaml', join(root, 'docs/_meta/sections.yaml'));
+  copyFileSync(join(ROOT, 'docs/_meta/sections.yaml'), join(root, 'docs/_meta/sections.yaml'));
   writeFileSync(join(root, 'docs/sessions', `${id}.md`), body);
   return spawnSync(validator, [join(root, 'docs')], { encoding: 'utf8' });
 }

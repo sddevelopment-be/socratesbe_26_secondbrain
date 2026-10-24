@@ -5,9 +5,12 @@ import { loadSchedule } from '../../src/lib/schedule/model.mjs';
 import { buildScheduleView } from '../../src/lib/schedule/view.mjs';
 import { scheduleApi, scheduleMarkdown } from '../../src/lib/schedule/text.mjs';
 import { OWNER, REPO, BRANCH, BASE, SITE } from '../../site.config.mjs';
+import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 
-const schedule = loadSchedule('scripts/fixtures/schedule/valid');
-const template = readFileSync('docs/_meta/templates/session-note.md', 'utf8');
+const schedule = loadSchedule(join(ROOT, 'scripts/fixtures/schedule/valid'));
+const template = readFileSync(join(ROOT, 'docs/_meta/templates/session-note.md'), 'utf8');
 const published = '2026-10-23-event-storming';
 const view = buildScheduleView({ schedule, publishedIds: new Set([published]), site: { owner: OWNER, repo: REPO, branch: BRANCH, base: BASE }, template });
 const root = `${SITE}${BASE}`;
