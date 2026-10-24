@@ -24,6 +24,18 @@ test('the text lists every session once, with its note state', () => {
   assert.match(text, /Notes: none \(id: 2026-10-23-is-tdd-dead\)/);
 });
 
+test('Markdown metacharacters in titles and descriptions are escaped; the id token stays parseable', () => {
+  const tricky = structuredClone(schedule);
+  const first = tricky.days[0].sessions[0];
+  first.title = 'A *bold* [link](x) #1 <b> `c` a_b \\';
+  first.description = 'See (id: fake) _now_';
+  const out = scheduleMarkdown(buildScheduleView({ schedule: tricky, publishedIds: new Set(), site: { owner: OWNER, repo: REPO, branch: BRANCH, base: BASE }, template }), root);
+  assert.ok(out.includes('**A \\*bold\\* \\[link\\]\\(x\\) \\#1 \\<b\\> \\`c\\` a\\_b \\\\**'), out);
+  assert.ok(out.includes('See \\(id: fake\\) \\_now\\_.'), out);
+  const tokens = [...out.matchAll(/\(id: ([^)\\\s]+)\)/g)].map((m) => m[1]);
+  assert.deepEqual([...tokens].sort(), [...ids].sort());
+});
+
 test('every link is absolute under the site, the API is linked, no prefill URL appears', () => {
   const links = [...text.matchAll(/\]\(([^)]+)\)|<(https?:[^>]+)>/g)].map((m) => m[1] ?? m[2]);
   assert.ok(links.length >= 2);

@@ -10,6 +10,9 @@ const noteUrl = (siteRoot, id) => `${siteRoot}/sessions/${id}.md`;
 /** The absolute URL of the machine-readable schedule. */
 export const apiUrl = (siteRoot) => `${siteRoot}/api/schedule.json`;
 
+/** Backslash-escape Markdown metacharacters so titles and descriptions read as plain text. */
+const esc = (text) => text.replace(/[\\*_[\]()`#<>]/g, '\\$&');
+
 function where(s) {
   if (s.location.kind === 'place') return s.location.label;
   const { name, facts } = s.location.room;
@@ -20,8 +23,8 @@ function bullet(s, siteRoot) {
   const notes = s.note.state === 'published' ? `[published](${noteUrl(siteRoot, s.id)})` : 'none';
   const from = s.start ? `, from ${s.start}` : '';
   const doubt = s.uncertain ? ' Partly unreadable on the board.' : '';
-  const about = s.description ? ` ${/[.!?]$/.test(s.description) ? s.description : `${s.description}.`}` : '';
-  return `- **${s.title}** — ${where(s)}${from}.${about}${doubt} Notes: ${notes} (id: ${s.id})`;
+  const about = s.description ? ` ${esc(/[.!?]$/.test(s.description) ? s.description : `${s.description}.`)}` : '';
+  return `- **${esc(s.title)}** — ${where(s)}${from}.${about}${doubt} Notes: ${notes} (id: ${s.id})`;
 }
 
 /** @param {import('./view.mjs').ScheduleView} view @param {string} siteRoot absolute, no trailing slash */
